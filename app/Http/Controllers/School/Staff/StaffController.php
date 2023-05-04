@@ -1,0 +1,277 @@
+<?php
+
+namespace App\Http\Controllers\School\Staff;
+
+use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\School;
+use App\Models\SchoolClass;
+use App\Models\SchoolClassStaff;
+use App\Models\Section;
+use App\Models\Staff;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+class StaffController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $staff = School::where('id', getSchool()->id)->first()->staff()->paginate(25);
+
+        return view('staff.staff.index', compact('staff'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        // $roles = Role::all();
+        // $designation = null;
+        return view('staff.staff.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Staff::where('email', $request->email)->first();
+            if (!$staff) {
+                $staff = new Staff();
+                $staff->first_name = $request->first_name;
+                $staff->last_name = $request->last_name;
+                $staff->other_name = $request->other_name;
+                $staff->username = $request->username;
+                $staff->gender = $request->gender ?? 'male';
+                $staff->address_1 = $request->address_1;
+                $staff->address_2 = $request->address_2;
+                $staff->phone_number = $request->phone_number;
+                $staff->country = $request->country;
+                $staff->religion = $request->religion;
+                $staff->state = $request->state;
+                $staff->city = $request->city;
+                $staff->email = $request->email;
+                $staff->date_of_birth =  Carbon::createFromDate(date('d/m/Y', strtotime($request->date_of_birth)))->toDateString();
+                $staff->password = bcrypt($request->password);
+
+                //if passport
+                if ($request->has('passport')) {
+                    $path = $request->file('passport')->store('public/avatars');
+                    $staff->image = $path;
+                }
+                $staff->save();
+                $uni = $request->university;
+                $uni['type'] = 'university';
+
+                $sec = $request->secondary;
+                $sec['type'] = 'secondary';
+
+                $pri = $request->primary;
+                $pri['type'] = 'primary';
+
+                $staff->qualifications()->create($uni);
+                $staff->qualifications()->create($sec);
+                $staff->qualifications()->create($pri);
+            }
+            $staff->schools()->attach(getSchool()->id);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Could not create new Staff ');
+        }
+
+        return redirect()->route('staff.index')->with('message', 'New Staff Created');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $staff = Staff::findOrFail($id);
+        return view('staff.staff.view', compact('staff'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $staff = Staff::find($id);
+        return view('staff.staff.edit', compact('staff'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Staff::findOrFail($id);
+            $staff->first_name = $request->first_name;
+            $staff->last_name = $request->last_name;
+            $staff->other_name = $request->other_name;
+            $staff->username = $request->username;
+            $staff->gender = $request->gender ?? 'male';
+            $staff->address_1 = $request->address_1;
+            $staff->address_2 = $request->address_2;
+            $staff->phone_number = $request->phone_number;
+            $staff->country = $request->country;
+            $staff->religion = $request->religion;
+            $staff->state = $request->state;
+            $staff->city = $request->city;
+            $staff->email = $request->email;
+            $staff->date_of_birth =  Carbon::createFromDate(date('d/m/Y', strtotime($request->date_of_birth)))->toDateString();
+
+            //if passport
+            if ($request->has('passport')) {
+                if ($staff->image) {
+                    Storage::delete($staff->image);
+                }
+                $path = $request->file('passport')->store('public/avatars');
+                $staff->image = $path;
+            }
+            $staff->save();
+            $primary = $staff->qualifications()->where('type', 'primary')->first();
+            $secondary = $staff->qualifications()->where('type', 'secondary')->first();
+            $university = $staff->qualifications()->where('type', 'university')->first();
+            $uni = $request->university;
+            $university->update($uni);
+
+            $sec = $request->secondary;
+            $secondary->update($sec);
+
+            $pri = $request->primary;
+            $primary->update($pri);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Could not Update Staff ');
+        }
+
+        return redirect()->back()->with('message', ' Staff Updated');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $staff = Staff::findOrFail($id);
+        // delete staff qualifications
+        // $staff->qualifications()->delete();
+        // $staff->schools()->detach();
+        if ($staff->schools()->detach(getSchool()->id)) {
+            return redirect()->route('staff.index')->with('message', 'Staff Deleted');
+        }
+        return redirect()->route('staff.index')->with('error', 'Deletion failed');
+    }
+
+    public function assignClasses()
+    {
+        $schoolClasses = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+        $staff = Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id', request()->route()->school_id)->get();
+        $staffWithClasses = $staff->filter(function ($s) {
+            return $s->school_classes()->wherePivot('school_id', getSchool()->id)->get()->count();
+        }); //Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id',request()->route()->school_id)->get();
+        $sections = Section::where('school_id', getSchool()->id)->get();
+        return view('staff.staff.classes', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+    }
+
+    public function assignClassesStore(Request $request)
+    {
+        $staff = Staff::find($request->staff);
+        $staff->school_classes()->wherePivot('school_id', getSchool()->id)->detach();
+        $sections = $request->sections ?? [];
+
+        foreach ($sections as $key => $value) {
+            foreach ($value as $ky => $val) {
+                $staff->school_classes()->attach($key, ['section_id' => $val, 'school_id' => request()->route()->school_id]);
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    public function assignClassesEdit($id)
+    {
+        $schoolClasses = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+        $staff = Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id', request()->route()->school_id)->get();
+        $staffWithClasses = $staff->filter(function ($s) {
+            return $s->school_classes()->wherePivot('school_id', getSchool()->id)->get()->count();
+        });
+        $sections = Section::where('school_id', getSchool()->id)->get();
+        $currentStaff = Staff::find($id);
+        return view('staff.staff.classes', compact('currentStaff', 'schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+    }
+
+    public function assignSubjects()
+    {
+        $schoolClasses = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+        $staff = Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id', request()->route()->school_id)->get();
+        $staffWithClasses = $staff->filter(function ($s) {
+            return $s->school_classes()->wherePivot('school_id', getSchool()->id)->get()->count();
+        }); //Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id',request()->route()->school_id)->get();
+        $sections = Section::where('school_id', getSchool()->id)->get();
+        return view('staff.staff.subjects', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+    }
+
+    public function assignSubjectsStore(Request $request)
+    {
+        $staff = Staff::find($request->staff);
+        $class = $request->class;
+        $staff->subjects()->wherePivot('school_id', getSchool()->id)
+            ->wherePivot('school_class_id', $class)
+            ->wherePivot('section_id', $request->section)->detach();
+        $subjects = $request->subjects ?? [];
+        foreach ($subjects as $sub) {
+            $staff->subjects()->wherePivot('school_id', getSchool()->id)
+                ->wherePivot('school_class_id', $class)
+                ->wherePivot('section_id', $request->section)
+                ->attach($sub, ['school_class_id' => $class, 'school_id' => request()->route()->school_id, 'section_id' => $request->section]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function resetPassword(Request $request, Staff $staff)
+    {
+        $data = $this->validate($request, [
+            'password' => 'required|string',
+            // 'password_confirmation' => 'required|confirmed'
+        ]);
+        $staff->update(['password' => bcrypt($request->password)]);
+        return redirect()->back()->with('message', 'Password was change');
+    }
+}
