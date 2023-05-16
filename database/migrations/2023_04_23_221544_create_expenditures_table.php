@@ -20,6 +20,8 @@ class CreateExpendituresTable extends Migration
             $table->unsignedBigInteger('term_id');
             $table->morphs('staffable');
             $table->string('reference')->unique();
+            $table->string('title');
+            $table->date('date');
             $table->decimal('amount');
             $table->text('description');
             $table->timestamps();

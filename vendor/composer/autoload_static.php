@@ -557,6 +557,7 @@ class ComposerStaticInitd4ba13b44b80d7cdb61c7d96cf68cc76
         'App\\Http\\Controllers\\School\\Staff\\CBTController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/CBTController.php',
         'App\\Http\\Controllers\\School\\Staff\\ExamSetupController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/ExamSetupController.php',
         'App\\Http\\Controllers\\School\\Staff\\ExaminationController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/ExaminationController.php',
+        'App\\Http\\Controllers\\School\\Staff\\FinanceManagementController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/FinanceManagementController.php',
         'App\\Http\\Controllers\\School\\Staff\\GradesController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/GradesController.php',
         'App\\Http\\Controllers\\School\\Staff\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/HomeController.php',
         'App\\Http\\Controllers\\School\\Staff\\HostelManagementController' => __DIR__ . '/../..' . '/app/Http/Controllers/School/Staff/HostelManagementController.php',

@@ -322,11 +322,11 @@
                              <span class="title">Fees</span>
                          </a>
                      </li>
-                     {{-- <li class="nav-item">
-                         <a class="nav-link" href="{{ route('roles.index') }}">
-                             <span class="title">Salaries</span>
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ route('staff.finances.expenditures') }}">
+                             <span class="title">Expenditures</span>
                          </a>
-                     </li> --}}
+                     </li>
                  </ul>
              </div>
          </li>

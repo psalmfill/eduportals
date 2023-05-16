@@ -27,9 +27,13 @@
     <div class="card">
         <div class="card-body">
             <h1>Finance Management</h1>
-            <h3>Transactions</h3>
+            <h3>Expenditures</h3>
 
             <div class="container-fluid p-3">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('staff.finances.record_expenditure') }}" class="btn btn-primary">Record Expenditue</a>
+                </div>
+                <br>
                 <div class="row">
                     <div class="col-md-12 table-responsive">
 
@@ -41,30 +45,26 @@
                                     <th>For</th>
                                     <th>Session</th>
                                     <th>Term</th>
-                                    <th>Type</th>
-                                    <th>Channel</th>
                                     <th>Amount</th>
                                     <th>Recorded By</th>
-                                    @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                                    {{-- @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
                                         <th>Action</th>
-                                    @endif
+                                    @endif --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($transactions as $item)
+                                @foreach ($expenditures as $item)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $item->reference }}</td>
-                                        <td>{{ $item->channel == 'fee' ? $item->transactable->student->full_name : '' }}
+                                        <td>{{ $item->title }}
                                         </td>
                                         <td>{{ $item->session->name }}</td>
                                         <td>{{ $item->term->name }}</td>
-                                        <td>{{ $item->type }}</td>
-                                        <td>{{ $item->channel }}</td>
                                         <td>{{ $item->amount }}</td>
                                         <td>{{ $item->staff ? $item->staff->full_name : '' }}</td>
 
-                                        @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                                        {{-- @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
                                             <td>
 
                                                 <div class="btn-group">
@@ -75,14 +75,14 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                        @endif
+                                        @endif --}}
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
 
                         <div class="mt-4">
-                            {{ $transactions->links() }}
+                            {{ $expenditures->links() }}
                         </div>
                     </div>
                 </div>

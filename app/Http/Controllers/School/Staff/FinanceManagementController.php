@@ -4,6 +4,7 @@ namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
+use App\Models\Expenditure;
 use App\Models\Fee;
 use App\Models\GeneralSetting;
 use App\Models\SchoolClass;
@@ -23,9 +24,14 @@ class FinanceManagementController extends Controller
         return view('staff.finances.transactions', compact('transactions'));
     }
 
+    public function showTransactions(Transaction $transaction)
+    {
+        return view('staff.finances.transaction', compact('transaction'));
+    }
+
     public function fees()
     {
-        $fees = Fee::where('school_id', getSchool()->id)->paginate(1);
+        $fees = Fee::where('school_id', getSchool()->id)->paginate();
         return view('staff.finances.fees', compact('fees'));
     }
 
@@ -57,7 +63,6 @@ class FinanceManagementController extends Controller
 
     public function saveFee(Request $request)
     {
-        // dd($request->all());
         $data = $request->validate(
             [
                 'session' => 'required|exists:academic_sessions,id',
@@ -103,6 +108,7 @@ class FinanceManagementController extends Controller
                 'school_id' => getSchool()->id,
                 'academic_session_id' => $data['session'],
                 'term_id' => $data['term'],
+                'student_id' => $data['student'],
                 'staffable_type' => get_class(user()),
                 'staffable_id' => user()->id,
                 'amount' => $data['amount_paid'],
@@ -117,6 +123,77 @@ class FinanceManagementController extends Controller
             DB::commit();
 
             return redirect()->route('staff.finances.fees')->with('message', 'Fee has been recorded successfully');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Record was not saved');
+        }
+    }
+
+    public function expenditures()
+    {
+        $expenditures = Expenditure::where('school_id', getSchool()->id)->paginate();
+        return view('staff.finances.expenditures', compact('expenditures'));
+    }
+
+    public function showExpenditures(Expenditure $expenditure)
+    {
+        return view('staff.finances.expenditure', compact('expenditure'));
+    }
+
+    public function recordExpenditure()
+    {
+        $sessions = AcademicSession::all();
+        $terms  = Term::where('school_id', getSchool()->id)->get();
+        $classes = SchoolClass::where('school_id', getSchool()->id)->get();
+
+        //
+        return view('staff.finances.record_expenditure', compact('sessions', 'terms', 'classes'));
+    }
+
+    public function saveExpenditure(Request $request)
+    {
+        $data = $request->validate(
+            [
+                'session' => 'required|exists:academic_sessions,id',
+                'term' => 'required|exists:terms,id',
+                'amount' => 'required|numeric',
+                'description' => 'required|string',
+                'title' => 'required|string',
+                'date' => 'required|date',
+            ]
+        );
+
+        try {
+            DB::beginTransaction();
+
+            $expenditure = new Expenditure();
+            $expenditure->school_id = getSchool()->id;
+            $expenditure->academic_session_id = $data['session'];
+            $expenditure->term_id = $data['term'];
+            $expenditure->staffable_type = get_class(user());
+            $expenditure->staffable_id = user()->id;
+            $expenditure->amount = $data['amount'];
+            $expenditure->title = $data['title'];
+            $expenditure->date = $data['date'];
+            $expenditure->description = $data['description'];
+            $expenditure->reference = Str::uuid();
+            $expenditure->save();
+            //  create transaction
+            $transaction = $expenditure->transaction()->create([
+                'school_id' => getSchool()->id,
+                'academic_session_id' => $data['session'],
+                'term_id' => $data['term'],
+                'staffable_type' => get_class(user()),
+                'staffable_id' => user()->id,
+                'amount' => $data['amount'],
+                'status' => 'confirmed',
+                'reference' => Str::uuid(),
+                'channel' => 'expenditure'
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('staff.finances.expenditures')->with('message', 'Expenditure has been recorded successfully');
         } catch (Exception $e) {
             DB::rollBack();
             dd($e);

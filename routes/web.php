@@ -157,6 +157,13 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                     'transactions',
                     'FinanceManagementController@transactions'
                 )->name('staff.finances.transactions');
+                Route::get(
+                    'transactions/{transaction}',
+                    'FinanceManagementController@showTransactions'
+                )->name('staff.finances.transaction');
+                Route::get('expenditures', 'FinanceManagementController@expenditures')->name('staff.finances.expenditures');
+                Route::get('record-expenditure', 'FinanceManagementController@recordExpenditure')->name('staff.finances.record_expenditure');
+                Route::post('record-expenditure', 'FinanceManagementController@saveExpenditure')->name('staff.finances.save_expenditure');
                 Route::get('fees', 'FinanceManagementController@fees')->name('staff.finances.fees');
                 Route::get('fees/{id}', 'FinanceManagementController@showFee')->name('staff.finances.fee');
                 Route::get('fees/{id}/complete-fees', 'FinanceManagementController@CompleteFee')->name('staff.finances.fee.complete');

@@ -18,7 +18,7 @@ class Expenditure extends Model
 
     public function session()
     {
-        return $this->belongsTo(AcademicSession::class);
+        return $this->belongsTo(AcademicSession::class, 'academic_session_id');
     }
 
     public function staff()
@@ -26,8 +26,8 @@ class Expenditure extends Model
         return $this->morphTo('staffable');
     }
 
-    public function transactable()
+    public function transaction()
     {
-        return $this->morphTo('transactable');
+        return $this->morphOne(Transaction::class, 'transactable');
     }
 }

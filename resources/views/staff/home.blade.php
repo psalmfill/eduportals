@@ -90,5 +90,33 @@
             </div>
 
         </div>
+        <div class="col-sm-3 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Total Expenditures</h4>
+                    <div class="media">
+                        <i class="entypo-gauge icon-lg text-secondary d-flex align-self-start mr-3"></i>
+                        <div class="media-body">
+                            <h2 class="">N{{ $totalExpenditure }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-3 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Total Fees</h4>
+                    <div class="media">
+                        <i class="entypo-gauge icon-lg text-warning d-flex align-self-start mr-3"></i>
+                        <div class="media-body">
+                            <h2 class="">N{{ $totalFee }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 @endsection

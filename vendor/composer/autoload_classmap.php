@@ -34,6 +34,7 @@ return array(
     'App\\Http\\Controllers\\School\\Staff\\CBTController' => $baseDir . '/app/Http/Controllers/School/Staff/CBTController.php',
     'App\\Http\\Controllers\\School\\Staff\\ExamSetupController' => $baseDir . '/app/Http/Controllers/School/Staff/ExamSetupController.php',
     'App\\Http\\Controllers\\School\\Staff\\ExaminationController' => $baseDir . '/app/Http/Controllers/School/Staff/ExaminationController.php',
+    'App\\Http\\Controllers\\School\\Staff\\FinanceManagementController' => $baseDir . '/app/Http/Controllers/School/Staff/FinanceManagementController.php',
     'App\\Http\\Controllers\\School\\Staff\\GradesController' => $baseDir . '/app/Http/Controllers/School/Staff/GradesController.php',
     'App\\Http\\Controllers\\School\\Staff\\HomeController' => $baseDir . '/app/Http/Controllers/School/Staff/HomeController.php',
     'App\\Http\\Controllers\\School\\Staff\\HostelManagementController' => $baseDir . '/app/Http/Controllers/School/Staff/HostelManagementController.php',
