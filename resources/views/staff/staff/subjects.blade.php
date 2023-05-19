@@ -17,7 +17,7 @@
         <li>
             <a href="#">
                 <i class="entypo-users"></i>
-                Classes
+                Assign Subjects
             </a>
         </li>
     </ol>
@@ -26,14 +26,12 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h3>All Classes</h3>
+            <h3>Assign Subject</h3>
             <div class="container-fluid p-3">
                 <div class="row">
                     @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
                         <div class="col-md-4">
                             <div class="well">
-                                <h4 class="margin">Assign Subjects</h4>
-                                <hr>
                                 @isset($currentStaff)
                                     <form action="{{ route('staff.classes.store') }}" method="POST">
                                         @csrf
@@ -141,11 +139,11 @@
                                     @php
                                         $uniqueClasses = $staff
                                             ->school_classes()
-                                            ->wherePivot('school_id', 1)
+                                            ->wherePivot('school_id', getSchool()->id)
                                             ->get();
                                         $staffRowSpan = 0;
                                         $su = $uniqueClasses->sum(function ($c) use ($staff, &$staffRowSpan) {
-                                            $classSections = App\Models\Staff::classSections($staff->id, $c->id, 1);
+                                            $classSections = App\Models\Staff::classSections($staff->id, $c->id, getSchool()->id);
                                             return $classSections->count();
                                         });
                                         $staffRowSpan = $uniqueClasses->count();
@@ -158,7 +156,7 @@
                                                     ->subjects()
                                                     ->wherePivot('school_class_id', $class->id)
                                                     ->get();
-                                                $classSections = App\Models\Staff::classSections($staff->id, $class->id, 1);
+                                                $classSections = App\Models\Staff::classSections($staff->id, $class->id, getSchool()->id);
                                             @endphp
                                             @if ($classSections->count() > 0)
                                                 <td rowspan="{{ $classSections->count() }}">{{ $class->name }}</td>
@@ -174,7 +172,7 @@
                                                     <td>{{ $section->name }} </td>
                                                     <td>
                                                         @foreach ($classSectionSubjects as $sub)
-                                                            {{ $sub->name }},
+                                                            {{ $sub->name }}{{ $loop->index == $classSectionSubjects->count() - 1 ? '' : ',' }}
                                                         @endforeach
                                                     </td>
                                     </tr>
@@ -205,12 +203,10 @@
 
                     url: BASE_URL + "/api/staff/" + staff_id + "/classes",
                 }).done(function(data) {
-                    console.log(data);
                     let html = '<option>Select Class</option>'
                     data.forEach(function(el) {
                         html += '<option value="' + el.id + '">' + el.name + '</option>'
                     })
-                    console.log(html)
 
 
                     $('#class').html(html);
@@ -226,12 +222,10 @@
 
                     url: BASE_URL + "/api/staff/" + staff_id + "/classes/" + class_id + "/sections",
                 }).done(function(data) {
-                    console.log(data);
                     let html = '<option>Select Section</option>'
                     data.forEach(function(el) {
                         html += '<option value="' + el.id + '">' + el.name + '</option>'
                     })
-                    console.log(html)
 
 
                     $('#section').html(html);
@@ -247,7 +241,6 @@
 
                     url: BASE_URL + "/api/classes/" + class_id + "/sections/" + section_id + "/subjects",
                 }).done(function(data) {
-                    console.log(data);
                     let html = ''
                     data.forEach(function(el) {
 
@@ -258,7 +251,6 @@
 
                     })
                     $('#subjects').html(html);
-                    console.log(html)
 
 
                     // show_loading_bar(100);

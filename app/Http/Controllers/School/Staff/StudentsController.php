@@ -436,7 +436,7 @@ class StudentsController extends Controller
             $strcount--;
         }
         $str .= $count;
-        $reg = 'DSS/' . $year . '/' . $str;
+        $reg = 'EDP/' . $year . '/' . $str;
         if (Student::where('reg_no', $reg)->first())
             return $this->generateRegNumber($n + 1);
         return $reg;
