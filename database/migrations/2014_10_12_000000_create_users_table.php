@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
         $user->last_name = 'Super';
         $user->address = 'nil';
         $user->phone_number = 'nil';
-        $user->email = 'admin@dss.com';
+        $user->email = 'admin@eduportals.co';
         $user->role_id = 1;
         $user->password = bcrypt('password');
         $user->save();
