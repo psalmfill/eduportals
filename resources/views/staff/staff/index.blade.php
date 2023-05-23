@@ -51,6 +51,8 @@
             <table class="table table-bordered datatable mt-4" id="table-4">
                 <thead>
                     <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
@@ -61,16 +63,17 @@
                 <tbody>
                     @foreach ($staff as $item)
                         <tr>
-                            <td><img width="50" height="50" class="img-circle" src="{{ asset($item->avatar) }}"
-                                    alt="">
-                                {{ $item->name }}</td>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td><img height="50" class="img-circle" src="{{ asset($item->avatar) }}" alt=""></td>
+                            <td>{{ $item->name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone_number }}</td>
                             <td>{{ $item->address_1 }}</td>
                             <td>
                                 <div class="">
                                     <a href="{{ route('staff.edit', $item->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                    <a href="{{ route('staff.show', $item->id) }}" class="btn btn-secondary btn-sm">View</a>
+                                    <a href="{{ route('staff.show', $item->id) }}"
+                                        class="btn btn-secondary btn-sm">View</a>
                                     <button onclick="$(this).parent().find('form').submit()"
                                         class="btn btn-danger btn-sm">Delete</button>
                                     <form action="{{ route('staff.destroy', $item->id) }}" method="POST">
@@ -86,6 +89,8 @@
                 <tfoot>
 
                     <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>

@@ -14,6 +14,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Image;
 
 class StaffController extends Controller
 {
@@ -70,10 +72,18 @@ class StaffController extends Controller
                 $staff->date_of_birth =  Carbon::createFromDate(date('d/m/Y', strtotime($request->date_of_birth)))->toDateString();
                 $staff->password = bcrypt($request->password);
 
+                $destination = null;
                 //if passport
                 if ($request->has('passport')) {
-                    $path = $request->file('passport')->store('public/avatars');
-                    $staff->image = $path;
+                    $image = $request->file('passport');
+                    $imageName = time() . Str::random() . '.' . $image->getClientOriginalExtension();
+                    $img = Image::make($image->getRealPath());
+                    $img->resize(500, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->encode();
+                    $path = Storage::disk('public')->put('avatars/' . $imageName, $img);
+                    $destination = 'public/avatars/' . $imageName;
+                    $staff->image = $destination;
                 }
                 $staff->save();
                 $uni = $request->university;
@@ -93,6 +103,11 @@ class StaffController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
+            if (isset($destination)) {
+                if (Storage::exists($destination)) {
+                    Storage::delete($destination);
+                }
+            }
             return redirect()->back()->with('error', 'Could not create new Staff ');
         }
 
@@ -148,15 +163,21 @@ class StaffController extends Controller
             $staff->state = $request->state;
             $staff->city = $request->city;
             $staff->email = $request->email;
-            $staff->date_of_birth =  Carbon::createFromDate(date('d/m/Y', strtotime($request->date_of_birth)))->toDateString();
+            $staff->date_of_birth =  Carbon::createFromDate(date('d-m-Y', strtotime($request->date_of_birth)))->toDateString();
 
+            $oldImage = $staff->image;
+            $destination = null;
             //if passport
             if ($request->has('passport')) {
-                if ($staff->image) {
-                    Storage::delete($staff->image);
-                }
-                $path = $request->file('passport')->store('public/avatars');
-                $staff->image = $path;
+                $image = $request->file('passport');
+                $imageName = time() . Str::random() . '.' . $image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode();
+                $path = Storage::disk('public')->put('avatars/' . $imageName, $img);
+                $destination = 'public/avatars/' . $imageName;
+                $staff->image = $destination;
             }
             $staff->save();
             $primary = $staff->qualifications()->where('type', 'primary')->first();
@@ -171,9 +192,18 @@ class StaffController extends Controller
             $pri = $request->primary;
             $primary->update($pri);
 
+            if (Storage::exists($oldImage)) {
+                Storage::delete($oldImage);
+            }
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
+            if (isset($destination)) {
+                if (Storage::exists($destination)) {
+                    Storage::delete($destination);
+                }
+            }
             return redirect()->back()->with('error', 'Could not Update Staff ');
         }
 
@@ -189,9 +219,6 @@ class StaffController extends Controller
     public function destroy($id)
     {
         $staff = Staff::findOrFail($id);
-        // delete staff qualifications
-        // $staff->qualifications()->delete();
-        // $staff->schools()->detach();
         if ($staff->schools()->detach(getSchool()->id)) {
             return redirect()->route('staff.index')->with('message', 'Staff Deleted');
         }

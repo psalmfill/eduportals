@@ -197,6 +197,7 @@
         <script>
             $('#staff').change(function(e) {
                 const staff_id = e.target.value;
+                $('#subjects').html('');
                 // show_loading_bar(65);
                 //fetch class sections
                 $.ajax({
@@ -216,6 +217,7 @@
             $('#class').change(function(e) {
                 const class_id = e.target.value;
                 const staff_id = $('#staff').val();
+                $('#subjects').html('');
                 // show_loading_bar(65);
                 //fetch class sections
                 $.ajax({
@@ -235,6 +237,7 @@
             $('#section').change(function(e) {
                 const class_id = $('#class').val();
                 const section_id = e.target.value;
+                $('#subjects').html('');
                 // show_loading_bar(65);
                 //fetch class sections
                 $.ajax({

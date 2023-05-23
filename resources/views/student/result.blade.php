@@ -145,6 +145,45 @@
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+
+                    <table class="table table-sm  table-bordered datatable dataTable no-footer" id="table-4">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Session</th>
+                                <th>Term</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pins as $item)
+                                <tr>
+                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $item->session ? $item->session->name : '' }}</td>
+                                    <td>{{ $item->exam ? $item->exam->name : '' }}</td>
+                                    <td>
+                                        <form action="{{ route('student.result.fetch') }}" method="POST" class="form">
+                                            @csrf
+                                            <input type="hidden" name="exam_id">
+                                            <input type="hidden" name="session_id">
+                                            <button class="btn btn-primary">View</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @section('page_scripts')
     <script>

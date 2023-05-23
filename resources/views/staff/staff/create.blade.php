@@ -510,19 +510,19 @@
                                     {{-- <input type="file" name="passport" id=""> --}}
                                 </div>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;"
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 100%;"
                                         data-trigger="fileinput">
                                         <img src="http://placehold.it/200x150" alt="...">
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"
-                                        style="max-width: 200px; max-height: 150px"></div>
-                                    <div>
+                                        style="max-width: 200px; max-height: 100%"></div>
+                                    <div class="d-flex justify-content-between">
                                         <span class="btn btn-white btn-file">
                                             <span class="fileinput-new">Select image</span>
                                             <span class="fileinput-exists">Change</span>
                                             <input type="file" name="passport" accept="image/*">
                                         </span>
-                                        <a href="#" class="btn btn-orange fileinput-exists"
+                                        <a href="#" class="btn btn-danger fileinput-exists btn-sm"
                                             data-dismiss="fileinput">Remove</a>
                                     </div>
 

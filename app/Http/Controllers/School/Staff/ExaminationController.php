@@ -411,7 +411,9 @@ class ExaminationController extends Controller
             $sections =  $currentClass->sections;
             $markstore = MarkStore::where('school_class_id', $class_id)
                 ->where('academic_session_id', $session_id)
-                ->where('section_id', $section_id)
+                ->when($currentSection, function ($q, $currentSection) {
+                    return $q->where('section_id', $currentSection->id);
+                })
                 ->where('exam_id', $exam_id)->get();
             $student_ids = $markstore->pluck('student_id')->unique();
             $subject_ids = $markstore->pluck('subject_id')->unique();
@@ -459,9 +461,11 @@ class ExaminationController extends Controller
 
         $sections =  $currentClass->sections;
         $markstore = MarkStore::where('school_class_id', $class_id)
-            ->where('section_id', $section_id)
             ->where('academic_session_id', $session_id)
-            ->where('exam_id', $exam_id)->get();
+            ->where('exam_id', $exam_id)
+            ->when($section_id, function ($q, $section_id) {
+                return $q->where('section_id', $section_id);
+            })->get();
         $student_ids = $markstore->pluck('student_id')->unique();
         $subject_ids = $markstore->pluck('subject_id')->unique();
         $subjects = Subject::find($subject_ids);
@@ -496,15 +500,16 @@ class ExaminationController extends Controller
 
         # calculate Class average
 
-
         $allMarkStoreFromStudents =  MarkStore::where([
             ['exam_id', $exam_id],
-            ['section_id', $section_id],
             ['school_class_id', $class_id],
             ['not_offered', 0],
             ['absent', 0],
             ['academic_session_id', $session_id],
-        ])->get();
+        ])->when($section_id, function ($q, $section_id) {
+            return $q->where('section_id', $section_id);
+        })->get();
+
 
         //pluck out unique id for all the students in class
         $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->unique();

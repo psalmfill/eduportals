@@ -21,4 +21,14 @@ class Pin extends Model
     {
         return Date($this->expiry_date) < now();
     }
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    public function session()
+    {
+        return $this->belongsTo(AcademicSession::class, 'academic_session_id');
+    }
 }

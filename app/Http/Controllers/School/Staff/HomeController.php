@@ -11,6 +11,7 @@ use App\Models\Section;
 use App\Models\Staff;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,8 +26,13 @@ class HomeController extends Controller
             Subject::where('school_id', getSchool()->id)->count();
         $sectionCount = Section::where('school_id', getSchool()->id)->count();
         $classCount = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->count();
-        $totalExpenditure = Expenditure::where('school_id', getSchool()->id)->sum('amount', 0);
-        $totalFee = Fee::where('school_id', getSchool()->id)->sum('amount', 0);
+        $totalExpenditure = Expenditure::where('school_id', getSchool()->id)->count();
+        $totalFee = Fee::where(
+            'school_id',
+            getSchool()->id
+        )->count();
+        $debitTransaction = Transaction::where('school_id', getSchool()->id)->where('type', 'debit')->sum('amount', 0);
+        $creditTransaction = Transaction::where('school_id', getSchool()->id)->where('type', 'credit')->sum('amount', 0);
 
         return view('staff.home', compact(
             'staffCount',
@@ -36,6 +42,8 @@ class HomeController extends Controller
             'sectionCount',
             'totalExpenditure',
             'totalFee',
+            'creditTransaction',
+            'debitTransaction'
         ));
     }
 }

@@ -208,7 +208,7 @@
                                                 <span class="fileinput-exists">Change</span>
                                                 <input type="file" name="passport" accept="image/*">
                                             </span>
-                                            <a href="#" class="btn btn-orange fileinput-exists"
+                                            <a href="#" class="btn btn-danger fileinput-exists"
                                                 data-dismiss="fileinput">Remove</a>
                                         </div>
                                     </div>

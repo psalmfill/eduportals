@@ -37,9 +37,8 @@
                         <tr>
                             <td colspan="2">
                                 {{-- <img src="{{asset('assets/images/member-4.jpg')}}" alt="image" class="img-responsiv img-fluid"> --}}
-                                <img width="200" height="200" class="img-circle"
-                                    src="{{ asset(\Storage::url($staff->image)) }}" alt="image"
-                                    class="img-responsiv img-fluid">
+                                <img height="200" class="img-circle" src="{{ asset(\Storage::url($staff->image)) }}"
+                                    alt="image" class="img-responsiv img-fluid">
                             </td>
                         </tr>
                         <tr>

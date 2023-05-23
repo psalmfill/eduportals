@@ -33,12 +33,13 @@ class ExaminationsController extends Controller
         $exams = Exam::where('school_id', getSchool()->id)->get();
         $resultTypes = [self::STANDARD, self::CUMMULATIVE, self::COMMENT];
         $classes = SchoolClass::where('school_id', getSchool()->id)->get();
-        return view('student.result', compact('exams', 'classes', 'sessions', 'resultTypes'));
+        $pins = Pin::where('school_id', getSchool()->id)->where('student_id', auth()->id())->get();
+        return view('student.result', compact('exams', 'classes', 'sessions', 'resultTypes', 'pins'));
     }
 
     public function getResult(Request $request)
     {
-        $pin = Pin::where('code', $request->pin_code)->first();
+        $pin = Pin::where('code', $request->pin_code)->where('school_id', getSchool()->id)->first();
         if (!$pin) {
             return redirect()->back()->with('error', 'Invalid result checking pin');
         }
@@ -47,9 +48,9 @@ class ExaminationsController extends Controller
             return redirect()->back()->with('error', 'Pin already in use by another student');
         }
 
-        if ($pin->trial == $pin->duration) {
-            return redirect()->back()->with('error', 'You have exceeded number of usage');
-        }
+        // if ($pin->trial == $pin->duration) {
+        //     return redirect()->back()->with('error', 'You have exceeded number of usage');
+        // }
         if ($pin->academic_session_id and $pin->academic_session_id != $request->session) {
             return redirect()->back()->with('error', 'Pin cannot be use for selected session');
         }
@@ -214,13 +215,13 @@ class ExaminationsController extends Controller
                 'section',
                 'generalSettings'
             ));
-            // return $html;
         }
         // increase pin usage
         $pin->update([
             'academic_session_id' => $session->id,
             'exam_id' => $exam->id,
-            'trial' => $pin->trial + 1
+            'trial' => $pin->trial + 1,
+            'student_id' => auth()->id()
         ]);
 
         $pdf->loadHTML($html)->setPaper('a4');

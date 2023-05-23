@@ -3,7 +3,8 @@
          <li class="nav-item">
              <div class="d-flex sidebar-profile">
                  <div class="sidebar-profile-image">
-                     <img src="{{ user()->avatar }}" alt="image">
+
+                     <img src="{{ user()->avatar ?? 'http://placehold.it/200x150' }}" alt="image">
                      <span class="sidebar-status-indicator"></span>
                  </div>
                  <div class="sidebar-profile-name">

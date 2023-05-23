@@ -111,13 +111,7 @@
                         <td>{{ $item->full_name }}</td>
 
                         <td>{!! getClassPosition($markstore, $item->id) !!} </td>
-                        <td>{!! App\Models\MarkStore::getClassPosition(
-                            $exam->id,
-                            $currentSession->id,
-                            $currentClass->id,
-                            $item->id,
-                            $currentSection->id,
-                        ) !!}</td>
+
                         <td>
                             {{ $totalScore ? number_format($totalScore / $subjectsOffered->count(), 2) : '-' }}
                         </td>

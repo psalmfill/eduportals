@@ -127,7 +127,7 @@
                                                 $attend = App\Models\Attendance::where([['school_id', '=', getSchool()->id], ['academic_session_id', '=', $currentSession->id], ['term_id', '=', $currentTerm->id]])
                                                     ->whereMonth('date', date_parse($month)['month'])
                                                     ->first();
-                                                $days = \Carbon\Carbon::createFromDate($attend->date)->daysInMonth;
+                                                $days = \Carbon\Carbon::createFromDate($attend ? $attend->date : strtotime($month))->daysInMonth;
                                             @endphp
 
                                             @for ($i = 1; $i <= $days; $i++)
@@ -150,7 +150,7 @@
                                                     @php
                                                         // $attendance = App\Models\Attendance::studentDayAttendance($item->id, $currentSession->id, $currentTerm->id, $month, $i);
                                                         // dd($attendance);
-                                                        $at = App\Models\Attendance::getAttendance($item->id, date('m/d/Y', strtotime($month . ' ' . $i . ' ' . $attend->created_at->year)));
+                                                        $at = $attend ? App\Models\Attendance::getAttendance($item->id, date('m/d/Y', strtotime($month . ' ' . $i . ' ' . $attend->created_at->year))) : null;
                                                     @endphp
                                                     @if ($at)
                                                         <td

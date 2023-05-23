@@ -41,7 +41,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <select name="session" id="" class="form-control input-lg">
-                                        <option value="">Select Session</option>
+                                        <option>Select Session</option>
                                         @foreach ($sessions as $session)
                                             <option value="{{ $session->id }}"
                                                 {{ isset($currentSession) && $currentSession->id == $session->id ? 'selected' : '' }}>
@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <select name="exam" id="" class="form-control input-lg" required>
 
-                                        <option value="">Select Exam</option>
+                                        <option>Select Exam</option>
                                         @foreach ($exams as $type)
                                             <option value="{{ $type->id }}"
                                                 {{ isset($exam) && $exam->id == $type->id ? 'selected' : '' }}>
@@ -67,7 +67,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <select name="class" id="class" class="form-control input-lg" required>
-                                        <option value="">Select Class</option>
+                                        <option>Select Class</option>
                                         @foreach ($classes as $class)
                                             <option value="{{ $class->id }}"
                                                 {{ isset($currentClass) && $currentClass->id == $class->id ? 'selected' : '' }}>
@@ -78,16 +78,18 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <select name="section" id="section" class="form-control input-lg" required>
+                                    <select name="section" id="section" class="form-control input-lg">
                                         @isset($sections)
+                                            <option value="0">Select Section</option>
+
                                             @foreach ($sections as $sec)
                                                 <option value="{{ $sec->id }}"
-                                                    {{ $sec->id == $currentSection->id ? 'selected' : '' }}>
+                                                    {{ ($currentSection and $sec->id == $currentSection->id) ? 'selected' : '' }}>
                                                     {{ $sec->name }}
                                                 </option>
                                             @endforeach
                                         @else
-                                            <option value="">Select Section</option>
+                                            <option>Select Section</option>
                                         @endisset
                                     </select>
                                 </div>
@@ -204,7 +206,7 @@
                                     'session_id' => $currentSession->id,
                                     'exam_id' => $exam->id,
                                     'class_id' => $currentClass->id,
-                                    'section_id' => $currentSection->id,
+                                    'section_id' => $currentSection ? $currentSection->id : 0,
                                 ]) }}"
                                 class="btn btn-success pull-right ">Download as PDF</a>
 

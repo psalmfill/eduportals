@@ -172,7 +172,7 @@
                                                 <span class="fileinput-exists">Change</span>
                                                 <input type="file" name="passport" accept="image/*">
                                             </span>
-                                            <a href="#" class="btn btn-orange fileinput-exists"
+                                            <a href="#" class="btn btn-danger fileinput-exists"
                                                 data-dismiss="fileinput">Remove</a>
                                         </div>
                                     </div>
@@ -230,14 +230,14 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="reg_no">Reg. No.</label>
                                         <Input class="form-control" name="reg_no" value="{{ $new_reg }}"
                                             type="text" readonly>
 
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </fieldset>
                         <br>

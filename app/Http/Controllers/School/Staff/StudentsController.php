@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Str;
+use Image;
+
 class StudentsController extends Controller
 {
     /**
@@ -57,7 +60,6 @@ class StudentsController extends Controller
     public function create()
     {
         $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
-        $new_reg = $this->generateRegNumber();
         return view('staff.student.create', compact('classes', 'new_reg'));
     }
 
@@ -98,24 +100,37 @@ class StudentsController extends Controller
             $student->address_1 = $request->address_1;
             $student->address_2 = $request->address_2;
             $student->blood_group = $request->blood_group;
-            $student->reg_no = $request->reg_no;
+            $student->reg_no = $this->generateRegNumber();
             $student->genotype = $request->genotype;
             $student->school_class_id = $request->class;
             $student->section_id = $request->section;
-            $student->school_id = request()->route()->school_id;
+            $student->school_id = getSchool()->id;
             $student->active = 1;
 
             $student->parent_id = $parent->id;
             //Perform passport upload
+            $destination = null;
+            //if passport
             if ($request->has('passport')) {
-
-                $path = $request->file('passport')->store('avatars');
-                $student->image = $path;
+                $image = $request->file('passport');
+                $imageName = time() . Str::random() . '.' . $image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode();
+                $path = Storage::disk('public')->put('avatars/' . $imageName, $img);
+                $destination = 'public/avatars/' . $imageName;
+                $student->image = $destination;
             }
             $student->save();
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            if (isset($destination)) {
+                if (Storage::exists($destination)) {
+                    Storage::delete($destination);
+                }
+            }
             return redirect()->route('students.index')->with(
                 'error',
                 'Failed to created Student'
@@ -190,18 +205,32 @@ class StudentsController extends Controller
             $student->school_class_id = $request->class;
             $student->section_id = $request->section;
             $student->active = $request->active ? 1 : 0;
-            //Perform passport upload
+            $oldImage = $student->image;
+            $destination = null;
+            //if passport
             if ($request->has('passport')) {
-                if ($student->image) {
-                    Storage::delete($student->image);
-                }
-                $path = $request->file('passport')->store('public/avatars');
-                $student->image = $path;
+                $image = $request->file('passport');
+                $imageName = time() . Str::random() . '.' . $image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode();
+                $path = Storage::disk('public')->put('avatars/' . $imageName, $img);
+                $destination = 'public/avatars/' . $imageName;
+                $student->image = $destination;
             }
             $student->save();
+            if (Storage::exists($oldImage)) {
+                Storage::delete($oldImage);
+            }
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            if (isset($destination)) {
+                if (Storage::exists($destination)) {
+                    Storage::delete($destination);
+                }
+            }
             return redirect()->back()->with(
                 'error',
                 'Failed to update Student'

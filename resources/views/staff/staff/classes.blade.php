@@ -23,7 +23,7 @@
         <li>
             <a href="#">
                 <i class="entypo-users"></i>
-                Classes
+                Assign Classes
             </a>
         </li>
     </ol>
@@ -33,7 +33,7 @@
     <div class="card">
         <div class="card-body">
 
-            <h3>All Classes</h3>
+            <h3>Assign Classes</h3>
             <div class="container-fluid p-3">
                 <div class="row">
                     <div class="col-md-4">
@@ -68,13 +68,16 @@
                                                         <div class="row">
                                                             @foreach ($class->sections->chunk(2) as $items)
                                                                 @foreach ($items as $item)
-                                                                    <div class="checkbox checkbox-replace">
-                                                                        <input type="checkbox" class="mt-1"
-                                                                            name="sections[{{ $class->id }}][]"
-                                                                            id="section-{{ $item->id }}"
-                                                                            value="{{ $item->id }}"
-                                                                            {{ $classSections->contains($item) ? 'checked' : '' }}>
-                                                                        <label>{{ $item->name }}</label>
+                                                                    <div class="col-md-6">
+                                                                        <div class="checkbox checkbox-replace m-0">
+                                                                            <input type="checkbox" class="mt-1"
+                                                                                name="sections[{{ $class->id }}][]"
+                                                                                id="section-{{ $item->id }}"
+                                                                                value="{{ $item->id }}"
+                                                                                {{ $classSections->contains($item) ? 'checked' : '' }}>
+                                                                            <label class="mr-2">{{ $item->name }}</label>
+                                                                        </div>
+
                                                                     </div>
                                                                 @endforeach
                                                             @endforeach
@@ -120,7 +123,7 @@
                                                                                 name="sections[{{ $class->id }}][]"
                                                                                 id="section-{{ $item->id }}"
                                                                                 value="{{ $item->id }}">
-                                                                            <label>{{ $item->name }}</label>
+                                                                            <label class="mr-1">{{ $item->name }}</label>
                                                                         </span>
                                                                     </div>
                                                                 @endforeach
@@ -169,8 +172,8 @@
 
                                                 <td>
 
-                                                    @foreach (App\Models\Staff::classSections($staff->id, $class->id, getSchool()->id) as $item)
-                                                        {{ $item->name }},
+                                                    @foreach ($classSection = App\Models\Staff::classSections($staff->id, $class->id, getSchool()->id) as $item)
+                                                        {{ $item->name }}{{ $loop->index == $classSection->count() - 1 ? '' : ',' }}
                                                     @endforeach
                                                 </td>
                                                 <td rowspan="{{ $staff->school_classes->unique()->count() }}">
@@ -187,8 +190,8 @@
                                         <td>{{ $class->name }}</td>
                                         <td>
 
-                                            @foreach (App\Models\Staff::classSections($staff->id, $class->id, getSchool()->id) as $item)
-                                                {{ $item->name }},
+                                            @foreach ($classSection = App\Models\Staff::classSections($staff->id, $class->id, getSchool()->id) as $item)
+                                                {{ $item->name }}{{ $loop->index == $classSection->count() - 1 ? '' : ',' }}
                                             @endforeach
                                         </td>
                                         {{-- <td></td> --}}

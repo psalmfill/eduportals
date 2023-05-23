@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -48,5 +49,9 @@ class User extends Authenticatable
     public function children()
     {
         return $this->hasMany(Student::class, 'parent_id');
+    }
+    public function getAvatarAttribute()
+    {
+        return  asset(Storage::url($this->image));
     }
 }

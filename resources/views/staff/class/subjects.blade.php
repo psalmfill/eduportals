@@ -17,7 +17,7 @@
         <li>
             <a href="#">
                 <i class="entypo-users"></i>
-                Classes
+                Classes Subject
             </a>
         </li>
     </ol>

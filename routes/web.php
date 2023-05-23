@@ -100,7 +100,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 Route::match(['POST', 'GET'], 'results', 'ExaminationController@viewResults')->name('staff.results.view');
                 Route::get('result-view', 'ExaminationController@getResult')->name('staff.student-result');
                 Route::get('download-result', 'ExaminationController@downloadResult')->name('staff.download-result');
-                Route::get('results/{session_id}/{exam_id}/{class_id}/{section_id}/download', 'ExaminationController@broadsheetDownload')->name('staff.results.download');
+                Route::get('results/{session_id}/{exam_id}/{class_id}/{section_id?}/download', 'ExaminationController@broadsheetDownload')->name('staff.results.download');
                 Route::match(['POST', 'GET'], 'psychomotor/results', 'ExaminationController@psychomotorResults')->name('staff.examination.psychomotor.result');
                 Route::post('psychomotor/results/store', 'ExaminationController@psychomotorResultsStore')->name('staff.examination.psychomotor.result.store');
                 Route::put('psychomotor/{id}/update', 'ExamSetupController@psychomotorUpdate')

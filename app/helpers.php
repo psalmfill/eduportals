@@ -130,7 +130,6 @@ if (!function_exists('ordinalSuffix')) {
             $student_id,
             $subject_id
         ) {
-
             $allMarkStoreFromStudents = $data->where('not_offered', 0)->where('subject_id', $subject_id);
             $studentIds = $allMarkStoreFromStudents->pluck('student_id')->unique();
             $scores = $studentIds->map(function ($e) use ($allMarkStoreFromStudents) {
