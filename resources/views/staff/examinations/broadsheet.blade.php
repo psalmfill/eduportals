@@ -155,7 +155,7 @@
                                             <th rowspan="">Reg No</th>
                                             <th rowspan="">Name</th>
                                             <th>Total</th>
-                                            <th>Position</th>
+                                            <th>Pos</th>
                                             <th>Student Average</th>
                                             <?php $subCount = $subjects->count(); ?>
                                             @while ($subCount > 0)
