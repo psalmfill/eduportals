@@ -8,12 +8,14 @@
     <title>Document</title>
     <style>
         body {
-            padding: 2px;
-            margin: 2px;
+            padding: 1px;
+            margin: 1px;
+            font-size: 0.5em
         }
 
         #result {
             page-break-after: right;
+            width: 100%;
         }
 
         #result table {
@@ -33,10 +35,9 @@
         #result td,
         #result th {
             font-weight: bold !important;
-            border-top: 1px solid #333;
-            border-right: 1px solid #333;
+            border: 1px solid #333;
             margin: 0;
-            padding: 5px;
+            padding: 2px;
         }
 
         #result table tr:last-child td {
@@ -57,7 +58,7 @@
 <body>
     <div id="result">
 
-        <table class="table table-bordere table-condensed" border="1" id="table-4" style="empty-cells:show">
+        <table class="table table-bordere table-condensed" border="1" id="table-4">
             <thead>
                 <tr>
                     <td class="text-center" colspan="{{ 6 + ($exam->exam_types->count() + 2) * $subjects->count() }}">
@@ -109,6 +110,7 @@
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->reg_no }}</td>
                         <td>{{ $item->full_name }}</td>
+                        <td>{{ $totalScore }}
 
                         <td>{!! getClassPosition($markstore, $item->id) !!} </td>
 

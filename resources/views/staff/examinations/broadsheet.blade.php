@@ -111,6 +111,21 @@
                 <hr>
                 @if ($students->count() > 0)
                     <div class="row">
+                        <script>
+                            jQuery(document).ready(function($) {
+                                var $table4 = jQuery("#table-4");
+
+                                $table4.DataTable({
+                                    dom: 'Bfrtip',
+                                    buttons: [
+                                        'copyHtml5',
+                                        'excelHtml5',
+                                        'csvHtml5',
+                                        // 'pdfHtml5'
+                                    ]
+                                });
+                            });
+                        </script>
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-sm table-bordered table-condensed datatable" id="table-4">
@@ -221,7 +236,7 @@
     @endisset
 @endsection
 @section('page_scripts')
-    {{-- <script src="{{asset('assets/js/datatables/datatables.js')}}"></script> --}}
+    <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
     <script>
         $('#class').change(function(e) {
             const class_id = e.target.value;

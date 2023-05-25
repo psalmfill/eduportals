@@ -29,7 +29,7 @@
             <h3>All Staffs</h3>
             <div class="container-flui d-flex justify-content-end">
 
-                <a href="{{ route('staff.create') }}" class="btn btn-primary pull-right">Create Staff</a>
+                <a href="{{ route('staff.create') }}" class="btn btn-primary pull-right">Add Staff</a>
             </div>
             <br />
             <script type="text/javascript">

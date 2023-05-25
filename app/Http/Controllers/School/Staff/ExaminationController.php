@@ -491,7 +491,7 @@ class ExaminationController extends Controller
 
         ));
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($html)->setPaper('a0', 'portrait')->setOptions(['dpi' => 300]);
+        $pdf->loadHTML($html)->setPaper('a0', 'landscape')->setOptions(['dpi' => 100000]);
         return $pdf->stream();
     }
 
