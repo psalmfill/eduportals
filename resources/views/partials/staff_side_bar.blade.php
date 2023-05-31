@@ -355,7 +355,7 @@
                      </ul>
                  </div>
              </li>
-             <li class="nav-item">
+             {{-- <li class="nav-item">
                  <a class="nav-link" data-toggle="collapse" href="#cbt-basic" aria-expanded="false"
                      aria-controls="cbt-basic">
                      <i class="mdi mdi-phone menu-icon"></i>
@@ -376,7 +376,7 @@
                          </li>
                      </ul>
                  </div>
-             </li>
+             </li> --}}
              <li class="nav-item">
                  <a class="nav-link" data-toggle="collapse" href="#settings-basic" aria-expanded="false"
                      aria-controls="settings-basic">
