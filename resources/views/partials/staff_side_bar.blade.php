@@ -74,12 +74,13 @@
              <div class="collapse" id="student-basic">
 
                  <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('students.index') }}">
-                             <span class="title">All Students</span>
-                         </a>
-                     </li>
+
                      @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('students.index') }}">
+                                 <span class="title">All Students</span>
+                             </a>
+                         </li>
                          <li class="nav-item">
                              <a class="nav-link" href="{{ route('students.create') }}">
                                  <span class="title">Admit Students</span>
@@ -114,54 +115,53 @@
                  </ul>
              </div>
          </li>
-
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#classes-basic" aria-expanded="false"
-                 aria-controls="classes-basic">
-                 <i class="mdi mdi-hospital-building menu-icon"></i>
-                 <span class="menu-title">Classes</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="classes-basic">
-
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('classes.index') }}">
-                             <span class="title">All Classes</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('sections.index') }}">
-                             <span class="title">All Section</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('classes.subjects') }}">
-                             <span class="title">Assign Subjects</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#subjects-basic" aria-expanded="false"
-                 aria-controls="subjects-basic">
-                 <i class="mdi mdi-library-books menu-icon"></i>
-                 <span class="menu-title">Subjects</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="subjects-basic">
-
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('subjects.index') }}">
-                             <span class="title">All Subjects</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
          @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#classes-basic" aria-expanded="false"
+                     aria-controls="classes-basic">
+                     <i class="mdi mdi-hospital-building menu-icon"></i>
+                     <span class="menu-title">Classes</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="classes-basic">
+
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('classes.index') }}">
+                                 <span class="title">All Classes</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('sections.index') }}">
+                                 <span class="title">All Section</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('classes.subjects') }}">
+                                 <span class="title">Assign Subjects</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#subjects-basic" aria-expanded="false"
+                     aria-controls="subjects-basic">
+                     <i class="mdi mdi-library-books menu-icon"></i>
+                     <span class="menu-title">Subjects</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="subjects-basic">
+
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('subjects.index') }}">
+                                 <span class="title">All Subjects</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
              <li class="nav-item">
                  <a class="nav-link" data-toggle="collapse" href="#terms-basic" aria-expanded="false"
                      aria-controls="terms-basic">
@@ -303,102 +303,104 @@
                  </ul>
              </div>
          </li>
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#finance-basic" aria-expanded="false"
-                 aria-controls="finance-basic">
-                 <i class="mdi mdi-cash menu-icon"></i>
-                 <span class="menu-title">Finance Management</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="finance-basic">
+         @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#finance-basic" aria-expanded="false"
+                     aria-controls="finance-basic">
+                     <i class="mdi mdi-cash menu-icon"></i>
+                     <span class="menu-title">Finance Management</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="finance-basic">
 
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.finances.transactions') }}">
-                             <span class="title">Transactions</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.finances.fees') }}">
-                             <span class="title">Fees</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.finances.expenditures') }}">
-                             <span class="title">Expenditures</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#hostels-basic" aria-expanded="false"
-                 aria-controls="hostels-basic">
-                 <i class="mdi mdi-hotel menu-icon"></i>
-                 <span class="menu-title">Hostels Management</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="hostels-basic">
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.finances.transactions') }}">
+                                 <span class="title">Transactions</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.finances.fees') }}">
+                                 <span class="title">Fees</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.finances.expenditures') }}">
+                                 <span class="title">Expenditures</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#hostels-basic" aria-expanded="false"
+                     aria-controls="hostels-basic">
+                     <i class="mdi mdi-hotel menu-icon"></i>
+                     <span class="menu-title">Hostels Management</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="hostels-basic">
 
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.hostels') }}">
-                             <span class="title">Hostels</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('roles.index') }}">
-                             <span class="title">Assign Hostel</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#cbt-basic" aria-expanded="false"
-                 aria-controls="cbt-basic">
-                 <i class="mdi mdi-phone menu-icon"></i>
-                 <span class="menu-title">SMS & Emails</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="cbt-basic">
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.cbt') }}">
-                             <span class="title">SMS</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('staff.hostels') }}">
-                             <span class="title">Emails</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
-         <li class="nav-item">
-             <a class="nav-link" data-toggle="collapse" href="#settings-basic" aria-expanded="false"
-                 aria-controls="settings-basic">
-                 <i class="mdi mdi-settings menu-icon"></i>
-                 <span class="menu-title">Configuration</span>
-                 <i class="typcn typcn-chevron-right menu-arrow"></i>
-             </a>
-             <div class="collapse" id="settings-basic">
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.hostels') }}">
+                                 <span class="title">Hostels</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('roles.index') }}">
+                                 <span class="title">Assign Hostel</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#cbt-basic" aria-expanded="false"
+                     aria-controls="cbt-basic">
+                     <i class="mdi mdi-phone menu-icon"></i>
+                     <span class="menu-title">SMS & Emails</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="cbt-basic">
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.cbt') }}">
+                                 <span class="title">SMS</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.hostels') }}">
+                                 <span class="title">Emails</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#settings-basic" aria-expanded="false"
+                     aria-controls="settings-basic">
+                     <i class="mdi mdi-settings menu-icon"></i>
+                     <span class="menu-title">Configuration</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="settings-basic">
 
-                 <ul class="nav flex-column sub-menu">
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('settings.index') }}">
-                             <span class="title">General Settings</span>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link" href="{{ route('roles.index') }}">
-                             <span class="title">Role</span>
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-         </li>
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('settings.index') }}">
+                                 <span class="title">General Settings</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('roles.index') }}">
+                                 <span class="title">Role</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
+         @endif
          <li class="nav-item">
              <a class="nav-link" href="{{ route('staff.logout') }}">
                  <i class="mdi mdi-logout menu-icon"></i>

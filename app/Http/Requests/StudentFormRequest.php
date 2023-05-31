@@ -38,7 +38,7 @@ class StudentFormRequest extends FormRequest
             'address_1' => 'required|string',
             'class' => 'required|exists:school_classes,id',
             'section' => 'required|exists:sections,id',
-            'reg_no'  => 'required|string',
+            // 'reg_no'  => 'required|string',
             'parent.first_name' => 'required|string|min:3',
             'parent.last_name' => 'required|string|min:3',
             'parent.other_name' => 'string|nullable',

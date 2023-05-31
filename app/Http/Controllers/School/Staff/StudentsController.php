@@ -48,7 +48,7 @@ class StudentsController extends Controller
             $section_id = $section ? $section->id : null;
             return view('staff.students', compact('classes', 'sections', 'students', 'class_id', 'section_id'));
         }
-        $students = Student::where('school_id', getSchool()->id)->get();
+        $students = Student::where('school_id', getSchool()->id)->orderBy('created_at', 'desc')->get();
         return view('staff.students', compact('classes', 'students'));
     }
 
@@ -60,7 +60,7 @@ class StudentsController extends Controller
     public function create()
     {
         $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
-        return view('staff.student.create', compact('classes', 'new_reg'));
+        return view('staff.student.create', compact('classes'));
     }
 
     /**
@@ -131,6 +131,7 @@ class StudentsController extends Controller
                     Storage::delete($destination);
                 }
             }
+
             return redirect()->route('students.index')->with(
                 'error',
                 'Failed to created Student'
@@ -359,9 +360,9 @@ class StudentsController extends Controller
 
             $date = $request->date;
             $currentClass = SchoolClass::findOrFail($request->class);
-            $currentSession = AcademicSession::findOrFail($request->session);
+            $currentSession = AcademicSession::findOrFail(getSettings()->current_session_id);
             $currentSection = Section::findOrFail($request->section);
-            $currentTerm = Term::findOrFail($request->term);
+            $currentTerm = Term::findOrFail(getSettings()->current_term_id);
             $terms = Term::where('school_id', getSchool()->id)->get();
             $sessions = AcademicSession::all();
             $sections = $currentClass->sections;

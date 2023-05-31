@@ -230,6 +230,7 @@
                                     </div>
 
                                 </div>
+                                {{ dd($errors) }}
                                 {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="reg_no">Reg. No.</label>

@@ -22,13 +22,15 @@
     </ol>
 @endsection
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Filter Result</h3>
-            <form action="" method="GET" class="form">
-                {{-- @csrf --}}
-                <div class="row">
-                    <div class="col-md-2">
+    <div class="card bg-dark">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-white">Filter Result</h3>
+                    <form action="" method="GET" class="form">
+                        {{-- @csrf --}}
+                        <div class="row">
+                            {{-- <div class="col-md-2">
                         <div class="form-group">
                             <select name="session" id="" class="form-control input-lg">
                                 <option value="">Select Session</option>
@@ -39,9 +41,9 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="col-md-2">
+                            {{-- <div class="col-md-2">
                         <div class="form-group">
                             <select name="term" id="" class="form-control input-lg">
                                 <option value="">Select Term</option>
@@ -52,59 +54,61 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <select name="class" id="class" class="form-control input-lg" required>
-                                <option value="">Select Class</option>
-                                @foreach ($classes as $class)
-                                    <option value="{{ $class->id }}"
-                                        {{ isset($currentClass) && $currentClass->id == $class->id ? 'selected' : '' }}>
-                                        {{ $class->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <select name="section" id="section" class="form-control input-lg" required>
-                                @isset($sections)
-                                    @foreach ($sections as $sec)
-                                        <option value="{{ $sec->id }}"
-                                            {{ $sec->id == $currentSection->id ? 'selected' : '' }}>{{ $sec->name }}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option value="">Select Section</option>
-                                @endisset
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <input type="date" name="date" placeholder="Select Date"
-                                class="form-control datepicker form-control-sm"
-                                value="{{ old('date_of_birth') ?? request()->date }}" data-start-view="1">
-                            @error('date')
-                                <div>
-                                    <small class="text-danger">{{ $message }}</small>
+                    </div> --}}
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <select name="class" id="class" class="form-control input-lg" required>
+                                        <option value="">Select Class</option>
+                                        @foreach ($classes as $class)
+                                            <option value="{{ $class->id }}"
+                                                {{ isset($currentClass) && $currentClass->id == $class->id ? 'selected' : '' }}>
+                                                {{ $class->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            @enderror
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <select name="section" id="section" class="form-control input-lg" required>
+                                        @isset($sections)
+                                            @foreach ($sections as $sec)
+                                                <option value="{{ $sec->id }}"
+                                                    {{ $sec->id == $currentSection->id ? 'selected' : '' }}>{{ $sec->name }}
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            <option value="">Select Section</option>
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="date" name="date" placeholder="Select Date"
+                                        class="form-control datepicker form-control-sm"
+                                        value="{{ old('date_of_birth') ?? request()->date }}" data-start-view="1">
+                                    @error('date')
+                                        <div>
+                                            <small class="text-danger">{{ $message }}</small>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-block"><i class="entypo-search"></i> Search</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i> Search</button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <div class="card mt-2">
-        <div class="card-body">
 
-            <h2>Attendance</h2>
-            <hr>
-            @isset($students)
+    @isset($students)
+        <div class="card mt-2">
+            <div class="card-body">
+                <h2>Attendance</h2>
+                <hr>
                 @if ($students->count() > 0)
                     <div class="row">
                         <div class="col-md-12">
@@ -166,9 +170,9 @@ $at = App\Models\Attendance::getAttendance($item->id,$date);
                 @else
                     <div class="alert alert-info text-center">No Result Available at the moment.</div>
                 @endif
-            @endisset
+            </div>
         </div>
-    </div>
+    @endisset
 @endsection
 @section('page_scripts')
     <script src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
