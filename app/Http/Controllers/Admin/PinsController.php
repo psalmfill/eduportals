@@ -59,7 +59,6 @@ class PinsController extends Controller
             DB::commit();
             return $pdf->download('pins.pdf');
         } catch (Exception $e) {
-            dd($e);
             DB::rollBack();
             return redirect()->back()->with('error', 'Pins Generation failed');
         }

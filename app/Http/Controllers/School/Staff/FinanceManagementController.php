@@ -196,7 +196,6 @@ class FinanceManagementController extends Controller
             return redirect()->route('staff.finances.expenditures')->with('message', 'Expenditure has been recorded successfully');
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
             return redirect()->back()->with('error', 'Record was not saved');
         }
     }
