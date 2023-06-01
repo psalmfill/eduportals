@@ -55,11 +55,11 @@
                                  <span class="title">Assign Subject</span>
                              </a>
                          </li>
-                         <li class="nav-item">
+                         {{-- <li class="nav-item">
                              <a class="nav-link" href="{{ route('staff.create') }}">
                                  <span class="title">Designations</span>
                              </a>
-                         </li>
+                         </li> --}}
                      </ul>
                  </div>
              </li>
@@ -347,11 +347,11 @@
                                  <span class="title">Hostels</span>
                              </a>
                          </li>
-                         <li class="nav-item">
+                         {{-- <li class="nav-item">
                              <a class="nav-link" href="{{ route('roles.index') }}">
                                  <span class="title">Assign Hostel</span>
                              </a>
-                         </li>
+                         </li> --}}
                      </ul>
                  </div>
              </li>

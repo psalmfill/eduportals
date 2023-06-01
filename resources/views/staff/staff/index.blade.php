@@ -26,7 +26,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h3>All Staffs</h3>
+            <h3>All Staff</h3>
             <div class="container-flui d-flex justify-content-end">
 
                 <a href="{{ route('staff.create') }}" class="btn btn-primary pull-right">Add Staff</a>

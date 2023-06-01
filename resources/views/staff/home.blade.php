@@ -18,7 +18,7 @@
             <div class="col-sm-3 mt-2">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Staffs</h4>
+                        <h4 class="card-title">Staff</h4>
                         <div class="media">
                             <i class="entypo-users icon-lg text-primary d-flex align-self-start mr-3"></i>
                             <div class="media-body">

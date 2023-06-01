@@ -276,7 +276,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="prim_school">School Name</label>
                                         <input class="form-control" name="primary[school]" id="prim_school"
-                                            placeholder="Which school did you attended" value="{{ $primary->school }}" />
+                                            value="{{ $primary->school }}" />
                                         @error('primary.school')
                                             <div>
                                                 <small class="text-danger">{{ $message }}</small>
@@ -341,7 +341,6 @@
                                     <div class="form-group">
                                         <label class="control-label" for="second_school">School Name</label>
                                         <input class="form-control" name="secondary[school]" id="second_school"
-                                            placeholder="Which school did you attended"
                                             value="{{ $secondary->school }}" />
                                         @error('secondary.school')
                                             <div>
@@ -405,7 +404,6 @@
                                     <div class="form-group">
                                         <label class="control-label" for="second_school">School Name</label>
                                         <input class="form-control" name="university[school]" id="second_school"
-                                            placeholder="Which school did you attended"
                                             value="{{ $university->school }}" />
                                         @error('university.school')
                                             <div>
@@ -453,9 +451,9 @@
                                 <label class="control-label">Choose Username</label>
 
                                 <div class="input-group">
-                                    <div class="input-group-addon">
+                                    {{-- <div class="input-group-addon">
                                         <i class="entypo-user"></i>
-                                    </div>
+                                    </div> --}}
 
                                     <input type="text" class="form-control" name="username" id="username"
                                         data-validate="required,minlength[5]"
@@ -492,36 +490,35 @@
 
                                         <label class="control-label" for="second_date_end">Passport</label>
 
-                                        {{-- <input type="file" name="passport" id=""> --}}
-                                    </div>
-                                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 159px;"
-                                            data-trigger="fileinput">
-                                            <img src="{{ $staff->image ? asset($staff->avatar) : 'http://placehold.it/200x150' }}"
-                                                class="h-100" alt="...">
-                                        </div>
-                                        <div class="fileinput-preview fileinput-exists thumbnail"
-                                            style="max-width: 200px; max-height: 150px"></div>
-                                        <div class="d-flex justify-content-between">
-                                            <span class="btn btn-white btn-file">
-                                                <span class="fileinput-new">Select image</span>
-                                                <span class="fileinput-exists">Change</span>
-                                                <input type="file" name="passport" accept="image/*">
-                                            </span>
-                                            <a href="#" class="btn btn-danger fileinput-exists btn-sm"
-                                                data-dismiss="fileinput">Remove</a>
+
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-preview fileinput-exists thumbnail"
+                                                style="max-width: 200px; height: 150px">
+                                                <img src="{{ $staff->image ? asset($staff->avatar) : 'http://placehold.it/200x150' }}"
+                                                    class="h-100" alt="...">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <span class="btn btn-white btn-file">
+                                                    <span class="fileinput-new">Select image</span>
+                                                    <span class="fileinput-exists">Change</span>
+                                                    <input type="file" name="passport" accept="image/*">
+                                                </span>
+                                                <button class="btn btn-danger fileinput-exists btn-sm"
+                                                    data-dismiss="fileinput">Remove</button>
+                                            </div>
+
+                                            @error('passport')
+                                                <div>
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                </div>
+                                            @enderror
                                         </div>
 
-                                        @error('passport')
-                                            <div>
-                                                <small class="text-danger">{{ $message }}</small>
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-2">
-                                <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                <button type="submit" class="btn btn-primary ">Update</button>
                             </div>
 
                         </div>

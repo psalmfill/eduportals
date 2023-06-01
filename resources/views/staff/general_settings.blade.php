@@ -75,13 +75,12 @@
                                         <div class="form-group">
                                             <label for="field-3" class="col-sm-3 control-label">Logo</label>
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail" id="logo-img"
-                                                    style="width: 200px; height: 150px;" data-trigger="fileinput">
+
+                                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                                    style="max-width: 200px; max-height: 100%">
                                                     <img src="{{ asset(\Storage::url($school->logo)) ?? 'http://placehold.it/150x150' }}"
                                                         class="h-100" alt="...">
                                                 </div>
-                                                <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; max-height: 100%"></div>
                                                 <div>
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
@@ -159,14 +158,11 @@
                                             <label class="control-label">Coat of Arm</label>
 
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;"
-                                                    data-trigger="fileinput">
-                                                    {{-- {{dd($generalSettings)}} --}}
+                                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                                    style="max-width: 200px; height: 150px">
                                                     <img src="{{ asset(\Storage::url($generalSettings->coat_of_arm)) ?? 'http://placehold.it/200x150' }}"
                                                         class="h-100" alt="...">
                                                 </div>
-                                                <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; max-height: 150px"></div>
                                                 <div>
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
@@ -186,13 +182,10 @@
 
 
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;"
-                                                    data-trigger="fileinput">
-                                                    <img src="{{ asset(\Storage::url($generalSettings->school_stamp)) ?? 'http://placehold.it/200x150' }}"
-                                                        class="h-100" alt="..." width="100%">
-                                                </div>
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; max-height: 150px"></div>
+                                                    style="max-width: 200px; height: 150px"><img
+                                                        src="{{ asset(\Storage::url($generalSettings->school_stamp)) ?? 'http://placehold.it/200x150' }}"
+                                                        class="h-100" alt="..." width="100%"></div>
                                                 <div>
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
@@ -313,9 +306,4 @@
 @endsection
 @section('page_scripts')
     <script src="{{ asset('assets/js/fileinput.js') }}"></script>
-    <script>
-        $('#logo').on('change', function() {
-            $('#logo-img').hide()
-        })
-    </script>
 @endsection

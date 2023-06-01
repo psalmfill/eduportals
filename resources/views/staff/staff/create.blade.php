@@ -254,8 +254,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="prim_school">School Name</label>
-                                    <input class="form-control" name="primary[school]" id="prim_school"
-                                        placeholder="Which school did you attended" />
+                                    <input class="form-control" name="primary[school]" id="prim_school" />
                                     @error('primary.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -316,8 +315,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="second_school">School Name</label>
-                                    <input class="form-control" name="secondary[school]" id="second_school"
-                                        placeholder="Which school did you attended" />
+                                    <input class="form-control" name="secondary[school]" id="second_school" />
                                     @error('secondary.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -376,8 +374,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="second_school">School Name</label>
-                                    <input class="form-control" name="university[school]" id="second_school"
-                                        placeholder="Which school did you attended" />
+                                    <input class="form-control" name="university[school]" id="second_school" />
                                     @error('university.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -422,9 +419,9 @@
                             <label class="control-label">Choose Username</label>
 
                             <div class="input-group">
-                                <div class="input-group-addon">
+                                {{-- <div class="input-group-addon">
                                     <i class="entypo-user"></i>
-                                </div>
+                                </div> --}}
 
                                 <input type="text" class="form-control" name="username" id="username"
                                     data-validate="required,minlength[5]"
@@ -445,9 +442,9 @@
                                     <label class="control-label">Choose Password</label>
 
                                     <div class="input-group">
-                                        <div class="input-group-addon">
+                                        {{-- <div class="input-group-addon">
                                             <i class="entypo-key"></i>
-                                        </div>
+                                        </div> --}}
 
                                         <input type="password" class="form-control" name="password" id="password"
                                             data-validate="required" placeholder="Enter strong password" />
@@ -465,9 +462,9 @@
                                     <label class="control-label">Repeat Password</label>
 
                                     <div class="input-group">
-                                        <div class="input-group-addon">
+                                        {{-- <div class="input-group-addon">
                                             <i class="entypo-cw"></i>
-                                        </div>
+                                        </div> --}}
 
                                         <input type="password" class="form-control" name="confirm" id="password"
                                             data-validate="required,equalTo[#password]"
@@ -506,38 +503,34 @@
                                 <div class="form-group">
 
                                     <label class="control-label" for="second_date_end">Passport</label>
-
-                                    {{-- <input type="file" name="passport" id=""> --}}
-                                </div>
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 100%;"
-                                        data-trigger="fileinput">
-                                        <img src="http://placehold.it/200x150" alt="...">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail"
-                                        style="max-width: 200px; max-height: 100%"></div>
-                                    <div class="d-flex justify-content-between">
-                                        <span class="btn btn-white btn-file">
-                                            <span class="fileinput-new">Select image</span>
-                                            <span class="fileinput-exists">Change</span>
-                                            <input type="file" name="passport" accept="image/*">
-                                        </span>
-                                        <a href="#" class="btn btn-danger fileinput-exists btn-sm"
-                                            data-dismiss="fileinput">Remove</a>
-                                    </div>
-
-                                    @error('passport')
-                                        <div>
-                                            <small class="text-danger">{{ $message }}</small>
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview fileinput-exists thumbnail"
+                                            style="max-width: 200px;height: 150px">
+                                            <img src="http://placehold.it/200x150" alt="...">
                                         </div>
-                                    @enderror
+                                        <div class="d-flex justify-content-between">
+                                            <span class="btn btn-white btn-file">
+                                                <span class="fileinput-new">Select image</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input type="file" name="passport" accept="image/*">
+                                            </span>
+                                            <button href="#" class="btn btn-danger fileinput-exists btn-sm"
+                                                data-dismiss="fileinput">Remove</button>
+                                        </div>
+
+                                        @error('passport')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Finish Registration</button>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">Finish Registration</button>
                         </div>
-
                     </div>
 
                     {{-- <ul class="pager wizard nav d-flex justify-content-between">

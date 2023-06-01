@@ -52,7 +52,7 @@
                     <form action="{{ route('staff.examination.psychomotor.result') }}" method="POST" class="form">
                         @csrf
                         <div class="row">
-                            <div class="col-md-2">
+                            {{-- <div class="col-md-2">
                                 <div class="form-group">
                                     <select name="session" id="" class="form-control input-lg">
                                         <option value="">Select Session</option>
@@ -63,7 +63,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
+                            <input type="hidden" name="session" value="{{ getSchool()->current_session_id }}" />
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <select name="exam" id="" class="form-control input-lg" required>
