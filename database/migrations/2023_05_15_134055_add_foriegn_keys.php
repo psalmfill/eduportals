@@ -28,7 +28,7 @@ class AddForiegnKeys extends Migration
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('CASCADE');
             $table->foreign('academic_session_id')->references('id')->on('academic_sessions')->onDelete('CASCADE');
             $table->foreign('term_id')->references('id')->on('terms')->onDelete('CASCADE');
-            $table->foreign('school_class_id')->references('id')->on('students')->onDelete('RESTRICT');
+            $table->foreign('school_class_id')->references('id')->on('school_classes')->onDelete('RESTRICT');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('SET NULL');
         });
         Schema::table('question_options', function (Blueprint $table) {

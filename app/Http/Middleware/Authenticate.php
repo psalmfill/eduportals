@@ -32,7 +32,7 @@ class Authenticate extends Middleware
 
 
 
-            return route('login');
+            returnroute('student.login.form', getSchool()->code);
         }
     }
 }

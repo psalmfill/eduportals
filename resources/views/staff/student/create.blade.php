@@ -220,6 +220,11 @@
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('class')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -228,7 +233,11 @@
                                         <select name="section" id="section" class="form-control">
                                         </select>
                                     </div>
-
+                                    @error('section')
+                                        <div>
+                                            <small class="text-danger">{{ $message }}</small>
+                                        </div>
+                                    @enderror
                                 </div>
                                 {{-- <div class="col-md-4">
                                     <div class="form-group">

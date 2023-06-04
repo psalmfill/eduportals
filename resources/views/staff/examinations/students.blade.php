@@ -161,7 +161,8 @@
                         <br>
                         <div class="clearfix"></div>
                         <hr>
-                        @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                        {{-- ALLOW BULK RESULT PRINTING --}}
+                        {{-- @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
                             <div class="d-flex justify-content-around">
                                 <form action="{{ route('staff.download-result') }}" class="form-inline">
                                     <input type="hidden" name="session" value="{{ $currentSession->id }}">
@@ -176,7 +177,7 @@
                                     <button type="submit" class="btn btn-primary btn-sm">Download page Result</button>
                                 </form>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 @else
                     <div class="alert alert-info text-center">No Result Available at the moment.</div>

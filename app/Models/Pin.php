@@ -31,4 +31,13 @@ class Pin extends Model
     {
         return $this->belongsTo(AcademicSession::class, 'academic_session_id');
     }
+
+    public function school_class()
+    {
+        return $this->belongsTo(SchoolClass::class, 'school_class_id');
+    }
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
 }

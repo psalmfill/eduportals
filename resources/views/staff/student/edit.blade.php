@@ -139,6 +139,11 @@
                                                 RhD
                                                 negative (AB-) </option>
                                         </select>
+                                        @error('blood_group')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -154,6 +159,11 @@
                                             <option value="SS" {{ $student->genotype == 'SS' ? 'selected' : '' }}>SS
                                             </option>
                                         </select>
+                                        @error('genotype')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

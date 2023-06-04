@@ -26,8 +26,10 @@ use App\Models\Staff;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use QrCode;
 
 class ExaminationController extends Controller
 {
@@ -224,7 +226,12 @@ class ExaminationController extends Controller
         $class_id = $request->class;
         $student_id = $request->student;
         $session_id = $request->session;
+        $type = $request->type;
+        $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student_id/" . $type;
+        $encryptRs = Crypt::encryptString($rs);
+        $verifyUrl = 'https://' . strtolower(request()->getHost()) . '/result/verify/' . $encryptRs;
 
+        $verifyUrlQrCode = QrCode::format('svg')->size(80)->generate($verifyUrl);
         $classes = SchoolClass::where('school_id', getSchool()->id)
             ->get();
         $currentClass = SchoolClass::find($class_id);
@@ -242,7 +249,7 @@ class ExaminationController extends Controller
 
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
-        if ($request->type == self::COMMENT) {
+        if ($type == self::COMMENT) {
             $results = CommentResult::where([
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
@@ -274,8 +281,8 @@ class ExaminationController extends Controller
                 'remark',
                 'session',
                 'section',
-                'generalSettings'
-
+                'generalSettings',
+                'verifyUrlQrCode',
             ));
         } else {
 
@@ -288,6 +295,7 @@ class ExaminationController extends Controller
                 ['academic_session_id', $session_id],
                 ['section_id', $request->section],
             ])->get();
+            // dd($allMarkStoreFromStudents->take(5));
             if (!$allMarkStoreFromStudents->count()) {
                 return redirect()->back()->with('error', 'No Result Available at the moment');
             }
@@ -312,7 +320,7 @@ class ExaminationController extends Controller
             // ])->get();
 
             //pluck out unique id for all the students in class
-            $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->merge([$student->id])->unique();
+            $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->unique();
 
             //Get all the students total scores
             $scores = $allStudentsId->map(function ($e) use ($allMarkStoreFromStudents, $subjects) {
@@ -381,6 +389,7 @@ class ExaminationController extends Controller
                 'remark',
                 'session',
                 'section',
+                'verifyUrlQrCode',
                 'generalSettings'
             ));
             // return $html;
@@ -952,6 +961,7 @@ class ExaminationController extends Controller
         $class_id = $request->class;
         $session_id = $request->session;
         $section_id = $request->section;
+        $type = $request->type;
         $classes = SchoolClass::where('school_id', getSchool()->id)
             ->get();
         $currentClass = SchoolClass::find($class_id);
@@ -971,7 +981,7 @@ class ExaminationController extends Controller
 
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
-        if ($request->type == self::COMMENT) {
+        if ($type == self::COMMENT) {
             $results = CommentResult::where([
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
@@ -991,9 +1001,17 @@ class ExaminationController extends Controller
                 ->where('school_id', getSchool()->id)->get();
 
             foreach ($students as $student) {
+                $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student->id/" . $type;
+                $encryptRs = Crypt::encryptString($rs);
+
+                $verifyUrl = 'https://' . strtolower(request()->getHost()) . '/result/verify/' . $encryptRs;
+
+                $verifyUrlQrCode =
+                    base64_encode(QrCode::format('svg')->size(80)->generate($verifyUrl));
+
                 $result = $results->where('student_id', $student->id)->get()->groupBy('comment_result_group_id');
                 $remark = $remarks->where('student_id', $student->id)->first();
-                $html .= view('staff.examinations.templates.comment_result_m', compact('student', 'exam', 'session', 'classes', 'currentClass', 'exams', 'sessions', 'grades', 'result', 'remark', 'psychomotor', 'section', 'generalSettings'))->render();
+                $html .= view('staff.examinations.templates.comment_result_m', compact('student', 'exam', 'session', 'classes', 'currentClass', 'exams', 'sessions', 'grades', 'result', 'remark', 'psychomotor', 'section', 'generalSettings', 'verifyUrlQrCode'))->render();
             }
         } else {
 
@@ -1055,6 +1073,13 @@ class ExaminationController extends Controller
             $grades = Grade::where('school_id', getSchool()->id)->get();
 
             foreach ($students as $student) {
+                $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student->id/" . $type;
+                $encryptRs = Crypt::encryptString($rs);
+
+                $verifyUrl = 'https://' . strtolower(request()->getHost()) . '/result/verify/' . $encryptRs;
+
+                $verifyUrlQrCode = base64_encode(QrCode::format('svg')->size(80)->generate($verifyUrl));
+
                 $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
                 $subject_ids = $allMarkStoreFromStudents->pluck('subject_id')->unique();
                 $subjects = Subject::find($subject_ids);
@@ -1091,7 +1116,8 @@ class ExaminationController extends Controller
                     'remark',
                     'session',
                     'section',
-                    'generalSettings'
+                    'generalSettings',
+                    'verifyUrlQrCode'
                 ))->render();
             }
             // return $html;

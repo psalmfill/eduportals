@@ -30,6 +30,8 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 return redirect()->route('student.login');
             });
         });
+        Route::get('result/verify/{code}', 'School\Student\ExaminationsController@verifyResult');
+
         Route::post('staff/login', 'School\Staff\LoginController@authenticate')->name('staff.login');
 
         Route::get('/staff/login', function () {

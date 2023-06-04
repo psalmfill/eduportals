@@ -83,7 +83,7 @@
                     <h3 class="text-white">Select Result</h3>
                     <form action="{{ route('student.result.fetch') }}" method="POST" class="form">
                         @csrf
-                        <input type="hidden" name="student" value="{{ user()->id }}">
+                        <input type="hidden" name="section" value="{{ user()->section_id }}">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -157,21 +157,41 @@
                                 <th>SN</th>
                                 <th>Session</th>
                                 <th>Term</th>
+                                <th>Class</th>
                                 <th>Download</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pins as $item)
+                                {{-- @php
+                                    dd(
+                                        $item,
+                                        $item->update([
+                                            'academic_session_id' => null,
+                                            'exam_id' => null,
+                                            'trial' => 1,
+                                            'student_id' => null,
+                                            'school_class_id' => null,
+                                            'section_id' => null,
+                                            'result_type' => null,
+                                        ]),
+                                    );
+                                @endphp --}}
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $item->session ? $item->session->name : '' }}</td>
                                     <td>{{ $item->exam ? $item->exam->name : '' }}</td>
+                                    <td>{{ $item->school_class ? $item->school_class->name : '' }}</td>
                                     <td>
                                         <form action="{{ route('student.result.fetch') }}" method="POST" class="form">
                                             @csrf
-                                            <input type="hidden" name="exam_id">
-                                            <input type="hidden" name="session_id">
-                                            <button class="btn btn-primary">View</button>
+                                            <input type="hidden" name="pin_code" value="{{ $item->code }}">
+                                            <input type="hidden" name="exam" value="{{ $item->exam_id }}">
+                                            <input type="hidden" name="type" value="{{ $item->result_type }}">
+                                            <input type="hidden" name="session" value="{{ $item->academic_session_id }}">
+                                            <input type="hidden" name="class" value="{{ $item->school_class_id }}">
+                                            <input type="hidden" name="section" value="{{ $item->section_id }}">
+                                            <button class="btn btn-primary">Download</button>
                                         </form>
                                     </td>
 

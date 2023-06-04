@@ -58,7 +58,7 @@ class LoginController extends Controller
     {
         $data = $request->only('reg_no', 'password');
 
-        if ($this->guard('students')->attempt($data)) {
+        if ($this->guard()->attempt($data)) {
 
             return redirect()->intended(route('student.dashboard'));
         }

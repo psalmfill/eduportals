@@ -20,6 +20,8 @@ use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Crypt;
+use QrCode;
 
 class ExaminationsController extends Controller
 {
@@ -37,38 +39,28 @@ class ExaminationsController extends Controller
         return view('student.result', compact('exams', 'classes', 'sessions', 'resultTypes', 'pins'));
     }
 
-    public function getResult(Request $request)
+    public function verifyResult(Request $request, $code)
     {
-        $pin = Pin::where('code', $request->pin_code)->where('school_id', getSchool()->id)->first();
-        if (!$pin) {
-            return redirect()->back()->with('error', 'Invalid result checking pin');
+        $decryptRs = Crypt::decryptString($code);
+        $rs = explode('/', $decryptRs);
+        if (count($rs) != 6) {
+            abort(404);
         }
-
-        if ($pin->student_id != null && $pin->student_id != user()->id) {
-            return redirect()->back()->with('error', 'Pin already in use by another student');
-        }
-
-        // if ($pin->trial == $pin->duration) {
-        //     return redirect()->back()->with('error', 'You have exceeded number of usage');
-        // }
-        if ($pin->academic_session_id and $pin->academic_session_id != $request->session) {
-            return redirect()->back()->with('error', 'Pin cannot be use for selected session');
-        }
-
-        if ($pin->exam_id and $pin->exam_id != $request->exam) {
-            return redirect()->back()->with('error', 'Pin cannot be use for selected exam');
-        }
-
-
         $sessions = AcademicSession::all();
         $generalSettings = GeneralSetting::where('school_id', getSchool()->id)->first();
 
         $exams = Exam::where('school_id', request()->route()->school_id)->with('exam_types')->get();
-        $exam_id = $request->exam;
-        $class_id = $request->class;
-        $student_id = $request->student;
-        $session_id = $request->session;
+        $exam_id = $rs[2];
+        $class_id = $rs[3];
+        $student_id =  $rs[4];
+        $session_id = $rs[1];
+        $type = $rs[5];
+        $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student_id/" . $type;
+        $encryptRs = Crypt::encryptString($rs);
 
+        $verifyUrl = 'https://' . strtolower(request()->getHost()) . '/result/verify/' . $encryptRs;
+
+        $verifyUrlQrCode = QrCode::format('svg')->size(80)->generate($verifyUrl);
         $classes = SchoolClass::where('school_id', getSchool()->id)
             ->get();
         $currentClass = SchoolClass::find($class_id);
@@ -83,7 +75,7 @@ class ExaminationsController extends Controller
 
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
-        if ($request->type == self::COMMENT) {
+        if ($type == self::COMMENT) {
             $results = CommentResult::where([
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
@@ -138,7 +130,7 @@ class ExaminationsController extends Controller
                 ['not_offered', 0],
                 ['absent', 0],
                 ['academic_session_id', $session_id],
-                ['section_id', $section->id . ''],
+                ['section_id', $section->id],
             ])->get();
 
             $result = $allMarkStoreFromStudents->where('student_id', '=', $student_id);
@@ -151,7 +143,7 @@ class ExaminationsController extends Controller
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
             //pluck out unique id for all the students in class
-            $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->merge([$student->id])->unique();
+            $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->unique();
             //Get all the students total scores
             $scores = $allStudentsId->map(function ($e) use ($allMarkStoreFromStudents) {
                 $subject_count =  $allMarkStoreFromStudents->where('student_id', $e)->unique('subject_id')->count();
@@ -196,7 +188,196 @@ class ExaminationsController extends Controller
                 ->where('min_average', '<=', $studentAverage)
                 ->first();
             $grades = Grade::where('school_id', getSchool()->id)->get();
+            $html = view('staff.examinations.templates.standard_result', compact(
+                'classes',
+                'currentClass',
+                'grades',
+                'exam',
+                'student',
+                'subjects',
+                'psychomotor',
+                'total_mark',
+                'total_students',
+                'position',
+                'studentAverage',
+                'classAverage',
+                'remark',
+                'session',
+                'section',
+                'generalSettings',
+                'verifyUrlQrCode',
+            ));
+        }
+        return $html;
+    }
 
+    public function getResult(Request $request)
+    {
+        $pin = Pin::where('code', $request->pin_code)->where('school_id', getSchool()->id)->first();
+        if (!$pin) {
+            return redirect()->back()->with('error', 'Invalid result checking pin');
+        }
+
+        if ($pin->student_id != null && $pin->student_id != user()->id) {
+            return redirect()->back()->with('error', 'Pin already in use by another student');
+        }
+
+        // if ($pin->trial == $pin->duration) {
+        //     return redirect()->back()->with('error', 'You have exceeded number of usage');
+        // }
+        if ($pin->academic_session_id and $pin->academic_session_id != $request->session) {
+            return redirect()->back()->with('error', 'Pin cannot be use for selected session');
+        }
+
+        if ($pin->exam_id and $pin->exam_id != $request->exam) {
+            return redirect()->back()->with('error', 'Pin cannot be use for selected exam');
+        }
+
+
+        $sessions = AcademicSession::all();
+        $generalSettings = GeneralSetting::where('school_id', getSchool()->id)->first();
+
+        $exams = Exam::where('school_id', request()->route()->school_id)->with('exam_types')->get();
+        $exam_id = $request->exam;
+        $class_id = $request->class;
+        $student_id = auth()->id();
+        $session_id = $request->session;
+        $type = $request->type;
+        $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student_id/$type";
+        $encryptRs = Crypt::encryptString($rs);
+
+        $verifyUrl = 'https://' . strtolower(request()->getHost()) . '/result/verify/' .
+            $encryptRs;
+
+        $verifyUrlQrCode = base64_encode(QrCode::format('svg')->size(80)->generate($verifyUrl));
+        $classes = SchoolClass::where('school_id', getSchool()->id)
+            ->get();
+        $currentClass = SchoolClass::find($class_id);
+        $exam = Exam::find($exam_id);
+        $session = AcademicSession::findOrFail($session_id);
+        $section = Section::find($request->section);
+        //student
+        $student = Student::find($student_id);
+
+        $psychomotor = Psychomotor::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
+
+
+        $pdf = App::make('dompdf.wrapper'); //prepare dompdf
+
+        if ($type == self::COMMENT) {
+            $results = CommentResult::where([
+                ['exam_id', $exam_id],
+                ['school_class_id', $class_id],
+                ['student_id', $student_id],
+                ['section_id', $student->section_id],
+                ['academic_session_id', $session_id],
+            ]);
+            $result = $results->get()->groupBy('comment_result_group_id');
+            $grades = CommentResultGrade::where('school_id', request()->route()->school_id)->get();
+
+            $section = Section::find($results->first()->section_id);
+            $remark = CommentResultRemark::where('student_id', $student_id)
+                ->where('exam_id', $exam_id)
+                ->where('school_class_id', $class_id)
+                ->where('academic_session_id', $session_id)
+                ->where('school_id', getSchool()->id)->first();
+
+            $html = view('templates.comment_result', compact(
+                'classes',
+                'currentClass',
+                'grades',
+                'exam',
+                'student',
+                'result',
+                'psychomotor',
+                'remark',
+                'session',
+                'section',
+                'generalSettings',
+                'verifyUrlQrCode',
+
+            ));
+        } else {
+            $res  = MarkStore::where([
+                ['exam_id', $exam_id],
+                ['school_class_id', $class_id],
+                ['student_id', $student_id],
+                ['not_offered', 0],
+                ['absent', 0],
+                ['academic_session_id', $session_id],
+            ])->first();
+            if (!$res) {
+                return redirect()->back()->with('message', 'No Result Available at the moment');
+            }
+            // get the user section
+            $section = Section::find($res->section_id);
+
+
+            //students scores from store
+            $allMarkStoreFromStudents = MarkStore::where([
+                ['exam_id', $exam_id],
+                ['school_class_id', $class_id],
+                ['not_offered', 0],
+                ['absent', 0],
+                ['academic_session_id', $session_id],
+                ['section_id', $section->id],
+            ])->get();
+
+            $result = $allMarkStoreFromStudents->where('student_id', '=', $student_id);
+            if (!$result->count()) {
+                return redirect()->back()->with('message', 'No Result Available at the moment');
+            }
+
+            // get class section subjects
+            $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
+            $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
+
+            //pluck out unique id for all the students in class
+            $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->unique();
+            //Get all the students total scores
+            $scores = $allStudentsId->map(function ($e) use ($allMarkStoreFromStudents) {
+                $subject_count =  $allMarkStoreFromStudents->where('student_id', $e)->unique('subject_id')->count();
+                $score = $allMarkStoreFromStudents->where('student_id', $e)->sum('score');
+                return [
+                    'student_id' => $e, 'score' => $score,
+                    'subject_count' => $subject_count,
+                    'student_average' => '' . $score / $subject_count
+                ];
+            })->sortByDesc('student_average');
+
+            //get Student position in class
+            $scoresGroup = $scores->groupBy('student_average');
+            $position = $scoresGroup->count();
+            $newGroup = [];
+            // remove the grouping score
+            foreach ($scoresGroup as $group) {
+                $newGroup[] = $group;
+            }
+            foreach ($newGroup as $key => $value) {
+                if (strval(collect($value)->pluck('student_id')->search($student_id)) != '') {
+                    $position = $key + 1;
+                }
+            }
+
+            $total_students = $allStudentsId->count();
+
+            //calculate student average
+            $studentAverage = number_format($total_mark / $subjects->count(), 2);
+
+            //calculate class average
+            $classAverage = $this->calculateClassAverage($exam_id, $class_id, $student->section_id, $session_id);
+
+            //get school remarks
+            $remark = ResultRemark::where(
+                [
+                    ['exam_id', $exam_id],
+                    ['school_class_id', $class_id],
+                ]
+            )->orderBy('min_average', 'desc')
+                // ->where('max_average', '<=', floor($studentAverage))
+                ->where('min_average', '<=', $studentAverage)
+                ->first();
+            $grades = Grade::where('school_id', getSchool()->id)->get();
             $html = view('templates.standard_result', compact(
                 'classes',
                 'currentClass',
@@ -213,7 +394,8 @@ class ExaminationsController extends Controller
                 'remark',
                 'session',
                 'section',
-                'generalSettings'
+                'generalSettings',
+                'verifyUrlQrCode',
             ));
         }
         // increase pin usage
@@ -221,8 +403,12 @@ class ExaminationsController extends Controller
             'academic_session_id' => $session->id,
             'exam_id' => $exam->id,
             'trial' => $pin->trial + 1,
-            'student_id' => auth()->id()
+            'student_id' => auth()->id(),
+            'school_class_id' => $class_id,
+            'section_id' => $section->id,
+            'result_type' => $type,
         ]);
+        // return $html;
 
         $pdf->loadHTML($html)->setPaper('a4');
         return $pdf->stream();

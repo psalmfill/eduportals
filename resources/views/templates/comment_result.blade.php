@@ -113,7 +113,6 @@
         .text-bold {
             font-weight: bold;
         }
-
     </style>
 </head>
 
@@ -208,7 +207,7 @@
                             <tr>
                                 <td>{{ $sub->title }}</td>
                                 <td class="text-center">
-                                    {{ App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id,null,$exam->id,$sub->title,$student->id)->grade }}
+                                    {{ App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id)->grade }}
                                 </td>
                             </tr>
                         @endforeach
@@ -257,11 +256,22 @@
             <tr style="border:0px">
                 <td style="border:0;"><img height="50" class="img-responsive"
                         src="{{ $generalSettings->coat_of_arm ? public_path(\Storage::url($generalSettings->coat_of_arm)) : '' }}"
-                        alt="coat of arm"></td>
-                <td style="border:0;width:100%"></td>
-                <td style="border:0;"><img height="50" class="img-responsive"
+                        alt="coat of arm">
+                    <h6>School Stamp</h6>
+
+                </td>
+                <td style="border:0;width:50%;text-align:center">
+                    <img height="50" class="img-responsive"
                         src="{{ $generalSettings->school_stamp ? public_path(\Storage::url($generalSettings->school_stamp)) : '' }}"
-                        alt="stamp"></td>
+                        alt="stamp">
+                    <h6>Headmaster/Principal Signature</h6>
+                </td>
+                <td style="border:0; text-align:right; max-height: 100px; width:50%">
+                    <div>
+                        <h5>Verify Result</h5>
+                        <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
