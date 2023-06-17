@@ -202,14 +202,20 @@ class ExaminationController extends Controller
             $currentSession =  AcademicSession::findOrFail($request->session);
             $currentClass =  SchoolClass::findOrFail($request->class);
             $currentSection =  Section::findOrFail($request->section);
-            $students = Student::where('section_id', $currentSection->id)
-                ->where('school_class_id', $currentClass->id)
-                ->where('school_id', getSchool()->id)->paginate(15);
-            $classes = SchoolClass::where('school_id', getSchool()->id)->get();
             $sections = $currentClass->sections;
             $mark_stores = MarkStore::where('exam_id', $exam->id)
                 ->where('academic_session_id', $currentSession->id)
                 ->where('school_class_id', $currentClass->id)->get();
+            if ($currentSession->id == getSettings()->current_session_id) {
+                $students = Student::where('section_id', $currentSection->id)
+                    ->where('school_class_id', $currentClass->id)
+                    ->where('school_id', getSchool()->id)->paginate(15);
+            } else {
+                $student_ids = $mark_stores->pluck('student_id')->unique();
+                $students = Student::whereIn('id', $student_ids)->paginate(15);
+            }
+            $classes = SchoolClass::where('school_id', getSchool()->id)->get();
+
             return view('staff.examinations.students', compact('sessions', 'exams', 'classes', 'sections', 'students', 'currentClass', 'currentSection', 'exam', 'currentSession', 'mark_stores'));
         }
         $classes = SchoolClass::where('school_id', getSchool()->id)->get();

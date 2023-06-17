@@ -55,6 +55,17 @@ class ExaminationsController extends Controller
         $student_id =  $rs[4];
         $session_id = $rs[1];
         $type = $rs[5];
+
+        $pin = Pin::where([
+            'academic_session_id' => $session_id,
+            'exam_id' => $exam_id,
+            'student_id' =>  $student_id,
+            'school_class_id' => $class_id,
+            'result_type' => $type,
+        ])->first();
+        if (!$pin) {
+            abort(401);
+        }
         $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student_id/" . $type;
         $encryptRs = Crypt::encryptString($rs);
 
