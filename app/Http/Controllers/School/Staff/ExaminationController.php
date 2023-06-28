@@ -4,6 +4,8 @@ namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
+use App\Models\AffectiveTrait;
+use App\Models\AffectiveTraitResult;
 use App\Models\CommentResult;
 use App\Models\CommentResultGrade;
 use App\Models\CommentResultGroup;
@@ -565,7 +567,7 @@ class ExaminationController extends Controller
             $session_id = $request->session;
             $currentClass = SchoolClass::find($class_id);
             $currentSection = Section::find($section_id);
-            $currentSession = AcademicSession::find($session_id);
+            $currentSession = AcademicSession::find(getSettings()->current_session_id);
 
             $sessions = AcademicSession::all();
 
@@ -579,8 +581,16 @@ class ExaminationController extends Controller
             $psychomotor = Psychomotor::where('school_id', getSchool()->id)->with('subjects')->first();
 
             if (!$psychomotor) {
-                return redirect()->route('staff.examination.psychomotor')->with('error', 'You are yet to setup Psychomotor! Do that to upload result.');
+                return redirect()->route('staff.examinations.psychomotors')->with('error', 'You are yet to setup Psychomotor! Do that to upload result.');
             };
+
+            $psychomotorResult = PsychomotorResult::where([
+                ['school_id', getSchool()->id],
+                ['school_class_id', $class_id],
+                ['section_id', $section_id],
+                ['exam_id', $exam_id],
+                ['section_id', $section_id],
+            ])->get();
 
             return view('staff.examinations.psychomotor_results', compact(
                 'exams',
@@ -592,7 +602,8 @@ class ExaminationController extends Controller
                 'currentSection',
                 'currentSession',
                 'psychomotor',
-                'sessions'
+                'sessions',
+                'psychomotorResult'
             ));
         }
         $sessions = AcademicSession::all();
@@ -660,6 +671,129 @@ class ExaminationController extends Controller
             ]
         );
     }
+
+
+    public function affectiveTraitResults(Request $request)
+    {
+        $user = user();
+        if ($user instanceof Staff)
+            $classes = $user->school_classes->unique();
+        else
+            $classes = SchoolClass::where('school_id', getSchool()->id)->get();
+
+        if ($request->getMethod() == 'POST' || $request->query->count()) {
+            $exams = Exam::where('school_id', getSchool()->id)->with('exam_types')->get();
+            $exam_id = $request->exam;
+            $class_id = $request->class;
+            $section_id = $request->section;
+            $session_id = $request->session;
+            $currentClass = SchoolClass::find($class_id);
+            $currentSection = Section::find($section_id);
+            $currentSession = AcademicSession::find(getSettings()->current_session_id);
+
+            $sessions = AcademicSession::all();
+
+            $sections =  $currentClass->sections;
+
+            $students = Student::where('school_id', getSchool()->id)
+                ->where('school_class_id', $class_id)
+                ->where('section_id', $section_id)
+                ->get();
+            $exam = Exam::find($exam_id);
+            $affectiveTrait = AffectiveTrait::where('school_id', getSchool()->id)->with('subjects')->first();
+
+            if (!$affectiveTrait) {
+                return redirect()->route('staff.examinations.affective_traits')->with('error', 'You are yet to setup Affective Trait! Do that to upload result.');
+            };
+
+            $affectiveTraitResult = AffectiveTraitResult::where([
+                ['school_id', getSchool()->id],
+                ['school_class_id', $class_id],
+                ['section_id', $section_id],
+                ['exam_id', $exam_id],
+                ['section_id', $section_id],
+            ])->get();
+
+            return view('staff.examinations.affective_trait_results', compact(
+                'exams',
+                'exam',
+                'students',
+                'classes',
+                'sections',
+                'currentClass',
+                'currentSection',
+                'currentSession',
+                'affectiveTrait',
+                'sessions',
+                'affectiveTraitResult'
+            ));
+        }
+        $sessions = AcademicSession::all();
+        $exams = Exam::where('school_id', getSchool()->id)->get();
+        return view('staff.examinations.affective_trait_results', compact('classes', 'exams', 'sessions'));
+    }
+
+    public function affectiveTraitResultsStore(Request $request)
+    {
+        $class_id = $request->class;
+        $section_id = $request->section;
+        $exam_id = $request->exam;
+        $students = $request->students;
+        $session_id = $request->session;
+
+        foreach ($students as $student_id => $subjects) {
+            foreach ($subjects['subjects'] as $subject_name => $grade) {
+
+                $data = [
+                    'school_id' => request()->route()->school_id,
+                    'school_class_id' => $class_id,
+                    'section_id' => $section_id,
+                    'exam_id' => $exam_id,
+                    'section_id' => $section_id,
+                    'student_id' => $student_id,
+                    'academic_session_id' => $session_id,
+                    'subject' => $subject_name,
+                    'grade' => $grade,
+                    'subject' => $subject_name
+
+                ];
+                //check if result exist already
+                $affectiveTraitResult = AffectiveTraitResult::where([
+                    ['school_id', getSchool()->id],
+                    ['school_class_id', $class_id],
+                    ['section_id', $section_id],
+                    ['exam_id', $exam_id],
+                    ['section_id', $section_id],
+                    ['subject', $subject_name],
+                    ['student_id', $student_id]
+                ])->first();
+
+                if ($affectiveTraitResult) {
+                    $affectiveTraitResult->update([
+                        'grade' => $grade,
+                        'subject' => $subject_name
+                    ]);
+                    continue;
+                } else {
+
+
+                    $affectiveTraitResult = new AffectiveTraitResult($data);
+                    $affectiveTraitResult->save();
+                }
+            }
+        }
+
+        return redirect()->action(
+            'School\Staff\ExaminationController@affectiveTraitResults',
+            [
+                'exam' => $exam_id,
+                'class' => $class_id,
+                'section' => $section_id,
+                'session' => $session_id
+            ]
+        );
+    }
+
 
     public function commentResultSetup()
     {

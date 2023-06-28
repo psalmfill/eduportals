@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="well">
-                            <h4 class="margin">Setup Exam</h4>
+                            <h4 class="margin">Group</h4>
                             <hr>
                             @isset($group)
                                 <form action="{{ route('staff.comment_result.setup_update', $group->id) }}" method="POST">

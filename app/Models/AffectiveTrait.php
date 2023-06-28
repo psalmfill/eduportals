@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Psychomotor extends Model
+class AffectiveTrait extends Model
 {
     protected $guarded = [];
 
     public function subjects()
     {
-        return $this->hasMany(PsychomotorSubject::class);
+        return $this->hasMany(AffectiveTraitSubject::class);
     }
     public function grades()
     {
-        return $this->hasMany(PsychomotorGrade::class);
+        return $this->hasMany(AffectiveTraitGrade::class);
     }
 
     public function school()

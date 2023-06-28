@@ -17,7 +17,7 @@
         <li>
             <a href="#">
                 <i class="entypo-users"></i>
-                Classes
+                Affective Trait
             </a>
         </li>
     </ol>
@@ -27,20 +27,20 @@
     <div class="card">
         <div class="card-body">
 
-            <h3>Pychomotor Setup</h3>
+            <h3>Affective Trait Setup</h3>
             <hr>
             <div class="container">
-                @if ($psychomotor)
-                    <form action="{{ route('staff.examination.psychomotor.update', $psychomotor->id) }}" method="POST"
-                        class="form" style="border:1px solid #eee;padding:2% ">
+                @if ($affectiveTrait)
+                    <form action="{{ route('staff.examination.affectiveTrait.update', $affectiveTrait->id) }}"
+                        method="POST" class="form" style="border:1px solid #eee;padding:2% ">
                         @csrf
                         @method('PUT')
                         <fieldset>
-                            <legend>Psychomotor Title</legend>
+                            <legend>Affective Trait Title</legend>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input value="{{ $psychomotor->title }}" name="title" type="text"
+                                        <input value="{{ $affectiveTrait->title }}" name="title" type="text"
                                             class="form-control input-lg" placeholder="Title" required>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                         <br>
                         <fieldset>
                             <legend>Subjects</legend>
-                            @foreach ($psychomotor->subjects->chunk(2) as $chunk)
+                            @foreach ($affectiveTrait->subjects->chunk(2) as $chunk)
                                 <div class="row">
                                     @foreach ($chunk as $subject)
                                         <div class="col-md-6">
@@ -66,10 +66,10 @@
                         </fieldset>
                         <br>
                         <fieldset>
-                            <legend>Psychomotor Grades</legend>
+                            <legend>affectiveTrait Grades</legend>
                             <div class="row">
                                 <div class="col-md-12">
-                                    @foreach ($psychomotor->grades as $grade)
+                                    @foreach ($affectiveTrait->grades as $grade)
                                         <div class="row">
                                             <div class="col-md-1">
                                                 {{ $loop->index + 1 }}
@@ -98,11 +98,11 @@
             </div>
             </form>
         @else
-            <form action="{{ route('staff.examination.psychomotor') }}" method="POST" class="form"
+            <form action="{{ route('staff.examination.affectiveTrait') }}" method="POST" class="form"
                 style="border:1px solid #eee;padding:2% ">
                 @csrf
                 <fieldset>
-                    <legend>Psychomotor Title</legend>
+                    <legend>Affective Trait Title</legend>
                     <div class="row">
                         <div class="col-md-12">
 
@@ -131,8 +131,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input name="subjects[]" type="text" class="form-control "
-                                        placeholder="Subject subject" required>
+                                    <input name="subjects[]" type="text" class="form-control " placeholder="Subject name"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                 </fieldset>
                 <br>
                 <fieldset>
-                    <legend>Psychomotor Grades</legend>
+                    <legend>Affective Trait Grades</legend>
                     <div class="row">
                         <div class="col-md-12">
                             <?php $count = 0; ?>

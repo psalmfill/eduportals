@@ -83,7 +83,7 @@
                          </li>
                          <li class="nav-item">
                              <a class="nav-link" href="{{ route('students.create') }}">
-                                 <span class="title">Admit Students</span>
+                                 <span class="title">Admit Student</span>
                              </a>
                          </li>
                      @endif
@@ -107,11 +107,11 @@
                              <span class="title">Alumni </span>
                          </a>
                      </li>
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                          <a class="nav-link" href="{{ route('staff.students.alumni') }}">
                              <span class="title">Transfer </span>
                          </a>
-                     </li>
+                     </li> --}}
                  </ul>
              </div>
          </li>
@@ -127,13 +127,13 @@
 
                      <ul class="nav flex-column sub-menu">
                          <li class="nav-item">
-                             <a class="nav-link" href="{{ route('classes.index') }}">
-                                 <span class="title">All Classes</span>
+                             <a class="nav-link" href="{{ route('sections.index') }}">
+                                 <span class="title">All Sections</span>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a class="nav-link" href="{{ route('sections.index') }}">
-                                 <span class="title">All Section</span>
+                             <a class="nav-link" href="{{ route('classes.index') }}">
+                                 <span class="title">All Classes</span>
                              </a>
                          </li>
                          <li class="nav-item">
@@ -258,22 +258,27 @@
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('staff.examination.psychomotor') }}">
-                                             <span class="title">Psychomotor</span>
+                                             <span class="title">Psychomotors</span>
+                                         </a>
+                                     </li>
+                                     <li class="nav-item">
+                                         <a class="nav-link" href="{{ route('staff.examination.affectiveTrait') }}">
+                                             <span class="title">Affective Trait</span>
                                          </a>
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('staff.comment_result.setup') }}">
-                                             <span class="title">Comments Result</span>
+                                             <span class="title">Comment Results</span>
                                          </a>
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('staff.comment_result.grades') }}">
-                                             <span class="title">Comments Result Grades</span>
+                                             <span class="title">Comment Result Grades</span>
                                          </a>
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('staff.result_remarks') }}">
-                                             <span class="title">Result Grades</span>
+                                             <span class="title">Result Grades/Remarks</span>
                                          </a>
                                      </li>
                                      <li class="nav-item">
@@ -293,6 +298,11 @@
                      <li class="nav-item">
                          <a class="nav-link" href="{{ route('staff.examination.psychomotor.result') }}">
                              <span class="title">Psycomotor Results</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ route('staff.examination.affectiveTrait.result') }}">
+                             <span class="title">Affective Trait Results</span>
                          </a>
                      </li>
                      <li class="nav-item">

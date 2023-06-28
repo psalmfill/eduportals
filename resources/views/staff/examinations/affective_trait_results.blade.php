@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="text-white">Filter Results</h3>
-                    <form action="{{ route('staff.examination.psychomotor.result') }}" method="POST" class="form">
+                    <form action="{{ route('staff.examination.affectiveTrait.result') }}" method="POST" class="form">
                         @csrf
                         <div class="row">
                             {{-- <div class="col-md-2">
@@ -121,7 +121,7 @@
         <div class="card">
             <div class="card-body">
                 <h2>Students</h2>
-                <form action="{{ route('staff.examination.psychomotor.result.store') }}" id="result" method="POST">
+                <form action="{{ route('staff.examination.affectiveTrait.result.store') }}" id="result" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -135,22 +135,22 @@
                                         <tr>
                                             <th colspan="3"></th>
                                             <th class="text-center"
-                                                colspan="{{ $psychomotor->subjects->count() + $psychomotor->subjects->count() * $psychomotor->grades->count() }}">
-                                                {{ $psychomotor->title }}</th>
+                                                colspan="{{ $affectiveTrait->subjects->count() + $affectiveTrait->subjects->count() * $affectiveTrait->grades->count() }}">
+                                                {{ $affectiveTrait->title }}</th>
                                         </tr>
                                         <tr>
                                             <th rowspan="2">S/N</th>
                                             <th rowspan="2">Reg No.</th>
                                             <th rowspan="2">Student Name</th>
-                                            @foreach ($psychomotor->subjects as $subject)
-                                                <th class="text-center" colspan="{{ $psychomotor->grades->count() }}">
+                                            @foreach ($affectiveTrait->subjects as $subject)
+                                                <th class="text-center" colspan="{{ $affectiveTrait->grades->count() }}">
                                                     {{ $subject->title }}</th>
                                             @endforeach
                                         </tr>
                                         <tr>
                                             <?php $count = 1; ?>
-                                            @while ($count <= $psychomotor->subjects->count())
-                                                @foreach ($psychomotor->grades as $grade)
+                                            @while ($count <= $affectiveTrait->subjects->count())
+                                                @foreach ($affectiveTrait->grades as $grade)
                                                     <th>{{ $grade->name }}</th>
                                                 @endforeach
 
@@ -164,15 +164,16 @@
                                                 <td class="left-border">{{ $loop->index + 1 }}</td>
                                                 <td>{{ $student->reg_no }}</td>
                                                 <td class="right-border">{{ $student->full_name }}</td>
-                                                @foreach ($psychomotor->subjects as $subject)
-                                                    @foreach ($psychomotor->grades as $grade)
+                                                @foreach ($affectiveTrait->subjects as $subject)
+                                                    @foreach ($affectiveTrait->grades as $grade)
                                                         <td @if ($loop->index == 0) {{ 'class=left-border' }} @endif
-                                                            @if ($loop->index == $psychomotor->grades->count() - 1) {{ 'class=right-border' }} @endif>
+                                                            @if ($loop->index == $affectiveTrait->grades->count() - 1) {{ 'class=right-border' }} @endif>
+
                                                             <input
                                                                 name="students[{{ $student->id }}][subjects][{{ $subject->title }}]"
                                                                 value="{{ $grade->name }}" type="radio"
                                                                 @php
-$result = $psychomotorResult->where('student_id',$student->id)->where('subject',$subject->title)->first();
+$result = $affectiveTraitResult->where('student_id',$student->id)->where('subject',$subject->title)->first();
                                                 
                                                 if($result && $result->grade == $grade->name)
                                                     echo 'checked' @endphp />
@@ -185,6 +186,7 @@ $result = $psychomotorResult->where('student_id',$student->id)->where('subject',
 
                                 </table>
                             </div>
+                            <br>
                             <button class="btn btn-primary btn-lg">Save</button>
                         </div>
                     </div>

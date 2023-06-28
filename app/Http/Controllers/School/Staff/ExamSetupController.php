@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Models\AffectiveTrait;
+use App\Models\AffectiveTraitGrade;
+use App\Models\AffectiveTraitSubject;
 use App\Models\Exam;
 use App\Models\ExamType;
 use App\Models\Psychomotor;
@@ -215,6 +218,73 @@ class ExamSetupController extends Controller
         foreach ($request->grades as $key => $grade) {
             $psychomotorGrade = PsychomotorGrade::find($key);
             $psychomotorGrade->update([
+                'name' => $grade['name'],
+                'remark' => $grade['remark'],
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'Saved');
+    }
+
+    public function affectiveTraits(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            try {
+                DB::beginTransaction();
+                $affectiveTrait = AffectiveTrait::create([
+                    'title' => $request->title,
+                    'school_id' => request()->route()->school_id
+                ]);
+                if ($affectiveTrait) {
+                    //save subjects
+                    foreach ($request->subjects as $subject) {
+                        AffectiveTraitSubject::create([
+                            'title' => $subject,
+                            'school_id' => request()->route()->school_id,
+                            'affective_trait_id' => $affectiveTrait->id
+                        ]);
+                    }
+
+                    foreach ($request->grades as $grade) {
+                        AffectiveTraitGrade::create([
+                            'name' => $grade['name'],
+                            'remark' => $grade['remark'],
+                            'school_id' => request()->route()->school_id,
+                            'affective_trait_id' => $affectiveTrait->id
+                        ]);
+                    }
+                }
+                DB::commit();
+                return redirect()->back()->with('message', 'Saved');
+            } catch (Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Affective Trait Setup failed');
+            }
+        }
+
+        $affectiveTrait = AffectiveTrait::where('school_id', getSchool()->id)->with('subjects')->first();
+
+        return view('staff.examinations.affective_traits', compact('affectiveTrait'));
+    }
+
+
+    public function affectiveTraitUpdate(Request $request, $id)
+    {
+        $psychomotor = AffectiveTrait::findOrFail($id);
+        $psychomotor->update([
+            'title' => $request->title
+        ]);
+
+        foreach ($request->subjects as $key => $subject) {
+            $affectiveTraitSubject = AffectiveTraitSubject::find($key);
+            $affectiveTraitSubject->update([
+                'title' => $subject
+            ]);
+        }
+
+        foreach ($request->grades as $key => $grade) {
+            $affectiveTraitGrade = AffectiveTraitGrade::find($key);
+            $affectiveTraitGrade->update([
                 'name' => $grade['name'],
                 'remark' => $grade['remark'],
             ]);

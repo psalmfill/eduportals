@@ -68,6 +68,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::resource('terms', 'TermController');
             Route::resource('roles', 'RolesController');
             Route::match(['POST', 'GET'], 'psychomotors/setup', 'ExamSetupController@psychomotors')->name('staff.examination.psychomotor');
+            Route::match(['POST', 'GET'], 'affective-trait/setup', 'ExamSetupController@affectiveTraits')->name('staff.examination.affectiveTrait');
             Route::resource('exams-setup', 'ExamSetupController');
             Route::get('students/alumni', 'StudentsController@alumni')->name('staff.students.alumni');
             Route::get('students/trash', 'StudentsController@trash')->name('staff.students.trash');
@@ -107,6 +108,11 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 Route::post('psychomotor/results/store', 'ExaminationController@psychomotorResultsStore')->name('staff.examination.psychomotor.result.store');
                 Route::put('psychomotor/{id}/update', 'ExamSetupController@psychomotorUpdate')
                     ->name('staff.examination.psychomotor.update');
+                Route::match(['POST', 'GET'], 'affective-trait/results', 'ExaminationController@affectiveTraitResults')->name('staff.examination.affectiveTrait.result');
+                Route::post('affective-trait/results/store', 'ExaminationController@affectiveTraitResultsStore')->name('staff.examination.affectiveTrait.result.store');
+                Route::put('affective-trait/{id}/update', 'ExamSetupController@affectiveTraitUpdate')
+                    ->name('staff.examination.affectiveTrait.update');
+
                 Route::get('result-remarks', 'ResultRemarksController@index')->name('staff.result_remarks');
                 Route::post('result-remarks', 'ResultRemarksController@store')->name('staff.result_remarks.store');
                 Route::get('result-remarks/{id}', 'ResultRemarksController@edit')->name('staff.result_remarks.edit');

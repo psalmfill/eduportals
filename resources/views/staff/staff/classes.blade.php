@@ -136,7 +136,7 @@
                                         @endforeach
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-primary btn-block" type="submit">Create</button>
+                                        <button class="btn btn-primary btn-block" type="submit">Assign</button>
                                     </div>
                                 </form>
                             @endisset

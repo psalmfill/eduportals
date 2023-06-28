@@ -20,8 +20,8 @@ class SchoolClassesController extends Controller
      */
     public function index()
     {
-        $school_classes = SchoolClass::where('school_id', request()->route()->school_id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
-        $sections = Section::where('school_id', request()->route()->school_id)->get();
+        $school_classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+        $sections = Section::where('school_id', getSchool()->id)->get();
 
         return view('staff.classes', compact('school_classes', 'sections'));
     }
@@ -47,14 +47,14 @@ class SchoolClassesController extends Controller
         $request->validate([
             'name' => [
                 'required',
-                Rule::unique('school_classes')->where('school_id', request()->route()->school_id)
+                Rule::unique('school_classes')->where('school_id', getSchool()->id)
             ],
             'sections' => 'required|array',
             'sections.*' => 'exists:sections,id'
         ]);
         $class = SchoolClass::create([
             'name' => $request->name,
-            'school_id' => request()->route()->school_id,
+            'school_id' => getSchool()->id,
             'active' => 1
         ]);
         if ($class) {
@@ -83,8 +83,8 @@ class SchoolClassesController extends Controller
      */
     public function edit($id)
     {
-        $school_classes = SchoolClass::where('school_id', request()->route()->school_id)->get();
-        $sections = Section::where('school_id', request()->route()->school_id)->get();
+        $school_classes = SchoolClass::where('school_id', getSchool()->id)->get();
+        $sections = Section::where('school_id', getSchool()->id)->get();
         $school_class = SchoolClass::findOrFail($id);
         return view('staff.classes', compact('school_classes', 'sections', 'school_class'));
     }
@@ -101,7 +101,7 @@ class SchoolClassesController extends Controller
         $request->validate([
             'name' => [
                 'required',
-                Rule::unique('school_classes')->where('school_id', request()->route()->school_id)->ignore($id)
+                Rule::unique('school_classes')->where('school_id', getSchool()->id)->ignore($id)
             ],
             'sections' => 'required|array',
             'sections.*' => 'exists:sections,id'
@@ -150,7 +150,7 @@ class SchoolClassesController extends Controller
 
             $class->subjects()->wherePivot(
                 'school_id',
-                request()->route()->school_id
+                getSchool()->id
             )->wherePivot('section_id', $section)->detach();
 
 
@@ -159,7 +159,7 @@ class SchoolClassesController extends Controller
 
                 $class->subjects()->attach($subject, [
                     'section_id' => $section,
-                    'school_id' => request()->route()->school_id
+                    'school_id' => getSchool()->id
                 ]);
             }
         }

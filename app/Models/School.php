@@ -56,4 +56,14 @@ class School extends Model
     {
         return $this->hasMany(Hostel::class);
     }
+
+    public function psychomotor()
+    {
+        return $this->hasOne(Psychomotor::class);
+    }
+
+    public function affectiveTrait()
+    {
+        return $this->hasOne(AffectiveTrait::class);
+    }
 }

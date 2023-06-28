@@ -26,7 +26,7 @@
     <div class="card">
         <div class="card-body">
             <div class="well well-sm">
-                <h4>Please fill the details to register new staff.</h4>
+                <h4>Please fill the details to register a new staff.</h4>
             </div>
 
             <form id="rootwizard-2" method="post" action="{{ route('staff.store') }}" class="form-wizard validate"
