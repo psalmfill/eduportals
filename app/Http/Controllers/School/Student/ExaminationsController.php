@@ -4,6 +4,8 @@ namespace App\Http\Controllers\School\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
+use App\Models\AffectiveTrait;
+use App\Models\AffectiveTraitResult;
 use App\Models\CommentResult;
 use App\Models\CommentResultGrade;
 use App\Models\CommentResultRemark;
@@ -13,6 +15,7 @@ use App\Models\Grade;
 use App\Models\MarkStore;
 use App\Models\Pin;
 use App\Models\Psychomotor;
+use App\Models\PsychomotorResult;
 use App\Models\ResultRemark;
 use App\Models\SchoolClass;
 use App\Models\Section;
@@ -82,7 +85,17 @@ class ExaminationsController extends Controller
         $student = Student::find($student_id);
 
         $psychomotor = Psychomotor::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
-
+        $affectiveTrait = AffectiveTrait::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
+        $psychomotorResult = PsychomotorResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+        ])->get();
+        $affectiveTraitResult = AffectiveTraitResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+        ])->get();
 
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
@@ -217,6 +230,9 @@ class ExaminationsController extends Controller
                 'section',
                 'generalSettings',
                 'verifyUrlQrCode',
+                'affectiveTrait',
+                'psychomotorResult',
+                'affectiveTraitResult'
             ));
         }
         return $html;
@@ -271,7 +287,17 @@ class ExaminationsController extends Controller
         $student = Student::find($student_id);
 
         $psychomotor = Psychomotor::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
-
+        $affectiveTrait = AffectiveTrait::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
+        $psychomotorResult = PsychomotorResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+        ])->get();
+        $affectiveTraitResult = AffectiveTraitResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+        ])->get();
 
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
@@ -407,6 +433,9 @@ class ExaminationsController extends Controller
                 'section',
                 'generalSettings',
                 'verifyUrlQrCode',
+                'affectiveTrait',
+                'psychomotorResult',
+                'affectiveTraitResult'
             ));
         }
         // increase pin usage

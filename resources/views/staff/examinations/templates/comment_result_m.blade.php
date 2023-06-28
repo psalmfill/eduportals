@@ -9,6 +9,7 @@
         * {
             box-sizing: border-box;
             margin: 0;
+            text-transform: uppercase;
             padding: 0
         }
 
@@ -201,6 +202,65 @@
                 </table>
             </div>
             <div class="col-4">
+                <table class="table">
+                    <tr>
+                        <td style="border-bottom:1px solid #333">Grading</td>
+                        <td style="border-bottom:1px solid #333">Interpretation</td>
+                    </tr>
+                    @foreach ($grades->chunk(2) as $chunk)
+                        @foreach ($chunk as $g)
+                            <tr>
+                                <td>{{ $g->name }} = {{ $g->minimum_score }} - {{ $g->maximum_score }}</td>
+
+                                <td>{{ $g->remark }}</td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                </table>
+                <br>
+                @if ($affectiveTrait)
+                    <table>
+                        <tr>
+                            <td>{{ $affectiveTrait->title }}</td>
+                            <td class="text-center">Scale</td>
+                        </tr>
+                        @foreach ($affectiveTrait->subjects->sortBy('title') as $sub)
+                            <tr>
+                                <td>{{ $sub->title }}</td>
+                                <td class="text-center">
+                                    @php
+                                        // $ps = App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id);
+                                        $ps = $affectiveTraitResult
+                                            ->where('student_id', $student->id)
+                                            ->where('subject', $subject->title)
+                                            ->first();
+                                        
+                                    @endphp
+                                    {{ $ps ? $ps->grade : '-' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                    <br>
+                    <table class="table" id="scale">
+                        <tr>
+                            <td colspan="2" style="border-bottom:1px solid #333">{{ $affectiveTrait->title }} Scale:
+                            </td>
+                        </tr>
+                        @foreach ($affectiveTrait->grades->chunk(2) as $chunk)
+                            <tr>
+                                @foreach ($chunk as $g)
+                                    <td>{{ $g->name }} = {{ $g->remark }}</td>
+                                    @if ($chunk->count() == 1)
+                                        <td></td>
+                                    @endif
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </table>
+
+                @endif
+                <br>
                 @if ($psychomotor)
                     <table>
                         <tr>
@@ -211,7 +271,15 @@
                             <tr>
                                 <td>{{ $sub->title }}</td>
                                 <td class="text-center">
-                                    {{ App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id)->grade }}
+                                    @php
+                                        // $ps = App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id);
+                                        $ps = $psychomotorResult
+                                            ->where('student_id', $student->id)
+                                            ->where('subject', $subject->title)
+                                            ->first();
+                                        
+                                    @endphp
+                                    {{ $ps ? $ps->grade : '-' }}
                                 </td>
                             </tr>
                         @endforeach
@@ -219,7 +287,8 @@
                     <br>
                     <table class="table" id="scale">
                         <tr>
-                            <td colspan="2" style="border-bottom:1px solid #333">Scale:</td>
+                            <td colspan="2" style="border-bottom:1px solid #333">{{ $psychomotor->title }} Scale:
+                            </td>
                         </tr>
                         @foreach ($psychomotor->grades->chunk(2) as $chunk)
                             <tr>

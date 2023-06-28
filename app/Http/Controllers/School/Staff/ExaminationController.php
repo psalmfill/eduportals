@@ -234,6 +234,7 @@ class ExaminationController extends Controller
         $class_id = $request->class;
         $student_id = $request->student;
         $session_id = $request->session;
+        $section_id = $request->section;
         $type = $request->type;
         $rs = getSchool()->id . "/$session_id/$exam_id/$class_id/$student_id/" . $type;
         $encryptRs = Crypt::encryptString($rs);
@@ -253,8 +254,20 @@ class ExaminationController extends Controller
 
 
         $psychomotor = Psychomotor::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
+        $affectiveTrait = AffectiveTrait::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
 
-
+        $psychomotorResult = PsychomotorResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+            ['section_id', $section_id],
+        ])->get();
+        $affectiveTraitResult = AffectiveTraitResult::where([
+            ['school_id', getSchool()->id],
+            ['school_class_id', $class_id],
+            ['exam_id', $exam_id],
+            ['section_id', $section_id],
+        ])->get();
         $pdf = App::make('dompdf.wrapper'); //prepare dompdf
 
         if ($type == self::COMMENT) {
@@ -291,6 +304,9 @@ class ExaminationController extends Controller
                 'section',
                 'generalSettings',
                 'verifyUrlQrCode',
+                'affectiveTrait',
+                'psychomotorResult',
+                'affectiveTraitResult'
             ));
         } else {
 
@@ -398,7 +414,10 @@ class ExaminationController extends Controller
                 'session',
                 'section',
                 'verifyUrlQrCode',
-                'generalSettings'
+                'generalSettings',
+                'affectiveTrait',
+                'psychomotorResult',
+                'affectiveTraitResult'
             ));
             // return $html;
         }
