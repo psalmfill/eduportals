@@ -31,7 +31,7 @@
 
         #result {
 
-            background-image: url({{ getSchool()->logo ? asset(\Storage::url(getSchool()->logo)) : '' }});
+            /* background-image: url({{ getSchool()->logo ? asset(\Storage::url(getSchool()->logo)) : '' }}); */
             background-repeat: no-repeat;
             background-position: center;
             background-color: rgba(255, 255, 255, 0.8);
@@ -216,9 +216,9 @@
                         <tr>
                             <td>{{ $subject->name }}</td>
                             {{-- <td>{{$item->full_name}}</td> --}}
-                            @foreach ($exam->exam_types as $type)
+                            @foreach ($exam->exam_types as $exam_type)
                                 @php
-                                    $mark = App\Models\MarkStore::getMark($exam->id, $type->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
+                                    $mark = App\Models\MarkStore::getMark($exam->id, $exam_type->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
                                     $total += $mark ? $mark->score : 0;
                                     if ($mark) {
                                         $isAbsent = $mark->absent;
@@ -387,6 +387,32 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <div style="width:1000px; margin:0 auto">
+
+        @if (\Session::has('error'))
+            <div style="color: red">
+                {{ \Session::get('error') }}
+            </div>
+        @endif
+        <form action="{{ route('staff.student-result.download') }}" method="POST" class="form">
+            @csrf
+            <input type="hidden" name="session" value="{{ $session->id }}">
+            <input type="hidden" name="class" value="{{ $currentClass->id }}">
+            <input type="hidden" name="section" value="{{ $section->id }}">
+            <input type="hidden" name="exam" value="{{ $exam->id }}">
+            <input type="hidden" name="type" value="{{ $type }}">
+            <input type="hidden" name="student" value="{{ $student->id }}">
+
+            <input type="text" name="pin_code"
+                style="height:40px; padding:10px; width:400px; border:1px solid #eee" placeholder="Enter Pin Code">
+            <button class="btn btn-primary btn-block btn-sm"
+                style="height:40px; padding:10px; width:200px;border:none; color:#fff; background: rgb(0, 102, 255); cursor:pointer">Download
+                Result</button>
+
+        </form>
+        <br>
+        <br>
     </div>
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());

@@ -13,7 +13,7 @@
             box-sizing: border-box;
             margin: 0;
             text-transform: uppercase;
-            font-size: 0.94em;
+            font-size: 0.97em;
             padding: 0;
         }
 
@@ -135,8 +135,8 @@
                         alt="logo">
                 </th>
                 <th style="width:60%">
-                    <div style="position:absolute;top:0;">
-                        <h1>{{ $exam->school->name }}</h1>
+                    <div>
+                        <h1 style="font-size:18px">{{ $exam->school->name }}</h1>
                         <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
                         <p>{{ $exam->school->country }}</p>
                     </div>
@@ -359,7 +359,7 @@
         </table>
         <br>
         <table id="foot-logo" style="width:100%; margin:2px">
-            <tr style="border:0px">
+            <tr style="border:0px;width:25%; text-align:center ">
                 <td style="border:0;"><img height="50" class="img-responsive"
                         src="{{ $generalSettings->coat_of_arm ? public_path(\Storage::url($generalSettings->coat_of_arm)) : '' }}"
                         alt="coat of arm">
@@ -372,7 +372,7 @@
                         alt="stamp">
                     <h6>Headmaster/Principal Signature</h6>
                 </td>
-                <td style="border:0; text-align:right; max-height: 100px; width:50%">
+                <td style="border:0; text-align:center; max-height: 100px; width:25%">
                     <div>
                         <h5>Verify Result</h5>
                         <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">

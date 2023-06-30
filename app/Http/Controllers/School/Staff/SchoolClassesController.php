@@ -135,9 +135,13 @@ class SchoolClassesController extends Controller
 
     public function subjects()
     {
+        $schoolClass = request()->school_class ? SchoolClass::where('id', request()->school_class)->with('sections')->first() : null;
+        $section = request()->school_class ? Section::where('id', request()->section)->first() : null;
+
         $school_classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->with('sections', 'sections.subjects')->orderBy('name', 'asc')->get();
         $subjects = Subject::where('school_id', getSchool()->id)->get();
-        return view('staff.class.subjects', compact('school_classes', 'subjects'));
+        // dd($section->subjects->unique());
+        return view('staff.class.subjects', compact('school_classes', 'subjects', 'schoolClass', 'section'));
     }
 
     public function subjectsAssign(Request $request)

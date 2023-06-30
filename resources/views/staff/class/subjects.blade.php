@@ -63,7 +63,14 @@
                                             <select name="class" id="class" class="form-control">
                                                 <option value="">Select Class</option>
                                                 @foreach ($school_classes as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    <option value="{{ $item->id }}"
+                                                        @isset($schoolClass) 
+                                                            @if ($schoolClass->id == $item->id)
+
+                                                            selected
+                                                            @endif
+                                                        @endisset>
+                                                        {{ $item->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -71,6 +78,13 @@
                                             <label class="control-label">Sections</label>
                                             <select name="sections[]" id="section" class="form-control" multiple>
                                                 <option value="">Select Section</option>
+                                                @if ($schoolClass)
+                                                    @foreach ($schoolClass->sections as $s)
+                                                        <option value="{{ $s->id }}"
+                                                            @if ($section->id == $s->id) selected @endif>
+                                                            {{ $s->name }}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -81,8 +95,8 @@
                                                         <div class="col-md-6">
                                                             <div class="checkbox checkbox-replace">
                                                                 <input type="checkbox" name="subjects[]"
-                                                                    id="subject-{{ $item->id }}"
-                                                                    value="{{ $item->id }}">
+                                                                    id="subject-{{ $item->id }}" value="{{ $item->id }}"
+                                                                    @if ($section->subjects()->wherePivot('school_class_id', $schoolClass->id)->get()->pluck('id')->contains($item->id)) checked @endif>
                                                                 <label>{{ $item->name }}</label>
                                                             </div>
                                                         </div>
@@ -104,8 +118,9 @@
                             <table class="table table-bordered" id="table-4">
                                 <thead class="">
                                     <tr>
-                                        <th>Trade Sections</th>
+                                        <th>Class Sections</th>
                                         <th>Subjects</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,8 +160,13 @@
 
                                                         </td>
                                                     @else
-                                                        <td></td>
+                                                        <td>
+
+                                                        </td>
                                                     @endif
+                                                    <td><a href="{{ route('classes.subjects', ['school_class' => $item->id, 'section' => $section->id]) }}"
+                                                            class="btn btn-secondary btn-sm">Edit</a>
+                                                    </td>
 
                                                 </tr>
                                             @endforeach

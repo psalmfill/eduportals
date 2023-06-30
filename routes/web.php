@@ -101,6 +101,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 Route::post('marks-register/clear-marks', 'ExaminationController@clearMarks')->name('staff.marks_register.clearmarks');
                 Route::match(['POST', 'GET'], 'broadsheet-results', 'ExaminationController@viewBroadsheetResult')->name('staff.broadsheet-results.view');
                 Route::match(['POST', 'GET'], 'results', 'ExaminationController@viewResults')->name('staff.results.view');
+                Route::post('result-download', 'ExaminationController@downloadSingleResult')->name('staff.student-result.download');
                 Route::get('result-view', 'ExaminationController@getResult')->name('staff.student-result');
                 Route::get('download-result', 'ExaminationController@downloadResult')->name('staff.download-result');
                 Route::get('results/{session_id}/{exam_id}/{class_id}/{section_id?}/download', 'ExaminationController@broadsheetDownload')->name('staff.results.download');
