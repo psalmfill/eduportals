@@ -202,32 +202,30 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="other_name">Passport</label>
-                                    </div>
-                                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;"
-                                            data-trigger="fileinput">
-                                            <img src="{{ asset($student->avatar) }}" alt="..."
-                                                class="img-responsive" style="height: 100%">
+                                        <label for="passport">Passport</label>
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-preview fileinput-exists thumbnail"
+                                                style="max-width: 200px; max-height: 150px">
+                                                <img src="{{ $student->image ? asset($student->avatar) : 'http://placehold.it/200x150' }}"
+                                                    class="h-100 w-100" alt="...">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <span class="btn btn-white btn-file">
+                                                    <span class="fileinput-new">Select image</span>
+                                                    <span class="fileinput-exists">Change</span>
+                                                    <input type="file" name="passport" accept="image/*">
+                                                </span>
+                                                <a href="#" class="btn btn-danger fileinput-exists"
+                                                    data-dismiss="fileinput">Remove</a>
+                                            </div>
                                         </div>
-                                        <div class="fileinput-preview fileinput-exists thumbnail"
-                                            style="max-width: 200px; max-height: 150px"></div>
-                                        <div>
-                                            <span class="btn btn-white btn-file">
-                                                <span class="fileinput-new">Select image</span>
-                                                <span class="fileinput-exists">Change</span>
-                                                <input type="file" name="passport" accept="image/*">
-                                            </span>
-                                            <a href="#" class="btn btn-danger fileinput-exists"
-                                                data-dismiss="fileinput">Remove</a>
-                                        </div>
+                                        @error('passport')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
-                                    @error('passport')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
                                 </div>
                             </div>
-                            <div class="row mt-">
+                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="address_1">Address 1</label>

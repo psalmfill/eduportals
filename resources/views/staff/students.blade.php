@@ -108,7 +108,7 @@
                                 <tbody>
                                     @foreach ($students as $item)
                                         <tr class="">
-                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td class="w-10">{{ $loop->index + 1 }}</td>
                                             <td>{{ $item->reg_no }}</td>
                                             <td class="text-center"> <img width="100" height="100"
                                                     src="{{ $item->avatar }}" alt="image" class="img-fluid">

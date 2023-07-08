@@ -15,7 +15,7 @@
     <h3>Academics</h3>
     <div class="row">
         @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Staff</h4>
@@ -29,7 +29,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Students</h4>
@@ -45,7 +45,7 @@
             </div>
         @endif
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-sm-6 col-md-4 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Subjects</h4>
@@ -62,7 +62,7 @@
 
 
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-sm-6 col-md-4 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Classes</h4>
@@ -78,7 +78,7 @@
         </div>
 
 
-        <div class="col-sm-3 mt-2">
+        <div class="col-sm-6 col-md-4 mt-2">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Sections</h4>
@@ -97,7 +97,7 @@
     @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
         <h3 class="mt-3">Finances</h3>
         <div class="row">
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Total Debit Transactions</h4>
@@ -111,7 +111,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Total Credit Transactions</h4>
@@ -125,7 +125,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Total Expenditures</h4>
@@ -139,7 +139,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-3 mt-2">
+            <div class="col-sm-6 col-md-4 mt-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Total Fees</h4>

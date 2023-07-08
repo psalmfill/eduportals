@@ -504,25 +504,21 @@
 
                                     <label class="control-label" for="second_date_end">Passport</label>
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
+
                                         <div class="fileinput-preview fileinput-exists thumbnail"
-                                            style="max-width: 200px;height: 150px">
-                                            <img src="http://placehold.it/200x150" alt="...">
+                                            style="max-width: 200px; max-height: 150px">
+                                            <img src="http://placehold.it/150x150" class="h-100 w-100" alt="...">
                                         </div>
-                                        <div class="d-flex justify-content-between">
+                                        <div>
                                             <span class="btn btn-white btn-file">
                                                 <span class="fileinput-new">Select image</span>
                                                 <span class="fileinput-exists">Change</span>
-                                                <input type="file" name="passport" accept="image/*">
+                                                <input type="file" name="passport" id="passport" accept="image/*">
                                             </span>
-                                            <button href="#" class="btn btn-danger fileinput-exists btn-sm"
-                                                data-dismiss="fileinput">Remove</button>
+                                            <a href="#" class="btn btn-sm btn-danger fileinput-exists"
+                                                data-dismiss="fileinput">Remove</a>
                                         </div>
 
-                                        @error('passport')
-                                            <div>
-                                                <small class="text-danger">{{ $message }}</small>
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
 

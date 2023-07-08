@@ -74,14 +74,14 @@
 
                                         <div class="form-group">
                                             <label for="field-3" class="col-sm-3 control-label">Logo</label>
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" data-provides="fileinput">
 
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; max-height: 100%">
+                                                    style="max-width:200px;max-height: 150px">
                                                     <img src="{{ asset(\Storage::url($school->logo)) ?? 'http://placehold.it/150x150' }}"
-                                                        class="h-100" alt="...">
+                                                        class="h-100 w-100" alt="...">
                                                 </div>
-                                                <div>
+                                                <div class="mt-5">
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
                                                         <span class="fileinput-exists">Change</span>
@@ -153,25 +153,26 @@
 
                                 <hr>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-4">
                                         <div class="form-group">
                                             <label class="control-label">Coat of Arm</label>
-
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; height: 150px">
-                                                    <img src="{{ asset(\Storage::url($generalSettings->coat_of_arm)) ?? 'http://placehold.it/200x150' }}"
-                                                        class="h-100" alt="...">
+                                                    style="max-width: 200px; max-height: 150px">
+                                                    <img src="{{ asset(\Storage::url($generalSettings->coat_of_arm)) ?? 'http://placehold.it/150x150' }}"
+                                                        class="h-100 w-100" alt="...">
                                                 </div>
                                                 <div>
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
                                                         <span class="fileinput-exists">Change</span>
-                                                        <input type="file" name="coat_of_arm" accept="image/*">
+                                                        <input type="file" name="coat_of_arm" id="coat_of_arm"
+                                                            accept="image/*">
                                                     </span>
                                                     <a href="#" class="btn btn-sm btn-danger fileinput-exists"
                                                         data-dismiss="fileinput">Remove</a>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -180,21 +181,24 @@
                                         <div class="form-group">
                                             <label class="control-label">School Stamp</label>
 
-
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
+
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
-                                                    style="max-width: 200px; height: 150px"><img
-                                                        src="{{ asset(\Storage::url($generalSettings->school_stamp)) ?? 'http://placehold.it/200x150' }}"
-                                                        class="h-100" alt="..." width="100%"></div>
+                                                    style="max-width: 200px; max-height: 150px">
+                                                    <img src="{{ asset(\Storage::url($generalSettings->school_stamp)) ?? 'http://placehold.it/150x150' }}"
+                                                        class="h-100 w-100" alt="...">
+                                                </div>
                                                 <div>
                                                     <span class="btn btn-white btn-file">
                                                         <span class="fileinput-new">Select image</span>
                                                         <span class="fileinput-exists">Change</span>
-                                                        <input type="file" name="stamp" accept="image/*">
+                                                        <input type="file" name="stamp" id="stamp"
+                                                            accept="image/*">
                                                     </span>
                                                     <a href="#" class="btn btn-sm btn-danger fileinput-exists"
                                                         data-dismiss="fileinput">Remove</a>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

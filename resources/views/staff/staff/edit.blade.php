@@ -488,14 +488,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <label class="control-label" for="second_date_end">Passport</label>
-
-
+                                        <label class="control-label" for="passport">Passport</label>
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"
-                                                style="max-width: 200px; height: 150px">
+                                                style="max-width: 200px; max-height: 150px">
                                                 <img src="{{ $staff->image ? asset($staff->avatar) : 'http://placehold.it/200x150' }}"
-                                                    class="h-100" alt="...">
+                                                    class="h-100 w-100" alt="...">
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <span class="btn btn-white btn-file">
@@ -506,14 +504,13 @@
                                                 <button class="btn btn-danger fileinput-exists btn-sm"
                                                     data-dismiss="fileinput">Remove</button>
                                             </div>
-
-                                            @error('passport')
-                                                <div>
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                </div>
-                                            @enderror
                                         </div>
 
+                                        @error('passport')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
