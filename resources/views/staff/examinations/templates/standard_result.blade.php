@@ -404,7 +404,8 @@
             <input type="hidden" name="type" value="{{ $type }}">
             <input type="hidden" name="student" value="{{ $student->id }}">
 
-            <input type="text" name="pin_code"
+            <input type="{{ isset($pin)?'hidden': 'text' }}" name="pin_code" 
+            value="{{ isset($pin)?$pin->code: '' }}"
                 style="height:40px; padding:10px; width:400px; border:1px solid #eee" placeholder="Enter Pin Code">
             <button class="btn btn-primary btn-block btn-sm"
                 style="height:40px; padding:10px; width:200px;border:none; color:#fff; background: rgb(0, 102, 255); cursor:pointer">Download

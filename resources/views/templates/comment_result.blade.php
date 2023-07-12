@@ -322,20 +322,20 @@
         </table>
         <br>
         <table id="foot-logo" style="width:100%; margin:2px">
-            <tr style="border:0px">
-                <td style="border:0;"><img height="50" class="img-responsive"
+            <tr style="border:none">
+                <td style="border:none;"><img height="50" class="img-responsive"
                         src="{{ $generalSettings->coat_of_arm ? public_path(\Storage::url($generalSettings->coat_of_arm)) : '' }}"
                         alt="coat of arm">
                     <h6>School Stamp</h6>
 
                 </td>
-                <td style="border:0;width:50%;text-align:center">
+                <td style="border:none;width:50%;text-align:center">
                     <img height="50" class="img-responsive"
                         src="{{ $generalSettings->school_stamp ? public_path(\Storage::url($generalSettings->school_stamp)) : '' }}"
                         alt="stamp">
                     <h6>Headmaster/Principal Signature</h6>
                 </td>
-                <td style="border:0; text-align:right; max-height: 100px; width:50%">
+                <td style="border:none; text-align:right; max-height: 100px; width:50%">
                     <div>
                         <h5>Verify Result</h5>
                         <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">

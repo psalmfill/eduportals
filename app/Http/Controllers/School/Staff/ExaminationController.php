@@ -250,9 +250,13 @@ class ExaminationController extends Controller
 
         //student
         $student = Student::find($student_id);
-
-
-
+        $pin = Pin::where([
+            'academic_session_id' => $session_id,
+            'exam_id' => $exam_id,
+            'student_id' =>  $student_id,
+            'school_class_id' => $class_id,
+            'result_type' => $type,
+        ])->first();
 
         $psychomotor = Psychomotor::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
         $affectiveTrait = AffectiveTrait::where('school_id', request()->route()->school_id)->with('subjects', 'grades')->first();
@@ -309,6 +313,7 @@ class ExaminationController extends Controller
                 'psychomotorResult',
                 'affectiveTraitResult',
                 'type',
+                'pin',
             ));
         } else {
 
@@ -421,6 +426,7 @@ class ExaminationController extends Controller
                 'psychomotorResult',
                 'type',
                 'affectiveTraitResult',
+                'pin'
             ));
             // return $html;
         }

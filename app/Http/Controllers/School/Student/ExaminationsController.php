@@ -128,7 +128,8 @@ class ExaminationsController extends Controller
                 'remark',
                 'session',
                 'section',
-                'generalSettings'
+                'generalSettings',
+                'pin'
 
             ));
         } else {
@@ -232,7 +233,8 @@ class ExaminationsController extends Controller
                 'verifyUrlQrCode',
                 'affectiveTrait',
                 'psychomotorResult',
-                'affectiveTraitResult'
+                'affectiveTraitResult',
+                'pin'
             ));
         }
         return $html;
