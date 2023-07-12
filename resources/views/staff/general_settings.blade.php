@@ -78,7 +78,7 @@
 
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
                                                     style="max-width:200px;max-height: 150px">
-                                                    <img src="{{ asset(\Storage::url($school->logo)) ?? 'http://placehold.it/150x150' }}"
+                                                    <img src="{{ $school->logo ? asset(\Storage::url($school->logo)) : 'http://placehold.it/150x150' }}"
                                                         class="h-100 w-100" alt="...">
                                                 </div>
                                                 <div class="mt-5">
@@ -159,7 +159,7 @@
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
                                                     style="max-width: 200px; max-height: 150px">
-                                                    <img src="{{ asset(\Storage::url($generalSettings->coat_of_arm)) ?? 'http://placehold.it/150x150' }}"
+                                                    <img src="{{ $generalSettings->coat_of_arm ? asset(\Storage::url($generalSettings->coat_of_arm)) : 'http://placehold.it/150x150' }}"
                                                         class="h-100 w-100" alt="...">
                                                 </div>
                                                 <div>
@@ -193,6 +193,33 @@
                                                         <span class="fileinput-new">Select image</span>
                                                         <span class="fileinput-exists">Change</span>
                                                         <input type="file" name="stamp" id="stamp"
+                                                            accept="image/*">
+                                                    </span>
+                                                    <a href="#" class="btn btn-sm btn-danger fileinput-exists"
+                                                        data-dismiss="fileinput">Remove</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label class="control-label">Backdrop Image</label>
+
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+
+                                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                                    style="max-width: 200px; max-height: 150px">
+                                                    <img src="{{ $generalSettings->backdrop_image ? asset(\Storage::url($generalSettings->backdrop_image)) : 'http://placehold.it/150x150' }}"
+                                                        class="h-100 w-100" alt="...">
+                                                </div>
+                                                <div>
+                                                    <span class="btn btn-white btn-file">
+                                                        <span class="fileinput-new">Select image</span>
+                                                        <span class="fileinput-exists">Change</span>
+                                                        <input type="file" name="backdrop_image" id="backdrop_image"
                                                             accept="image/*">
                                                     </span>
                                                     <a href="#" class="btn btn-sm btn-danger fileinput-exists"

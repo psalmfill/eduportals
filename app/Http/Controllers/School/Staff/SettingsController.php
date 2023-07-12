@@ -4,8 +4,12 @@ namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Image;
 
 class SettingsController extends Controller
 {
@@ -23,43 +27,94 @@ class SettingsController extends Controller
 
     public function saveSettings(Request $request)
     {
-        $generalSettings = GeneralSetting::where('school_id', getSchool()->id)->first();
-        $school = getSchool();
-        $school->address = $request->address;
-        $school->email = $request->email;
-        $school->phone_number = $request->phone_number;
-        $school->name = $request->name;
+        try {
+            DB::beginTransaction();
 
-        if ($request->logo) {
-            //delete old logo if any
-            if ($school->logo) {
-                Storage::delete($school->logo);
-            }
-            $path = $request->file('logo')->store('public/images');
-            $school->logo = $path;
-        }
-        if ($request->coat_of_arm) {
-            //delete old coat_of_arm if any
-            if ($generalSettings->coat_of_arm) {
-                Storage::delete($generalSettings->coat_of_arm);
-            }
-            $path = $request->file('coat_of_arm')->store('public/images');
-            $generalSettings->coat_of_arm = $path;
-        }
-        if ($request->stamp) {
-            //delete old logo if any
-            if ($generalSettings->school_stamp) {
-                Storage::delete($generalSettings->school_stamp);
-            }
-            $path = $request->file('stamp')->store('public/images');
-            $generalSettings->school_stamp = $path;
-        }
-        $generalSettings->current_session_id = $request->current_session;
-        $generalSettings->current_term_id =$request->current_term;
-        $generalSettings->date_format = $request->date_format;
+            $generalSettings = GeneralSetting::where('school_id', getSchool()->id)->first();
+            $school = getSchool();
+            $school->address = $request->address;
+            $school->email = $request->email;
+            $school->phone_number = $request->phone_number;
+            $school->name = $request->name;
 
-        $school->save();
-        $generalSettings->save();
-        return redirect()->back()->with('message', 'Setting Saved');
+            if ($request->logo) {
+                //delete old logo if any
+                if ($school->logo) {
+                    Storage::delete($school->logo);
+                }
+                $logoDestination = $request->file('logo')->store('public/images');
+                $school->logo = $logoDestination;
+            }
+            if ($request->coat_of_arm) {
+                //delete old coat_of_arm if any
+                if ($generalSettings->coat_of_arm) {
+                    Storage::delete($generalSettings->coat_of_arm);
+                }
+                $coatOfArmDestination = $request->file('coat_of_arm')->store('public/images');
+                $generalSettings->coat_of_arm = $coatOfArmDestination;
+            }
+            if ($request->stamp) {
+                //delete old logo if any
+                if ($generalSettings->school_stamp) {
+                    Storage::delete($generalSettings->school_stamp);
+                }
+                $stampDestination = $request->file('stamp')->store('public/images');
+                $generalSettings->school_stamp = $stampDestination;
+            }
+            $oldSchoolBackdropImage = null;
+            $backdropImageDestination = null;
+
+            if ($request->backdrop_image) {
+                $oldSchoolBackdropImage = $generalSettings->backdrop_image;
+                $backdropImage = $request->file('backdrop_image');
+                $backdropImageName = time() . Str::random() . '.' . $backdropImage->getClientOriginalExtension();
+                $backdrop_image = Image::make($backdropImage->getRealPath());
+                $backdrop_image->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode();
+                $path = Storage::disk('public')->put('images/' . $backdropImageName, $backdrop_image);
+                $backdropImageDestination = 'public/images/' . $backdropImageName;
+                $generalSettings->backdrop_image = $backdropImageDestination;
+            }
+
+            $generalSettings->current_session_id = $request->current_session;
+            $generalSettings->current_term_id = $request->current_term;
+            $generalSettings->date_format = $request->date_format;
+
+            $school->save();
+            $generalSettings->save();
+            // delete the old images
+
+            if ($oldSchoolBackdropImage and Storage::exists($oldSchoolBackdropImage)) {
+                Storage::delete($oldSchoolBackdropImage);
+            }
+            DB::commit();
+
+            return redirect()->back()->with('message', 'Setting Saved');
+        } catch (Exception $e) {
+            DB::rollback();
+            if (isset($logoDestination)) {
+                if (Storage::exists($logoDestination)) {
+                    Storage::delete($logoDestination);
+                }
+            }
+            if (isset($coatOfArmDestination)) {
+                if (Storage::exists($coatOfArmDestination)) {
+                    Storage::delete($coatOfArmDestination);
+                }
+            }
+            if (isset($stampDestination)) {
+                if (Storage::exists($stampDestination)) {
+                    Storage::delete($stampDestination);
+                }
+            }
+            if (isset($backdropImageDestination)) {
+                if (Storage::exists($backdropImageDestination)) {
+                    Storage::delete($backdropImageDestination);
+                }
+            }
+            dd($e);
+            return redirect()->back()->with('error', 'Could not Update Settings ');
+        }
     }
 }

@@ -165,10 +165,11 @@ class StaffController extends Controller
             $staff->email = $request->email;
             $staff->date_of_birth =  Carbon::createFromDate(date('d-m-Y', strtotime($request->date_of_birth)))->toDateString();
 
-            $oldImage = $staff->image;
+            $oldImage = null;
             $destination = null;
             //if passport
             if ($request->has('passport')) {
+                $oldImage = $staff->image;
                 $image = $request->file('passport');
                 $imageName = time() . Str::random() . '.' . $image->getClientOriginalExtension();
                 $img = Image::make($image->getRealPath());
@@ -192,7 +193,7 @@ class StaffController extends Controller
             $pri = $request->primary;
             $primary->update($pri);
 
-            if (Storage::exists($oldImage)) {
+            if ($oldImage and Storage::exists($oldImage)) {
                 Storage::delete($oldImage);
             }
 

@@ -21,6 +21,13 @@
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+    <style>
+        .content-wrapper {
+            background-size: cover;
+            background-image: url({{ asset(\Storage::url(getSettings()->backdrop_image)) }}) !important;
+
+        }
+    </style>
 </head>
 
 <body>
