@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class School extends Model
 {
@@ -65,5 +66,10 @@ class School extends Model
     public function affectiveTrait()
     {
         return $this->hasOne(AffectiveTrait::class);
+    }
+
+    public function getImageAttribute()
+    {
+        return asset(Storage::url($this->logo));
     }
 }

@@ -30,11 +30,11 @@
                 <div class="row w-100 mx-0">
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                            <div class="brand-logo">
+                            {{-- <div class="brand-logo">
                                 <img src="{{ asset('images/logo.svg') }}" alt="logo">
                             </div>
                             <h4>Hello! let's get started</h4>
-                            <h6 class="font-weight-light">Sign in to continue.</h6>
+                            <h6 class="font-weight-light">Sign in to continue.</h6> --}}
                             @if (session()->has('error'))
                                 <div class="alert alert-danger">
                                     <p>{{ session()->get('error') }}</p>
@@ -67,16 +67,7 @@
                                             Keep me signed in
                                         </label>
                                     </div>
-                                    {{-- <a href="#" class="auth-link text-black">Forgot password?</a> --}}
                                 </div>
-                                {{-- <div class="mb-2">
-                                    <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                                        <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
-                                    </button>
-                                </div>
-                                <div class="text-center mt-4 font-weight-light">
-                                    Don't have an account? <a href="register.html" class="text-primary">Create</a>
-                                </div> --}}
                             </form>
                         </div>
                     </div>

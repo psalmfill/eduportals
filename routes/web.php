@@ -224,6 +224,4 @@ Route::group(['prefix' => 'super-admin', 'namespace' => 'Admin'], function () {
 });
 
 
-Route::get('/', function () {
-    return redirect()->route('admin.login.form');
-});
+Route::get('/', 'HomeController@index')->name('home');
