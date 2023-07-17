@@ -174,7 +174,6 @@
                         <div class="d-flex border-bottom pb-4">
                             <span
                                 class="bg-soft-primary avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-primary me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -210,7 +209,6 @@
                         <div class="d-flex border-bottom py-4">
                             <span
                                 class="bg-soft-success avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-success me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -248,7 +246,6 @@
                         <div class="d-flex pt-4">
                             <span
                                 class="bg-soft-orange avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-orange me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -300,7 +297,6 @@
                     <div class="mb-5 mb-lg-0" data-aos="fade-up" data-aos-duration="200">
                         <span
                             class="bg-soft-primary avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-primary me-3 mb-4">
-                            <?xml version="1.0" encoding="UTF-8"?>
                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -361,7 +357,6 @@
                         <div class="d-flex border-bottom pb-4">
                             <span
                                 class="bg-soft-primary avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-primary me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -401,7 +396,6 @@
                         <div class="d-flex border-bottom py-4">
                             <span
                                 class="bg-soft-success avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-success me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -441,7 +435,6 @@
                         <div class="d-flex pt-4">
                             <span
                                 class="bg-soft-orange avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-orange me-3 flex-shrink-0">
-                                <?xml version="1.0" encoding="UTF-8"?>
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
@@ -494,7 +487,6 @@
                     <div class="mb-5 mb-lg-0" data-aos="fade-up" data-aos-duration="200">
                         <span
                             class="bg-soft-primary avatar avatar-sm rounded-lg icon icon-with-bg icon-xs text-primary me-3 mb-4">
-                            <?xml version="1.0" encoding="UTF-8"?>
                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
