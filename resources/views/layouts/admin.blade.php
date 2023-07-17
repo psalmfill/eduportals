@@ -182,11 +182,11 @@
                                         <span class="title">Generate Pins</span>
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pins.download') }}">
-                                        <span class="title">Download Pins</span>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('pins.collections') }}">
+                                        <span class="title">Collections</span>
                                     </a>
-                                </li> --}}
+                                </li>
                             </ul>
                         </div>
                     </li>

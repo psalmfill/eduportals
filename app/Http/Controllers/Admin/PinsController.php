@@ -22,6 +22,21 @@ class PinsController extends Controller
         return view('admin.pins', compact('schools'));
     }
 
+    public function collections()
+    {
+        $schools = School::all();
+        $pinCollections = PinCollection::paginate();
+        return view('admin.pin_collections', compact('pinCollections', 'schools'));
+    }
+
+
+    public function viewCollections($id)
+    {
+        $pinCollections = PinCollection::find($id);
+        return view('admin.pin_collection', compact('pinCollection'));
+    }
+
+
     public function generate(Request $request)
     {
         $request->validate([
@@ -42,10 +57,11 @@ class PinsController extends Controller
             $count = $request->quantity;
             $days = $request->days;
             while ($count > 0) {
+                $latestPin = Pin::latest('serial_number')->first();
                 $pin = new Pin();
                 $pin->code = $this->generateCode();
                 $pin->ref_code = $this->generateRefCode($school);
-                $pin->serial_number = $this->generateSerialCode(Pin::count());
+                $pin->serial_number = $this->generateSerialCode($latestPin ? (int)$latestPin->serial_number : Pin::count());
                 $pin->duration = $days;
                 $pin->school_id = $school->id;
                 $pin->pin_collection_id = $pinCollection->id;
@@ -76,6 +92,7 @@ class PinsController extends Controller
 
     private function generateSerialCode($int)
     {
+        $int += 1;
         $count = 20;
         $sn = '';
         while ($count > strlen($int)) {

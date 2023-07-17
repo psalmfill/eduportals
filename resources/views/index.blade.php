@@ -10,8 +10,8 @@
 
     <!-- title -->
     <title>Eduportals E-SIMS</title>
-    <meta content="Coderthemes" name="author" />
-    <meta content="A fully featured multi purpose template" name="description" />
+    <meta content="Eduportals" name="author" />
+    <meta content="Best School information management" name="description" />
 
     <!-- theme favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
