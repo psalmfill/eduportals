@@ -24,9 +24,7 @@ class SchoolsController extends Controller
     public function index()
     {
         $schools = School::all();
-        $categories = SchoolCategory::all();
-        $vendors = Vendor::all();
-        return view('admin.schools', compact('schools', 'categories', 'vendors'));
+        return view('admin.schools', compact('schools'));
     }
 
     /**
@@ -36,7 +34,10 @@ class SchoolsController extends Controller
      */
     public function create()
     {
-        //
+        $schools = School::all();
+        $categories = SchoolCategory::all();
+        $vendors = Vendor::all();
+        return view('admin.schools', compact('create_edit_school', 'categories', 'vendors'));
     }
 
     /**
@@ -101,11 +102,10 @@ class SchoolsController extends Controller
      */
     public function edit($id)
     {
-        $schools = School::all();
         $categories = SchoolCategory::all();
         $vendors = Vendor::all();
         $school = School::findOrFail($id);
-        return view('admin.schools', compact('schools', 'categories', 'vendors', 'school'));
+        return view('admin.create_edit_school', compact('categories', 'vendors', 'school'));
     }
 
     /**

@@ -97,15 +97,8 @@
                                             <th>{{ $item->pins()->count() }}</th>
                                             <td class="center">
                                                 <div class="btn-group">
-                                                    <a href="{{-- route('students.show',$item->id) --}}" class="btn btn-info btn-sm"><i
-                                                            class="entypo-eye"></i> View</a>
-                                                    @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
-                                                        <a href="{{-- route('students.edit',$item->id) --}}" class="btn btn-secondary btn-sm"><i
-                                                                class="entypo-pencil"></i>
-                                                            Edit</a>
-
-                                                        {{-- <a href="javascript:void()" class="btn btn-danger" onclick="deleteStudent(this)"><i class="entypo-trash"></i> Delete</a> --}}
-                                                    @endif
+                                                    <a href="{{ route('pins.collections.show', $item->id) }}"
+                                                        class="btn btn-info btn-sm"><i class="entypo-eye"></i> View</a>
                                                 </div>
                                                 {{-- <form action="{{route('staff.deleteStudent')}}" id="delete-student" method="POST">
                                         @method('DELETE')

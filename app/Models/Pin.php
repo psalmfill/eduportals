@@ -17,6 +17,10 @@ class Pin extends Model
         return $this->belongsTo(PinCollection::class);
     }
 
+    public function getIsUsedAttribute()
+    {
+        return $this->user_id !== null;
+    }
     public function getHasExpiredAttribute()
     {
         return Date($this->expiry_date) < now();
@@ -30,6 +34,11 @@ class Pin extends Model
     public function session()
     {
         return $this->belongsTo(AcademicSession::class, 'academic_session_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(SchoolClass::class, 'student_id');
     }
 
     public function school_class()

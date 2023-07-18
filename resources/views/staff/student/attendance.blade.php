@@ -139,7 +139,7 @@
                                         style="empty-cells:show">
                                         <thead>
                                             <tr>
-                                                <th rowspan="">S/N</th>
+                                                <th class="text-center" rowspan="">Passport</th>
                                                 <th rowspan="">Reg No</th>
                                                 <th rowspan="">Name</th>
                                                 <th>Present</th>
@@ -148,7 +148,8 @@
                                         <tbody>
                                             @foreach ($students as $item)
                                                 <tr>
-                                                    <td>{{ $loop->index + 1 }}</td>
+                                                    <td class="text-center"> <img width="50" height="50"
+                                                            src="{{ $item->avatar }}" alt="image" class="rounded"></td>
                                                     <td>{{ $item->reg_no }}</td>
                                                     <td>{{ $item->full_name }}</td>
                                                     <td><input type="checkbox" name="students[]" value="{{ $item->id }}"

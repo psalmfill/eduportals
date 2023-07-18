@@ -73,7 +73,7 @@
                     <div class="col-md-12">
 
                         <div class="table-responsive">
-                            <br />
+                            {{-- <br />
                             <script type="text/javascript">
                                 jQuery(document).ready(function($) {
                                     var $table4 = jQuery("#table-4");
@@ -88,9 +88,9 @@
                                         ]
                                     });
                                 });
-                            </script>
+                            </script> --}}
 
-                            <table class="table table-bordered datatable mt-4" id="table-4">
+                            {{-- <table class="table table-bordered datatable mt-4" id="table-4">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
@@ -129,15 +129,8 @@
                                                         <a href="{{ route('students.edit', $item->id) }}"
                                                             class="btn btn-secondary btn-sm"><i class="entypo-pencil"></i>
                                                             Edit</a>
-
-                                                        {{-- <a href="javascript:void()" class="btn btn-danger" onclick="deleteStudent(this)"><i class="entypo-trash"></i> Delete</a> --}}
                                                     @endif
                                                 </div>
-                                                {{-- <form action="{{route('staff.deleteStudent')}}" id="delete-student" method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <input type="hidden" name="student_id" value="{{$item->id}}">
-                                    </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -156,7 +149,75 @@
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
-                            </table>
+                            </table> --}}
+                            <div class="container">
+                                <div class="row table-head border d-none d-md-flex font-weight-bold text-center">
+
+
+                                    <div class="col-md-1 my-md-auto py-2">
+                                        Passport
+                                    </div>
+                                    <div class="col-md-3 my-md-auto py-2">
+                                        Name
+                                    </div>
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Reg. No
+                                    </div>
+                                    <div class="col-md-1 my-md-auto py-2">
+                                        Gender
+                                    </div>
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Class
+                                    </div>
+                                    <div class="col-md-1 my-md-auto py-2">
+                                        Status
+                                    </div>
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Action
+                                    </div>
+                                </div>
+                                @foreach ($students as $item)
+                                    <div class="row striped border py-3 text-center align-middle">
+                                        <div class="col-md-1 my-md-auto my-1">
+                                            <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
+                                                class="rounded">
+                                        </div>
+                                        <div class="col-md-3 my-md-auto my-1 font-weight-bold">
+                                            <div class="text-secondary text-uppercase">{{ $item->full_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-1 font-weight-bold">
+                                            {{ $item->reg_no }}
+                                        </div>
+                                        <div class="col-md-1 my-md-auto my-1">
+                                            {{ ucwords($item->gender) }}
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-2">
+                                            {{ $item->school_class->name }} - {{ $item->section->name }}
+                                        </div>
+                                        <div class="col-md-1 my-md-auto my-1">
+                                            {!! $item->active
+                                                ? '<span class="badge badge-success">Active</span>'
+                                                : '<span class="badge badge-danger">Inactive</span>' !!}
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-1">
+                                            <div class="d-flex justify-content-center">
+                                                <a href="{{ route('students.show', $item->id) }}"
+                                                    class="btn btn-info btn-sm mr-1"> View</a>
+                                                @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                                                    <a href="{{ route('students.edit', $item->id) }}"
+                                                        class="btn btn-secondary btn-sm">
+                                                        Edit</a>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <div class="mt-4 d-flex justify-content-center">
+
+                                {!! $students->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +226,7 @@
     @endisset
 @endsection
 @section('page_scripts')
-    <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script> --}}
 
     <script>
         $('#class').change(function(e) {

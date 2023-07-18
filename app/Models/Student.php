@@ -36,7 +36,7 @@ class Student extends Authenticatable
     }
     public function getFullNameAttribute()
     {
-        return "$this->first_name  $this->other_name $this->last_name";
+        return " $this->last_name, $this->first_name  $this->other_name";
     }
 
     public function getAvatarAttribute()

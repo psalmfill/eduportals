@@ -11,7 +11,7 @@
     <!-- title -->
     <title>Eduportals E-SIMS</title>
     <meta content="Eduportals" name="author" />
-    <meta content="Best School information management" name="description" />
+    <meta content="Best School information management system" name="description" />
 
     <!-- theme favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">

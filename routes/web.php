@@ -211,6 +211,7 @@ Route::group(['prefix' => 'super-admin', 'namespace' => 'Admin'], function () {
         Route::get('pins', 'PinsController@index')->name('pins.index');
         Route::post('pins', 'PinsController@generate')->name('pins.generate');
         Route::get('pins/collections', 'PinsController@collections')->name('pins.collections');
+        Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('pins.collections.show');
         Route::get('roles', 'RolesController@index')->name('admin.roles.index');
         Route::post('roles', 'RolesController@store')->name('admin.roles.store');
         Route::get('roles/{id}', 'RolesController@edit')->name('admin.roles.edit');

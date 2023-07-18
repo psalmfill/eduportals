@@ -30,9 +30,9 @@ class PinsController extends Controller
     }
 
 
-    public function viewCollections($id)
+    public function viewCollection($id)
     {
-        $pinCollections = PinCollection::find($id);
+        $pinCollection = PinCollection::find($id);
         return view('admin.pin_collection', compact('pinCollection'));
     }
 

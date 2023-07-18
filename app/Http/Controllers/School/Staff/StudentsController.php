@@ -35,20 +35,20 @@ class StudentsController extends Controller
     {
 
         $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
-        if (request()->query->count()) {
+        if (request()->query->count() > 1) {
             $class =  SchoolClass::where('name', request()->class)->where('school_id', getSchool()->id)->first();
             $section =  Section::where('name', request()->section)->where('school_id', getSchool()->id)->first();
             $students = Student::when($section, function ($query, $section) {
                 return $query->where('section_id', $section->id);
             })->when($class, function ($query, $class) {
                 return $query->where('school_class_id', $class->id);
-            })->where('school_id', getSchool()->id)->active()->get();
+            })->where('school_id', getSchool()->id)->orderBy('first_name', 'desc')->active()->paginate();
             $sections = $class ? $class->sections : [];
             $class_id = $class ? $class->id : null;
             $section_id = $section ? $section->id : null;
             return view('staff.students', compact('classes', 'sections', 'students', 'class_id', 'section_id'));
         }
-        $students = Student::where('school_id', getSchool()->id)->orderBy('created_at', 'desc')->get();
+        $students = Student::where('school_id', getSchool()->id)->orderBy('created_at', 'desc')->paginate(100);
         return view('staff.students', compact('classes', 'students'));
     }
 

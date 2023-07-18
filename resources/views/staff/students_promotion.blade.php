@@ -94,55 +94,57 @@
                         });
                     </script> --}}
 
-                            <table class="table table-bordered datatable mt-4" id="table-4">
-                                <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Reg. No</th>
-                                        <th>Photo</th>
-                                        <th>Name</th>
-                                        <th>Gender</th>
-                                        <th>Class</th>
-                                        <th>Section</th>
-                                        <th>
-                                            <input type="checkbox" class="check-all" id=""> Check All
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($students as $item)
-                                        <tr class="odd gradeX">
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $item->reg_no }}</td>
-                                            <td class="text-center"> <img width="100" height="100"
-                                                    src="{{ $item->avatar }}" alt="image" class="img-fluid">
-                                            </td>
-                                            <td>{{ $item->full_name }}</td>
-                                            <td>{{ ucwords($item->gender) }}</td>
-                                            <td>{{ $item->school_class->name }}</td>
-                                            <td>{{ $item->section->name }}</td>
-                                            <td style="padding:18px">
-                                                <input class="check" type="checkbox" name="students[]"
-                                                    value="{{ $item->id }}" id="">
-                                            </td>
+                            <div class="table-responsive">
+                                <table class="table table-bordered datatable mt-4" id="table-4">
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Reg. No</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Class</th>
+                                            <th>Section</th>
+                                            <th>
+                                                <input type="checkbox" class="check-all" id=""> Check All
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Reg. No</th>
-                                        <th>Photo</th>
-                                        <th>Name</th>
-                                        <th>Gender</th>
-                                        <th>Class</th>
-                                        <th>Section</th>
-                                        <th>
-                                            <input type="checkbox" class="check-all" id=""> Check All
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($students as $item)
+                                            <tr class="odd gradeX">
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>{{ $item->reg_no }}</td>
+                                                <td class="text-center"> <img width="100" height="100"
+                                                        src="{{ $item->avatar }}" alt="image" class="img-fluid">
+                                                </td>
+                                                <td>{{ $item->full_name }}</td>
+                                                <td>{{ ucwords($item->gender) }}</td>
+                                                <td>{{ $item->school_class->name }}</td>
+                                                <td>{{ $item->section->name }}</td>
+                                                <td style="padding:18px">
+                                                    <input class="check" type="checkbox" name="students[]"
+                                                        value="{{ $item->id }}" id="">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Reg. No</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Class</th>
+                                            <th>Section</th>
+                                            <th>
+                                                <input type="checkbox" class="check-all" id=""> Check All
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <br>

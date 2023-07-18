@@ -138,6 +138,12 @@
                                         <span class="title">All Schools</span>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('schools.create') }}">
+                                        <span class="title">Onboard School</span>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('school-categories.index') }}">
                                         <span class="title">Categories</span>
