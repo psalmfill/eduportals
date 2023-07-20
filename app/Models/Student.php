@@ -41,7 +41,7 @@ class Student extends Authenticatable
 
     public function getAvatarAttribute()
     {
-        return asset(Storage::url($this->image));
+        return $this->image ? asset(Storage::url($this->image)) : 'http://placehold.it/150x150?text=Passport';
     }
 
     public function psychomotor_results()

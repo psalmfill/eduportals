@@ -201,15 +201,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="passport">Passport</label>
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"
-                                                style="max-width: 200px; max-height: 150px">
+                                                style="max-width: 200px; max-height 200px">
                                                 <img src="{{ $student->image ? asset($student->avatar) : 'http://placehold.it/200x150' }}"
-                                                    class="h-100 w-100" alt="...">
+                                                    class="h-100 w-100 " alt="...">
                                             </div>
-                                            <div class="d-flex justify-content-between">
+                                            <div>
                                                 <span class="btn btn-white btn-file">
                                                     <span class="fileinput-new">Select image</span>
                                                     <span class="fileinput-exists">Change</span>
@@ -222,6 +222,28 @@
                                         @error('passport')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label for="field-3" class="col-sm-3 control-label">Passport</label>
+                                        <div class="fileinput-new thumbnail" data-provides="fileinput">
+
+                                            <div class="fileinput-preview fileinput-exists thumbnail"
+                                                style="max-width:200px;max-height: 150px">
+                                                <img src="{{ $student->image ? asset($student->avatar) : 'http://placehold.it/200x150' }}"
+                                                    class="img-fluid" alt="...">
+                                            </div>
+                                            <div class="mt-1">
+                                                <span class="btn btn-white btn-file">
+                                                    <span class="fileinput-new">Select image</span>
+                                                    <span class="fileinput-exists">Change</span>
+                                                    <input type="file" name="passport" id="passport"
+                                                        accept="image/*">
+                                                </span>
+                                                <a href="#" class="btn btn-sm btn-danger fileinput-exists"
+                                                    data-dismiss="fileinput">Remove</a>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

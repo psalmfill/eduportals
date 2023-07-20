@@ -95,7 +95,7 @@
                     </script> --}}
 
                             <div class="table-responsive">
-                                <table class="table table-bordered datatable mt-4" id="table-4">
+                                {{-- <table class="table table-bordered datatable mt-4" id="table-4">
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
@@ -143,7 +143,58 @@
                                             </th>
                                         </tr>
                                     </tfoot>
-                                </table>
+                                </table> --}}
+
+                                <div class="container">
+                                    <div class="row table-head border d-none d-md-flex font-weight-bold text-center">
+
+
+                                        <div class="col-md-1 my-md-auto py-2">
+                                            Passport
+                                        </div>
+                                        <div class="col-md-3 my-md-auto py-2">
+                                            Name
+                                        </div>
+                                        <div class="col-md-2 my-md-auto py-2">
+                                            Reg. No
+                                        </div>
+                                        <div class="col-md-2 my-md-auto py-2">
+                                            Class
+                                        </div>
+
+                                        <div class="col-md-2 my-md-auto py-2">
+                                            Section
+                                        </div>
+                                        <div class="col-md-2 my-md-auto pt-3">
+                                            Check All <br> <input type="checkbox" class="check-all" id="">
+                                        </div>
+                                    </div>
+                                    @foreach ($students as $item)
+                                        <div class="row striped border py-3 text-center align-middle">
+                                            <div class="col-md-1 my-md-auto my-1">
+                                                <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
+                                                    class="rounded">
+                                            </div>
+                                            <div class="col-md-3 my-md-auto my-1 font-weight-bold">
+                                                <div class="text-secondary text-uppercase">{{ $item->full_name }}</div>
+                                            </div>
+                                            <div class="col-md-2 my-md-auto my-1 font-weight-bold">
+                                                {{ $item->reg_no }}
+                                            </div>
+                                            <div class="col-md-2 my-md-auto my-2">
+                                                {{ $item->school_class->name }}
+                                            </div>
+                                            <div class="col-md-2 my-md-auto my-2">
+                                                {{ $item->section->name }}
+                                            </div>
+                                            <div class="col-md-2 my-md-auto my-1">
+                                                <input class="check" type="checkbox" name="students[]"
+                                                    value="{{ $item->id }}" id="">
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
                             </div>
                         </div>
                     </div>

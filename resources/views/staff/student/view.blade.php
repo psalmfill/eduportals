@@ -32,13 +32,12 @@
         <div class="card-body">
             <div class="row">
 
-                <div class="col-md-8">
+                <div class="col-md-8 offset-md-2">
                     <table class="table table-bordered">
                         <tr>
-                            <td colspan="2">
-                                {{-- <img src="{{asset('assets/images/member-4.jpg')}}" alt="image" class="img-responsiv img-fluid">  --}}
-                                <img width="200" height="200" src="{{ asset(\Storage::url($student->image)) }}"
-                                    alt="image" class="img-responsiv img-fluid">
+                            <td colspan="2" class="text-center text-md-left">
+                                <img width="200" height="200" src="{{ $student->avatar }}" alt="image"
+                                    class="img-responsive rounded">
                             </td>
                         </tr>
                         <tr>

@@ -550,7 +550,7 @@
     <script src="{{ asset('assets/js/jquery.bootstrap.wizard.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.inputmask.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/selectboxit/jquery.selectBoxIt.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/selectboxit/jquery.selectBoxIt.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-switch.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.multi-select.js') }}"></script>

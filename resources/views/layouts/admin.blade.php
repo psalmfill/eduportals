@@ -252,7 +252,7 @@
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
-                    Distributed By: <a href="https://www.themewagon.com/" target="_blank">Eduportals</a>
+                    Distributed By: <a href="{{ env('BASE_URL') }}" target="_blank">Eduportals</a>
                     </span>
 
             </div>

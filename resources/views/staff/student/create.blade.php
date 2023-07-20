@@ -162,8 +162,9 @@
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                         <div class="fileinput-preview fileinput-exists thumbnail"
                                             style="max-width: 200px; max-height: 150px"><img
-                                                src="http://placehold.it/200x150" class="h-100 w-100" alt="..."
-                                                width="100%"></div>
+                                                src="http://placehold.it/200x150?text=Passport" class="h-100 w-100"
+                                                alt="..." width="100%">
+                                        </div>
                                         <div>
                                             <span class="btn btn-white btn-file">
                                                 <span class="fileinput-new">Select image</span>

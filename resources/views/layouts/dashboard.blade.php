@@ -32,12 +32,12 @@
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center bg-dark">
                 <a class="navbar-brand brand-logo" href="{{ route('staff.dashboard') }}"><img
                         src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo" class="w-auto" /></a>
                 <a class="navbar-brand brand-logo-mini" href="{{ route('staff.dashboard') }}">
                     <img src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo" class="w-auto" /></a>
-                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+                <button class="navbar-toggler navbar-toggler align-self-center d-none " type="button"
                     data-toggle="minimize">
                     <span class="typcn typcn-th-menu"></span>
                 </button>
@@ -54,11 +54,11 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('settings.index') }}">
                                 <i class="typcn typcn-cog text-primary"></i>
                                 Settings
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('staff.logout') }}">
                                 <i class="typcn typcn-power text-primary"></i>
                                 Logout
                             </a>
@@ -107,7 +107,7 @@
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
-                    Distributed By: <a href="https://www.themewagon.com/" target="_blank">Eduportals</a>
+                    Distributed By: <a href="{{ env('BASE_URL') }}" target="_blank">Eduportals</a>
                     </span>
 
             </div>

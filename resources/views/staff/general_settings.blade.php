@@ -78,7 +78,7 @@
 
                                                 <div class="fileinput-preview fileinput-exists thumbnail"
                                                     style="max-width:200px;max-height: 150px">
-                                                    <img src="{{ $school->logo ? asset(\Storage::url($school->logo)) : 'http://placehold.it/150x150' }}"
+                                                    <img src="{{ $school->logo ? asset(\Storage::url($school->logo)) : 'http://placehold.it/150x150?text=Logo' }}"
                                                         class="h-100 w-100" alt="...">
                                                 </div>
                                                 <div class="mt-5">
