@@ -188,6 +188,9 @@
                                                 {{ $item->section->name }}
                                             </div>
                                             <div class="col-md-2 my-md-auto my-1">
+                                                {{ $item->section->name }}
+                                            </div>
+                                            <div class="col-md-2 my-md-auto my-1">
                                                 <input class="check" type="checkbox" name="students[]"
                                                     value="{{ $item->id }}" id="">
                                             </div>
