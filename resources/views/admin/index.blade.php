@@ -115,14 +115,5 @@
             </div>
 
         </div>
-
-        <div class="col-md-3">
-            <div class="tile-stats tile-brown">
-                <div class="icon"><i class="entypo-users"></i></div>
-                <div class="num">{{ $roles }}</div>
-
-                <h3>Roles</h3>
-            </div>
-        </div>
     </div>
 @endsection

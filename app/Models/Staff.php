@@ -71,6 +71,6 @@ class Staff extends Authenticatable
     }
     public function getAvatarAttribute()
     {
-        return Storage::url($this->image);
+        return $this->image ? Storage::url($this->image) : 'http://placehold.it/150x150?text=Passport';
     }
 }

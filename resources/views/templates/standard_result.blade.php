@@ -19,7 +19,7 @@
 
         #scale {
             width: 100%;
-            border: 1px solid #333;
+            border: 1px solid #000;
         }
 
         #scale tr td {
@@ -30,16 +30,15 @@
             /* background-image: url({{ getSchool()->logo ? public_path(\Storage::url(getSchool()->logo)) : '' }}); */
             background-repeat: no-repeat;
             background-position: center;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.1);
             background-blend-mode: lighten;
             background-size: 60%;
-            width: 100%;
-            border: 1px solid #333;
-            color: #333;
+            border: 1px solid #000;
+            color: #000;
             /* font-weight: bold !important; */
             margin: 1%;
             padding: 1%;
-            width: 100%;
+            width: 96%;
             font-size: 9pt;
             text-transform: capitalize
                 /* white-space: nowrap; */
@@ -53,28 +52,28 @@
         }
 
         #result td:first-child {
-            border-left: 1px solid #333;
+            border-left: 1px solid #000;
         }
 
         /* #result tr:first-child{
-                border-left: 1px solid #333;
+                border-left: 1px solid #000;
             } */
         #result td,
         #result th {
             font-weight: bold !important;
-            border-top: 1px solid #333;
-            border-right: 1px solid #333;
+            border-top: 1px solid #000;
+            border-right: 1px solid #000;
             margin: 0;
             padding: 2px;
         }
 
         #result table tr:last-child td {
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #000;
         }
 
         #result table tr td:first-child {
 
-            border-left: 1px solid #333;
+            border-left: 1px solid #000;
         }
 
         #head {
@@ -236,8 +235,8 @@
 
                 <table class="table" style="width:50%">
                     <tr>
-                        <td style="border-bottom:1px solid #333">Grading</td>
-                        <td style="border-bottom:1px solid #333">Interpretation</td>
+                        <td style="border-bottom:1px solid #000">Grading</td>
+                        <td style="border-bottom:1px solid #000">Interpretation</td>
                     </tr>
                     @foreach ($grades->chunk(2) as $chunk)
                         @foreach ($chunk as $g)

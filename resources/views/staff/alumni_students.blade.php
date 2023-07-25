@@ -28,30 +28,35 @@
     </ol>
 @endsection
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Filter Student</h3>
-            <form action="" class="form">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <select name="section" id="section" class="form-control input-lg">
-                                <option value="">Select session</option>
-                                @isset($sessions)
-                                    @foreach ($sessions as $session)
-                                        <option value="{{ $session->name }}"
-                                            {{ isset($session_id) && $session_id == $session->id ? 'selected' : '' }}>
-                                            {{ $session->name }}</option>
-                                    @endforeach
-                                @endisset
-                            </select>
+    <div class="card bg-dark">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-white">Filter Student</h3>
+                    <form action="" class="form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="section" id="section" class="form-control input-lg">
+                                        <option value="">Select session</option>
+                                        @isset($sessions)
+                                            @foreach ($sessions as $session)
+                                                <option value="{{ $session->name }}"
+                                                    {{ isset($session_id) && $session_id == $session->id ? 'selected' : '' }}>
+                                                    {{ $session->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i>
+                                    Search</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i> Search</button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
     @isset($students)

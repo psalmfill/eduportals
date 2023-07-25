@@ -3,13 +3,6 @@
 @section('page_styles')
     <!-- Imported styles on this page -->
     <link rel="stylesheet" href="{{ asset('assets/js/datatables/datatables.css') }}">
-    <style>
-        #table-4 tr th,
-        #table-4 tr td {
-            border: 1px solid #000;
-            color: #000;
-        }
-    </style>
 @endsection
 
 @section('breadcrum')
@@ -107,14 +100,10 @@
                 <h2>Class Results</h2>
                 <hr>
                 @if ($students->count() > 0)
-                    <div class="row">
-                        <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="table-4">
                                     <thead>
-                                        {{-- <tr>
-                                            <td colspan="5" class="text-center">Students</td>
-                                        <tr> --}}
                                         <th rowspan="">S/N</th>
                                         <th>Avatar</th>
                                         <th rowspan="">Reg No</th>
@@ -153,16 +142,69 @@
                                 </table>
                             </div>
 
+                        </div> --}}
+
+                    <div class="container table">
+                        <div class="row table-head border d-none d-md-flex text-center">
+
+
+                            <div class="col-md-2 my-md-auto py-2">
+                                Passport
+                            </div>
+                            <div class="col-md-4 my-md-auto py-2">
+                                Name
+                            </div>
+                            <div class="col-md-2 my-md-auto py-2">
+                                Reg. No
+                            </div>
+                            <div class="col-md-4 my-md-auto py-2">
+                                Action
+                            </div>
                         </div>
-                        <div class="pull-right mt-2">
+                        @foreach ($students as $item)
+                            <div class="row striped border py-3 text-center align-middle">
+                                <div class="col-md-2 my-md-auto my-1">
+                                    <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
+                                        class="rounded">
+                                </div>
+                                <div class="col-md-4 my-md-auto my-1">
+                                    <div class="text-uppercase">{{ $item->full_name }}</div>
+                                </div>
+                                <div class="col-md-2 my-md-auto my-1 ">
+                                    {{ $item->reg_no }}
+                                </div>
+
+                                <div class="col-md-4 my-md-auto my-1">
+                                    <form action="{{ route('staff.student-result') }}" class="form-horizontal">
+                                        <input type="hidden" name="session" value="{{ $currentSession->id }}">
+                                        <input type="hidden" name="exam" value="{{ $exam->id }}">
+                                        <input type="hidden" name="class" value="{{ $currentClass->id }}">
+                                        <input type="hidden" name="student" value="{{ $item->id }}">
+                                        <input type="hidden" name="section" value="{{ $currentSection->id }}">
+                                        <div class="input-group">
+                                            <select name="type" class="form-control mr-1" id="">
+                                                <option value="standand">Standard results</option>
+                                                <option value="comment">Comment results</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-primary btn-sm">View</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="mt-4 d-flex justify-content-center">
+
                             {!! $students->withQueryString()->links() !!}
+
                         </div>
 
-                        <br>
-                        <div class="clearfix"></div>
-                        <hr>
-                        {{-- ALLOW BULK RESULT PRINTING --}}
-                        {{-- @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
+                    </div>
+
+                    <br>
+                    <div class="clearfix"></div>
+                    <hr>
+                    {{-- ALLOW BULK RESULT PRINTING --}}
+                    {{-- @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
                             <div class="d-flex justify-content-around">
                                 <form action="{{ route('staff.download-result') }}" class="form-inline">
                                     <input type="hidden" name="session" value="{{ $currentSession->id }}">
@@ -178,7 +220,6 @@
                                 </form>
                             </div>
                         @endif --}}
-                    </div>
                 @else
                     <div class="alert alert-info text-center">No Result Available at the moment.</div>
                 @endif

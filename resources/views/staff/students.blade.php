@@ -150,8 +150,8 @@
                                     </tr>
                                 </tfoot>
                             </table> --}}
-                            <div class="container">
-                                <div class="row table-head border d-none d-md-flex font-weight-bold text-center">
+                            <div class="container table">
+                                <div class="row table-head border d-none d-md-flex text-center">
 
 
                                     <div class="col-md-1 my-md-auto py-2">
@@ -182,10 +182,10 @@
                                             <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
                                                 class="rounded">
                                         </div>
-                                        <div class="col-md-3 my-md-auto my-1 font-weight-bold">
-                                            <div class="text-secondary text-uppercase">{{ $item->full_name }}</div>
+                                        <div class="col-md-3 my-md-auto my-1 ">
+                                            <div class="text-uppercase">{{ $item->full_name }}</div>
                                         </div>
-                                        <div class="col-md-2 my-md-auto my-1 font-weight-bold">
+                                        <div class="col-md-2 my-md-auto my-1 ">
                                             {{ $item->reg_no }}
                                         </div>
                                         <div class="col-md-1 my-md-auto my-1">

@@ -34,7 +34,7 @@
             background-color: rgba(255, 255, 255, 0.0);
             background-blend-mode: lighten;
             background-size: 60%;
-            width: 1000px !important;
+            width: 842px !important;
             border: 1px solid #333;
             color: #333;
             /* font-weight: bold !important; */

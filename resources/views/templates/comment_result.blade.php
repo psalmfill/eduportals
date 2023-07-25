@@ -18,7 +18,7 @@
 
         #scale {
             width: 100%;
-            border: 1px solid #333;
+            border: 1px solid #000;
         }
 
         #scale tr td {
@@ -26,13 +26,18 @@
         }
 
         #result {
-            width: 100%;
-            border: 1px solid #333;
-            color: #333;
+            /* background-image: url({{ getSchool()->logo ? public_path(\Storage::url(getSchool()->logo)) : '' }}); */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            background-blend-mode: lighten;
+            background-size: 60%;
+            border: 1px solid #000;
+            color: #000;
             /* font-weight: bold !important; */
-            margin: 3%;
+            margin: 1%;
             padding: 1%;
-            width: 100%;
+            width: 96%;
             font-size: 9pt;
             text-transform: capitalize
                 /* white-space: nowrap; */
@@ -45,28 +50,28 @@
         }
 
         #result td:first-child {
-            border-left: 1px solid #333;
+            border-left: 1px solid #000;
         }
 
         /* #result tr:first-child{
-                border-left: 1px solid #333;
+                border-left: 1px solid #000;
             } */
         #result td,
         #result th {
             font-weight: bold !important;
-            border-top: 1px solid #333;
-            border-right: 1px solid #333;
+            border-top: 1px solid #000;
+            border-right: 1px solid #000;
             margin: 0;
             padding: 5px;
         }
 
         #result table tr:last-child td {
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #000;
         }
 
         #result table tr td:first-child {
 
-            border-left: 1px solid #333;
+            border-left: 1px solid #000;
         }
 
         #head {
@@ -200,8 +205,8 @@
             <div class="col-4">
                 <table class="table">
                     <tr>
-                        <td style="border-bottom:1px solid #333">Grading</td>
-                        <td style="border-bottom:1px solid #333">Interpretation</td>
+                        <td style="border-bottom:1px solid #000">Grading</td>
+                        <td style="border-bottom:1px solid #000">Interpretation</td>
                     </tr>
                     @foreach ($grades->chunk(2) as $chunk)
                         @foreach ($chunk as $g)
@@ -240,7 +245,7 @@
                     <br>
                     <table class="table" id="scale">
                         <tr>
-                            <td colspan="2" style="border-bottom:1px solid #333">{{ $affectiveTrait->title }} Scale:
+                            <td colspan="2" style="border-bottom:1px solid #000">{{ $affectiveTrait->title }} Scale:
                             </td>
                         </tr>
                         @foreach ($affectiveTrait->grades->chunk(2) as $chunk)
@@ -283,7 +288,7 @@
                     <br>
                     <table class="table" id="scale">
                         <tr>
-                            <td colspan="2" style="border-bottom:1px solid #333">{{ $psychomotor->title }} Scale:
+                            <td colspan="2" style="border-bottom:1px solid #000">{{ $psychomotor->title }} Scale:
                             </td>
                         </tr>
                         @foreach ($psychomotor->grades->chunk(2) as $chunk)

@@ -31,6 +31,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use QrCode;
 
@@ -1290,6 +1291,26 @@ class ExaminationController extends Controller
         }
         $html .= '</html>';
         $pdf->loadHTML($html)->setPaper('a4');
+        // Instantiate canvas instance 
+        $canvas = $pdf->getCanvas();
+        // Get height and width of page 
+        $w = $canvas->get_width();
+        $h = $canvas->get_height();
+
+        // Specify watermark image 
+        $imageURL = public_path(Storage::url(getSchool()->logo));
+        $imgWidth = 300;
+        $imgHeight = 200;
+
+        // Set image opacity 
+        $canvas->set_opacity(.3);
+
+        // Specify horizontal and vertical position 
+        $x = (($w / 2) - ($imgWidth / 2));
+        $y = (($h / 2) - ($imgHeight / 2));
+
+        // Add an image to the pdf 
+        $canvas->image($imageURL, $x, $y, $imgWidth, $imgHeight);
         return $pdf->stream();
     }
 
@@ -1508,6 +1529,27 @@ class ExaminationController extends Controller
         // return $html;
 
         $pdf->loadHTML($html)->setPaper('a4');
+
+        // Instantiate canvas instance 
+        $canvas = $pdf->getCanvas();
+        // Get height and width of page 
+        $w = $canvas->get_width();
+        $h = $canvas->get_height();
+
+        // Specify watermark image 
+        $imageURL = public_path(Storage::url(getSchool()->logo));
+        $imgWidth = 300;
+        $imgHeight = 200;
+
+        // Set image opacity 
+        $canvas->set_opacity(.3);
+
+        // Specify horizontal and vertical position 
+        $x = (($w / 2) - ($imgWidth / 2));
+        $y = (($h / 2) - ($imgHeight / 2));
+
+        // Add an image to the pdf 
+        $canvas->image($imageURL, $x, $y, $imgWidth, $imgHeight);
         return $pdf->stream();
     }
 }

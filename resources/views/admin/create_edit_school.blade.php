@@ -26,11 +26,10 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h3>All Categories</h3>
             <div class="row">
                 <div class="col-md-12">
                     <div class="well">
-                        <h4 class="margin">{{ isset($school) ? 'Edit' : 'Create New' }} School</h4>
+                        <h3 class="margin">{{ isset($school) ? 'Edit' : 'Onboard' }} School</h3>
                         <p class="text-danger">All fields are required</p>
                         <hr>
                         @isset($school)

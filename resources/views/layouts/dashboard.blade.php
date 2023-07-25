@@ -22,7 +22,20 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset(\Storage::url(getSchool()->logo)) }}" />
+
+    <style>
+        .container.table .border {
+            border-top: 1px solid #ccc !important;
+            border-left: 1px solid #ccc !important;
+            border-right: 1px solid #ccc !important;
+
+        }
+
+        .container.table .border:last-child {
+            border-bottom: 1px solid #ccc !important;
+        }
+    </style>
     @yield('page_styles')
     <script src="{{ asset('assets/js/jquery-1.11.3.min.js') }}"></script>
 
@@ -32,7 +45,7 @@
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center bg-dark">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center bg-md-dark">
                 <a class="navbar-brand brand-logo" href="{{ route('staff.dashboard') }}"><img
                         src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo" class="w-auto" /></a>
                 <a class="navbar-brand brand-logo-mini" href="{{ route('staff.dashboard') }}">

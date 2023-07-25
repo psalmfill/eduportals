@@ -96,7 +96,9 @@
                                                             <div class="checkbox checkbox-replace">
                                                                 <input type="checkbox" name="subjects[]"
                                                                     id="subject-{{ $item->id }}" value="{{ $item->id }}"
-                                                                    @if ($section->subjects()->wherePivot('school_class_id', $schoolClass->id)->get()->pluck('id')->contains($item->id)) checked @endif>
+                                                                    @isset($section)
+@if ($section->subjects()->wherePivot('school_class_id', $schoolClass->id)->get()->pluck('id')->contains($item->id)) checked @endif
+                                                                    @endisset>
                                                                 <label>{{ $item->name }}</label>
                                                             </div>
                                                         </div>

@@ -34,10 +34,9 @@ class SchoolsController extends Controller
      */
     public function create()
     {
-        $schools = School::all();
         $categories = SchoolCategory::all();
         $vendors = Vendor::all();
-        return view('admin.schools', compact('create_edit_school', 'categories', 'vendors'));
+        return view('admin.create_edit_school', compact('categories', 'vendors'));
     }
 
     /**
