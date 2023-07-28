@@ -79,7 +79,7 @@
                             </h1>
 
                             <p class="fs-18 text-muted pt-3">
-                                Make your website or web application stand out with high-quality landing pages designed
+                                Make your school stand out with an advances school infomation management system designed
                                 and developed by professionals.
                             </p>
 

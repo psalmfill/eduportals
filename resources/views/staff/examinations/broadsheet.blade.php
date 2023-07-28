@@ -117,6 +117,9 @@
 
                                 $table4.DataTable({
                                     dom: 'Bfrtip',
+                                    order: [
+                                        [5, 'desc'],
+                                    ],
                                     buttons: [
                                         'copyHtml5',
                                         'excelHtml5',
