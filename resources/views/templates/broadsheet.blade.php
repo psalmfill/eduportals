@@ -16,13 +16,15 @@
         #result {
             page-break-after: right;
             width: 100%;
+            text-transform: uppercase;
         }
 
         #result table {
             box-sizing: border-box;
             /* border-collapse: collapse; */
             border-spacing: 0px;
-            width: 100%
+            width: 100%;
+            table-layout: auto !important;
         }
 
         #result td:first-child {
@@ -37,7 +39,9 @@
             font-weight: bold !important;
             border: 1px solid #333;
             margin: 0;
-            padding: 2px;
+            padding: 10px;
+            white-space: nowrap;
+            width: auto !important;
         }
 
         #result table tr:last-child td {
@@ -63,11 +67,17 @@
                 <tr>
                     <td class="text-center" colspan="{{ 6 + ($exam->exam_types->count() + 2) * $subjects->count() }}">
                         <div>
+                            <div>
+                                <img width="140" height="130" class="img-responsive"
+                                    src="{{ getSchool()->logo ? public_path(\Storage::url(getSchool()->logo)) : '' }}"
+                                    alt="logo">
+                            </div>
                             <h2>{{ $exam->school->name }}</h2>
                             <p>{{ $exam->school->address }}, {{ $exam->school->city }}</< /p>
                             <p>{{ $exam->school->state }}, {{ $exam->school->country }}</< /p>
                         </div>
                     </td>
+
                 </tr>
                 <tr>
 
@@ -81,11 +91,11 @@
                 </tr>
                 <tr>
                     <th rowspan="">S/N</th>
-                    <th rowspan="">Reg No</th>
-                    <th rowspan="">Name</th>
-                    <th rowspan="">Total</th>
-                    <th rowspan="">Pos</th>
-                    <th>Student Average</th>
+                    <th class="text-center" rowspan="">Reg No</th>
+                    <th class="text-center" rowspan="">Name</th>
+                    <th class="text-center" rowspan="">Total</th>
+                    <th class="text-center" rowspan="">Pos</th>
+                    <th class="text-center">Student Average</th>
 
                     <?php $subCount = $subjects->count(); ?>
                     @while ($subCount > 0)
@@ -107,14 +117,14 @@
                     @endphp
 
                     <tr>
-                        <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $item->reg_no }}</td>
-                        <td>{{ $item->full_name }}</td>
-                        <td>{{ $totalScore }}
+                        <td class="text-center">{{ $loop->index + 1 }}</td>
+                        <td class="text-center">{{ $item->reg_no }}</td>
+                        <td class="text-center">{{ $item->full_name }}</td>
+                        <td class="text-center">{{ $totalScore }}
 
-                        <td>{!! getClassPosition($markstore, $item->id) !!} </td>
+                        <td class="text-center">{!! getClassPosition($markstore, $item->id) !!} </td>
 
-                        <td>
+                        <td class="text-center">
                             {{ $totalScore ? number_format($totalScore / $subjectsOffered->count(), 2) : '-' }}
                         </td>
                         @foreach ($subjects as $subject)

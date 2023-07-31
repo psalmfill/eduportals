@@ -128,16 +128,19 @@
         <table id="head">
             <tr>
                 <th style="width:20%"><img width="140" height="130" class="img-responsive"
-                        src="{{ public_path(\Storage::url(getSchool()->logo)) }}" alt="logo"></th>
+                        src="{{ getSchool()->logo ? public_path(\Storage::url(getSchool()->logo)) : '' }}"
+                        alt="logo">
+                </th>
                 <th style="width:60%">
-                    <div style="position:absolute;top:0;">
-                        <h1>{{ $exam->school->name }}</h1>
+                    <div>
+                        <h1 style="font-size:18px">{{ $exam->school->name }}</h1>
                         <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
                         <p>{{ $exam->school->country }}</p>
                     </div>
                 </th>
                 <th style="width:20%"><img width="130" height="130" class="img-100"
-                        src="{{ public_path(\Storage::url($student->image)) }}" alt="student"></th>
+                        src="{{ $student->image ? public_path(\Storage::url($student->image)) : '' }}" alt="student">
+                </th>
             </tr>
         </table>
         <br>

@@ -8,6 +8,8 @@
         #table-4 tr td {
             border: 1px solid #000;
             color: #000;
+            text-transform: uppercase;
+
         }
     </style>
 @endsection
@@ -138,6 +140,11 @@
                                             <td class="text-center"
                                                 colspan="{{ 6 + ($exam->exam_types->count() + 2) * $subjects->count() }}">
                                                 <div>
+                                                    <div>
+                                                        <img width="140" height="130" class="img-responsive"
+                                                            src="{{ getSchool()->logo ? public_path(\Storage::url(getSchool()->logo)) : '' }}"
+                                                            alt="logo">
+                                                    </div>
                                                     <h2>{{ $exam->school->name }}</h2>
                                                     <p>{{ $exam->school->address }}, {{ $exam->school->city }}</< /p>
                                                     <p>{{ $exam->school->state }}, {{ $exam->school->country }}</< /p>
@@ -157,9 +164,9 @@
                                             <th rowspan="">S/N</th>
                                             <th rowspan="">Reg No</th>
                                             <th rowspan="">Name</th>
-                                            <th>Total</th>
-                                            <th>Pos</th>
-                                            <th>Student Average</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Pos</th>
+                                            <th class="text-center">Student Average</th>
                                             <?php $subCount = $subjects->count(); ?>
                                             @while ($subCount > 0)
                                                 @foreach ($exam->exam_types as $item)
@@ -183,11 +190,11 @@
                                                 <td>{{ $item->reg_no }}</td>
                                                 <td>{{ $item->full_name }}</td>
 
-                                                <td>{{ $totalScore }}
+                                                <td class="text-center">{{ $totalScore }}
                                                 </td>
-                                                <td>{!! getClassPosition($markstore, $item->id) !!}</td>
+                                                <td class="text-center">{!! getClassPosition($markstore, $item->id) !!}</td>
 
-                                                <td>
+                                                <td class="text-center">
                                                     {{ $totalScore ? number_format($totalScore / $subjectsOffered->count(), 2) : '-' }}
                                                 </td>
 

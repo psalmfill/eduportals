@@ -518,6 +518,25 @@ class ExaminationController extends Controller
         // $students = Student::find($student_ids);
         $students = Student::whereIn('id', $student_ids)->get();
         $exam = Exam::find($exam_id);
+        // $avgs = collect();
+        // foreach ($students as $student) {
+        //     $results = $markstore->where('student_id', $student->id);
+        //     $totalScore = $results->sum('score');
+        //     $subjectsOffered = $subjects->whereIn('id', $results->pluck('subject_id')->unique())->sortBy('name');
+        //     $avgs->push([
+        //         'student_id' => $student->id,
+        //         'avg' => $totalScore / $subjectsOffered->count()
+        //     ]);
+        // }
+        $students = $students->map(function ($student) use ($markstore, $subjects) {
+            $results = $markstore->where('student_id', $student->id);
+            $totalScore = $results->sum('score');
+            $subjectsOffered = $subjects->whereIn('id', $results->pluck('subject_id')->unique())->sortBy('name');
+            $student['avg'] = $totalScore / $subjectsOffered->count();
+            return $student;
+        })->sort(function ($a, $b) {
+            return ($a['avg'] > $b['avg']) ? -1 : 1;
+        });
 
         $classAverage = $this->calculateClassAverage($exam_id, $class_id, $section_id, $currentSession->id);
 
@@ -537,7 +556,7 @@ class ExaminationController extends Controller
 
         ));
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($html)->setPaper('a0', 'landscape')->setOptions(['dpi' => 100000]);
+        $pdf->loadHTML($html)->setPaper('a1', 'landscape')->getOptions()->setDpi(350);
         return $pdf->stream();
     }
 
