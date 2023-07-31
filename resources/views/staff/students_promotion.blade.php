@@ -94,110 +94,55 @@
                         });
                     </script> --}}
 
-                            <div class="table-responsive">
-                                {{-- <table class="table table-bordered datatable mt-4" id="table-4">
-                                    <thead>
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th>Reg. No</th>
-                                            <th>Photo</th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Class</th>
-                                            <th>Section</th>
-                                            <th>
-                                                <input type="checkbox" class="check-all" id=""> Check All
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($students as $item)
-                                            <tr class="odd gradeX">
-                                                <td>{{ $loop->index + 1 }}</td>
-                                                <td>{{ $item->reg_no }}</td>
-                                                <td class="text-center"> <img width="100" height="100"
-                                                        src="{{ $item->avatar }}" alt="image" class="img-fluid">
-                                                </td>
-                                                <td>{{ $item->full_name }}</td>
-                                                <td>{{ ucwords($item->gender) }}</td>
-                                                <td>{{ $item->school_class->name }}</td>
-                                                <td>{{ $item->section->name }}</td>
-                                                <td style="padding:18px">
-                                                    <input class="check" type="checkbox" name="students[]"
-                                                        value="{{ $item->id }}" id="">
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th>Reg. No</th>
-                                            <th>Photo</th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                            <th>Class</th>
-                                            <th>Section</th>
-                                            <th>
-                                                <input type="checkbox" class="check-all" id=""> Check All
-                                            </th>
-                                        </tr>
-                                    </tfoot>
-                                </table> --}}
-
-                                <div class="container">
-                                    <div class="row table-head border d-none d-md-flex font-weight-bold text-center">
+                            <div class="container table">
+                                <div class="row table-head border d-none d-md-flex font-weight-bold text-center">
 
 
-                                        <div class="col-md-1 my-md-auto py-2">
-                                            Passport
-                                        </div>
-                                        <div class="col-md-3 my-md-auto py-2">
-                                            Name
-                                        </div>
-                                        <div class="col-md-2 my-md-auto py-2">
-                                            Reg. No
-                                        </div>
-                                        <div class="col-md-2 my-md-auto py-2">
-                                            Class
-                                        </div>
+                                    <div class="col-md-1 my-md-auto py-2">
+                                        Passport
+                                    </div>
+                                    <div class="col-md-3 my-md-auto py-2">
+                                        Name
+                                    </div>
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Reg. No
+                                    </div>
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Class
+                                    </div>
 
-                                        <div class="col-md-2 my-md-auto py-2">
-                                            Section
+                                    <div class="col-md-2 my-md-auto py-2">
+                                        Section
+                                    </div>
+                                    <div class="col-md-2 my-md-auto pt-3">
+                                        Check All <br> <input type="checkbox" class="check-all" id="">
+                                    </div>
+                                </div>
+                                @foreach ($students as $item)
+                                    <div class="row striped border py-3 text-center align-middle">
+                                        <div class="col-md-1 my-md-auto my-1">
+                                            <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
+                                                class="rounded">
                                         </div>
-                                        <div class="col-md-2 my-md-auto pt-3">
-                                            Check All <br> <input type="checkbox" class="check-all" id="">
+                                        <div class="col-md-3 my-md-auto my-1">
+                                            <div class="text-uppercase">{{ $item->full_name }}</div>
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-1">
+                                            {{ $item->reg_no }}
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-2">
+                                            {{ $item->school_class->name }}
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-2">
+                                            {{ $item->section->name }}
+                                        </div>
+                                        <div class="col-md-2 my-md-auto my-1">
+                                            <input class="check" type="checkbox" name="students[]" value="{{ $item->id }}"
+                                                id="">
                                         </div>
                                     </div>
-                                    @foreach ($students as $item)
-                                        <div class="row striped border py-3 text-center align-middle">
-                                            <div class="col-md-1 my-md-auto my-1">
-                                                <img width="100" height="100" src="{{ $item->avatar }}" alt="image"
-                                                    class="rounded">
-                                            </div>
-                                            <div class="col-md-3 my-md-auto my-1 font-weight-bold">
-                                                <div class="text-secondary text-uppercase">{{ $item->full_name }}</div>
-                                            </div>
-                                            <div class="col-md-2 my-md-auto my-1 font-weight-bold">
-                                                {{ $item->reg_no }}
-                                            </div>
-                                            <div class="col-md-2 my-md-auto my-2">
-                                                {{ $item->school_class->name }}
-                                            </div>
-                                            <div class="col-md-2 my-md-auto my-2">
-                                                {{ $item->section->name }}
-                                            </div>
-                                            <div class="col-md-2 my-md-auto my-1">
-                                                {{ $item->section->name }}
-                                            </div>
-                                            <div class="col-md-2 my-md-auto my-1">
-                                                <input class="check" type="checkbox" name="students[]"
-                                                    value="{{ $item->id }}" id="">
-                                            </div>
-                                        </div>
-                                    @endforeach
+                                @endforeach
 
-                                </div>
                             </div>
                         </div>
                     </div>
