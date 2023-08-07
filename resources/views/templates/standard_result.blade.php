@@ -358,7 +358,7 @@
         </table>
         <br>
         <table id="foot-logo" style="width:100%; margin:2px">
-            <tr style="border:none;width:25%; text-align:center ">
+            <tr style="border:none;width:25%;">
                 <td style="border:none;"><img height="50" class="img-responsive"
                         src="{{ $generalSettings->coat_of_arm ? public_path(\Storage::url($generalSettings->coat_of_arm)) : '' }}"
                         alt="coat of arm">
@@ -371,7 +371,7 @@
                         alt="stamp">
                     <h6>Headmaster/Principal Signature</h6>
                 </td>
-                <td style="border:none; text-align:center; max-height: 100px; width:25%">
+                <td style="border:none;  max-height: 100px; width:25%">
                     <div>
                         <h5>Verify Result</h5>
                         <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">
