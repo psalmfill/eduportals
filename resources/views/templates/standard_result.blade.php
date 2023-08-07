@@ -371,7 +371,7 @@
                         alt="stamp">
                     <h6>Headmaster/Principal Signature</h6>
                 </td>
-                <td style="border:none;  max-height: 100px; width:25%">
+                <td style="border:none;text-align:right;  max-height: 100px; width:25%">
                     <div>
                         <h5>Verify Result</h5>
                         <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">
