@@ -93,7 +93,8 @@
                     <th rowspan="">S/N</th>
                     <th class="text-center" rowspan="">Reg No</th>
                     <th class="text-center" rowspan="">Name</th>
-                    <th class="text-center" rowspan="">Total</th>
+                    <th class="text-center" rowspan="">Total <br>({{ $exam->total_mark * $subjects->count() }})
+                    </th>
                     <th class="text-center" rowspan="">Pos</th>
                     <th class="text-center">Student Average</th>
 

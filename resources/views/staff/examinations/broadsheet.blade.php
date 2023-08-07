@@ -122,12 +122,7 @@
                                     order: [
                                         [5, 'desc'],
                                     ],
-                                    buttons: [
-                                        'copyHtml5',
-                                        'excelHtml5',
-                                        'csvHtml5',
-                                        // 'pdfHtml5'
-                                    ]
+
                                 });
                             });
                         </script>
@@ -164,7 +159,8 @@
                                             <th rowspan="">S/N</th>
                                             <th rowspan="">Reg No</th>
                                             <th rowspan="">Name</th>
-                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Total <br>({{ $exam->total_mark * $subjects->count() }})
+                                            </th>
                                             <th class="text-center">Pos</th>
                                             <th class="text-center">Student Average</th>
                                             <?php $subCount = $subjects->count(); ?>

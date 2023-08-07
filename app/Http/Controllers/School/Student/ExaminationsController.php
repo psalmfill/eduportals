@@ -130,7 +130,8 @@ class ExaminationsController extends Controller
                 'session',
                 'section',
                 'generalSettings',
-                'pin'
+                'pin',
+                'type'
 
             ));
         } else {
@@ -235,7 +236,8 @@ class ExaminationsController extends Controller
                 'affectiveTrait',
                 'psychomotorResult',
                 'affectiveTraitResult',
-                'pin'
+                'pin',
+                'type'
             ));
         }
         return $html;
