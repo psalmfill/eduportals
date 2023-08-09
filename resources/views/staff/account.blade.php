@@ -31,12 +31,12 @@
                             <form action="" method="post">
                                 @csrf
                                 <img width="200" height="200" class="img-circle"
-                                    src="{{user()->image?asset(user()->avatar):'http://placehold.it/200x150'}}" alt="image"
-                                    class="img-responsiv img-fluid">
-                                <input class="custom-control-input" name="image" id="image" data-validate="required"
-                                    type="file" />
+                                    src="{{ user()->image ? asset(user()->avatar) : 'http://placehold.it/200x150' }}"
+                                    alt="image" class="img-responsiv img-fluid">
+                                {{-- <input class="custom-control-input" name="image" id="image" data-validate="required"
+                                    type="file" /> --}}
                                 <br>
-                                <button class="btn btn-primary">update</button>
+                                {{-- <button class="btn btn-primary">update</button> --}}
                                 @error('image')
                                     <div>
                                         <small class="text-danger">{{ $message }}</small>
@@ -159,8 +159,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label" for="country">Country</label>
-                                            <input class="form-control" name="country" id="country" data-validate="required"
-                                                value="{{ $staff->country }}" placeholder="Country" />
+                                            <input class="form-control" name="country" id="country"
+                                                data-validate="required" value="{{ $staff->country }}"
+                                                placeholder="Country" />
                                             @error('country')
                                                 <div>
                                                     <small class="text-danger">{{ $message }}</small>
@@ -173,8 +174,9 @@
                                         <div class="form-group">
                                             <label class="control-label" for="state">State</label>
 
-                                            <input class="form-control" name="state" id="state" data-validate="required"
-                                                value="{{ $staff->state }}" placeholder="State" />
+                                            <input class="form-control" name="state" id="state"
+                                                data-validate="required" value="{{ $staff->state }}"
+                                                placeholder="State" />
                                             @error('state')
                                                 <div>
                                                     <small class="text-danger">{{ $message }}</small>
@@ -187,8 +189,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label" for="city">City</label>
-                                            <input class="form-control" name="city" id="city" data-validate="required"
-                                                value="{{ $staff->city }}" placeholder="City" />
+                                            <input class="form-control" name="city" id="city"
+                                                data-validate="required" value="{{ $staff->city }}"
+                                                placeholder="City" />
                                             @error('city')
                                                 <div>
                                                     <small class="text-danger">{{ $message }}</small>
@@ -386,7 +389,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5 bg-secondary">
+            <div class="col-md-5 ">
                 <h3>Update Password</h3>
                 <div class="card">
                     <div class="card-body">

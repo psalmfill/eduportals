@@ -411,6 +411,14 @@
                  </div>
              </li>
          @endif
+
+
+         <li class="nav-item">
+             <a class="nav-link" href="{{ route('account.setting') }}" aria-controls="cbt-basic">
+                 <i class="mdi mdi-account menu-icon"></i>
+                 <span class="menu-title">My Account</span>
+             </a>
+         </li>
          <li class="nav-item">
              <a class="nav-link" href="{{ route('staff.logout') }}">
                  <i class="mdi mdi-logout menu-icon"></i>
