@@ -305,7 +305,9 @@
                             <label for="field-4" class="col-sm-5 control-label">Current Session</label>
                             <select name="current_session" id="" class="form-control">
                                 @foreach (App\Models\AcademicSession::all() as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ $generalSettings->current_session_id == $item->id ? ' selected' : '' }}>
+                                        {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -317,7 +319,9 @@
                             <label for="field-4" class="col-sm-5 control-label">Current Term</label>
                             <select name="current_term" id="" class="form-control">
                                 @foreach (App\Models\Term::where('school_id', $school->id)->get() as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ $generalSettings->current_term_id == $item->id ? ' selected' : '' }}>
+                                        {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
