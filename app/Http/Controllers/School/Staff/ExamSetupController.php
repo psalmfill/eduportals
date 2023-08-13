@@ -197,6 +197,69 @@ class ExamSetupController extends Controller
         }
 
         $psychomotor = Psychomotor::where('school_id', getSchool()->id)->with('subjects')->first();
+        if (!$psychomotor) {
+            // create sample
+            DB::beginTransaction();
+            $psychomotor = Psychomotor::create([
+                'title' => 'Psychomotor',
+                'school_id' => request()->route()->school_id
+            ]);
+            if ($psychomotor) {
+                //save subjects
+                $subjects = [
+                    'Handling of Tools',
+                    'Sport and Games',
+                    'Drawing/Painting',
+                    ' Music',
+                    'Handwriting',
+                    'ICT',
+                    ' Public Speaking',
+                    'Logical Thinking',
+                    'Verbal Fluency',
+                    'Crafts'
+                ];
+                foreach ($subjects as $subject) {
+                    PsychomotorSubject::create([
+                        'title' => $subject,
+                        'school_id' => request()->route()->school_id,
+                        'psychomotor_id' => $psychomotor->id
+                    ]);
+                }
+                $grades = [
+                    [
+                        'name' => 'A',
+                        'remark' => 'Excellent',
+                    ],
+                    [
+                        'name' => 'B',
+                        'remark' => 'Very Good',
+                    ],
+                    [
+                        'name' => 'C',
+                        'remark' => 'Good',
+                    ],
+                    [
+                        'name' => 'D',
+                        'remark' => 'Fair',
+                    ],
+                    [
+                        'name' => 'E',
+                        'remark' => 'Poor',
+                    ],
+                ];
+
+                foreach ($grades as $grade) {
+                    PsychomotorGrade::create([
+                        'name' => $grade['name'],
+                        'remark' => $grade['remark'],
+                        'school_id' => request()->route()->school_id,
+                        'psychomotor_id' => $psychomotor->id
+                    ]);
+                }
+            }
+            DB::commit();
+            $psychomotor = Psychomotor::where('school_id', getSchool()->id)->with('subjects')->first();
+        }
 
         return view('staff.examinations.psychomotors', compact('psychomotor'));
     }
@@ -263,6 +326,69 @@ class ExamSetupController extends Controller
         }
 
         $affectiveTrait = AffectiveTrait::where('school_id', getSchool()->id)->with('subjects')->first();
+        if (!$affectiveTrait) {
+            // create sample
+            DB::beginTransaction();
+            $affectiveTrait = AffectiveTrait::create([
+                'title' => 'Affective Domain',
+                'school_id' => request()->route()->school_id
+            ]);
+            if ($affectiveTrait) {
+                //save subjects
+                $subjects = [
+                    'Punctuality',
+                    'Cooperation',
+                    'Politeness',
+                    'Attentiveness',
+                    'Neatness',
+                    'Perseverance',
+                    'Honesty',
+                    'Attitude to Work',
+                    ' Leadership Skill',
+                    ' Self Control',
+                ];
+                foreach ($subjects as $subject) {
+                    AffectiveTraitSubject::create([
+                        'title' => $subject,
+                        'school_id' => request()->route()->school_id,
+                        'affective_trait_id' => $affectiveTrait->id
+                    ]);
+                }
+                $grades = [
+                    [
+                        'name' => 'A',
+                        'remark' => 'Excellent',
+                    ],
+                    [
+                        'name' => 'B',
+                        'remark' => 'Very Good',
+                    ],
+                    [
+                        'name' => 'C',
+                        'remark' => 'Good',
+                    ],
+                    [
+                        'name' => 'D',
+                        'remark' => 'Fair',
+                    ],
+                    [
+                        'name' => 'E',
+                        'remark' => 'Poor',
+                    ],
+                ];
+
+                foreach ($grades as $grade) {
+                    AffectiveTraitGrade::create([
+                        'name' => $grade['name'],
+                        'remark' => $grade['remark'],
+                        'school_id' => request()->route()->school_id,
+                        'affective_trait_id' => $affectiveTrait->id
+                    ]);
+                }
+            }
+            DB::commit();
+            $affectiveTrait = AffectiveTrait::where('school_id', getSchool()->id)->with('subjects')->first();
+        }
 
         return view('staff.examinations.affective_traits', compact('affectiveTrait'));
     }
