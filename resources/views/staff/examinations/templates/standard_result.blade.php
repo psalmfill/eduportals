@@ -36,7 +36,7 @@
             background-position: center;
             background-color: rgba(255, 255, 255, 0.8);
             background-blend-mode: lighten;
-            background-size: 60%;
+            background-size: 30%;
             width: 842px !important;
             border: 1px solid #000;
             color: #000;
@@ -46,6 +46,16 @@
             font-size: 9pt;
             text-transform: capitalize
                 /* white-space: nowrap; */
+        }
+
+        #result::after {
+            content: "Draft Copy";
+            display: block;
+            font-size: 150px;
+            rotate: -45deg;
+            z-index: -10;
+            position: absolute;
+            top: 60%
         }
 
         #result table {
