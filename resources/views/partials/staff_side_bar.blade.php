@@ -278,7 +278,7 @@
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('grades.index') }}">
-                                             <span class="title">Result Remarks</span>
+                                             <span class="title">Grades</span>
                                          </a>
                                      </li>
                                      <li class="nav-item">
