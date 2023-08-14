@@ -284,7 +284,7 @@
                                         // $ps = App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id);
                                         $ps = $affectiveTraitResult
                                             ->where('student_id', $student->id)
-                                            ->where('subject', $subject->title)
+                                            ->where('subject', $sub->title)
                                             ->first();
                                         
                                     @endphp
@@ -327,7 +327,7 @@
                                         // $ps = App\Models\PsychomotorResult::getStudentPsychomotor($currentClass->id, null, $exam->id, $sub->title, $student->id);
                                         $ps = $psychomotorResult
                                             ->where('student_id', $student->id)
-                                            ->where('subject', $subject->title)
+                                            ->where('subject', $sub->title)
                                             ->first();
                                         
                                     @endphp
