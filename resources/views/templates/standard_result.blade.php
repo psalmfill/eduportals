@@ -136,8 +136,9 @@
                 <th style="width:60%">
                     <div>
                         <h1 style="font-size:18px">{{ $exam->school->name }}</h1>
+                        <h2>{{ $exam->school->slogan }}</h2>
                         <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
-                        <p>{{ $exam->school->country }}</p>
+                        <p>{{ $exam->school->state }}, {{ $exam->school->country }}</p>
                     </div>
                 </th>
                 <th style="width:20%"><img width="130" height="130" class="img-100"
