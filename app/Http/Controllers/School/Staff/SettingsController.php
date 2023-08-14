@@ -80,6 +80,8 @@ class SettingsController extends Controller
             $generalSettings->current_session_id = $request->current_session;
             $generalSettings->current_term_id = $request->current_term;
             $generalSettings->date_format = $request->date_format;
+            $generalSettings->slogan = $request->slogan;
+            $generalSettings->tagline = $request->tagline;
 
             $school->save();
             $generalSettings->save();
@@ -113,7 +115,6 @@ class SettingsController extends Controller
                     Storage::delete($backdropImageDestination);
                 }
             }
-            dd($e);
             return redirect()->back()->with('error', 'Could not Update Settings ');
         }
     }
