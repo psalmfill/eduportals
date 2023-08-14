@@ -144,9 +144,9 @@
                 <th style="width:60%; position:relative; text-align:center">
                     <div style="top:0">
                         <h1>{{ $exam->school->name }}</h1>
-                        <h2>{{ $exam->school->slogan }}</h1>
-                            <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
-                            <p>{{ $exam->school->state }}, {{ $exam->school->country }}</p>
+                        <h2>{{ getSettings()->slogan }}</h2>
+                        <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
+                        <p>{{ $exam->school->state }}, {{ $exam->school->country }}</p>
                     </div>
                 </th>
                 <th style="width:20%"><img width="130" height="130" class="img-100"

@@ -136,7 +136,7 @@
                 <th style="width:60%">
                     <div>
                         <h1 style="font-size:18px">{{ $exam->school->name }}</h1>
-                        <h2>{{ $exam->school->slogan }}</h2>
+                        <h2>{{ getSettings()->slogan }}</h2>
                         <address>{{ $exam->school->address }}, {{ $exam->school->city }}</address>
                         <p>{{ $exam->school->state }}, {{ $exam->school->country }}</p>
                     </div>
