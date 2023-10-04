@@ -181,6 +181,30 @@
                  </div>
              </li>
          @endif
+
+         {{-- <li class="nav-item">
+             <a class="nav-link" data-toggle="collapse" href="#academics-basic" aria-expanded="false"
+                 aria-controls="academics-basic">
+                 <i class="mdi mdi-library-books menu-icon"></i>
+                 <span class="menu-title">Academics</span>
+                 <i class="typcn typcn-chevron-right menu-arrow"></i>
+             </a>
+             <div class="collapse" id="academics-basic">
+
+                 <ul class="nav flex-column sub-menu">
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ route('learning-resources.index') }}">
+                             <span class="title">Learning Resources</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ route('subjects.index') }}">
+                             <span class="title">Assignments</span>
+                         </a>
+                     </li>
+                 </ul>
+             </div>
+         </li> --}}
          <li class="nav-item">
              <a class="nav-link" data-toggle="collapse" href="#examination-basic" aria-expanded="false"
                  aria-controls="examination-basic">

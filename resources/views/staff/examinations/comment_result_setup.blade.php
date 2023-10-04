@@ -153,26 +153,27 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('page_scripts')
-        <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
-        <script>
-            function addRow(e) {
-                // e.preventDefault();
-                let count = $('.topic').length;
-                if (count > 5) {
-                    alert('maximum topic allowed has been reached');
-                    return;
-                }
-                console.log(count);
-                $('#topics').append(` <div class="form-group">
+@section('page_scripts')
+    <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
+    <script>
+        function addRow(e) {
+            // e.preventDefault();
+            let count = $('.topic').length;
+            if (count > 5) {
+                alert('maximum topic allowed has been reached');
+                return;
+            }
+            console.log(count);
+            $('#topics').append(` <div class="form-group">
                    <input type="text" name="topics[]" placeholder="Enter topic name" class="form-control topic">
                </div>`)
-            }
-            $('#exams-setup').on('submit', function(e) {
-                e.preventDefault();
-                console.log(e);
-            })
-        </script>
-    @endsection
+        }
+        $('#exams-setup').on('submit', function(e) {
+            e.preventDefault();
+            console.log(e);
+        })
+    </script>
+@endsection

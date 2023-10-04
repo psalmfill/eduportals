@@ -57,6 +57,20 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="section" id="section" class="form-control input-lg" required>
+                                        <option value="">Select Section</option>
+                                        @isset($sections)
+                                            @foreach ($sections as $section)
+                                                <option value="{{ $section->id }}"
+                                                    {{ isset($section_id) && $section_id == $section->id ? 'selected' : '' }}>
+                                                    {{ $section->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i>
                                     Search</button>
                             </div>

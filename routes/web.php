@@ -60,6 +60,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 'StaffController@resetPassword'
             )->name('staff.resetPassword');
             Route::resource('sections', 'SectionsController');
+            Route::resource('learning-resources', 'LearningResourceController');
             Route::resource('subjects', 'SubjectsController');
             Route::get('classes/subjects', 'SchoolClassesController@subjects')->name('classes.subjects');
             Route::post('classes/subjects', 'SchoolClassesController@subjectsAssign')->name('classes.subjects.assign');

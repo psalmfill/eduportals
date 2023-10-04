@@ -42,9 +42,10 @@ class StudentFormRequest extends FormRequest
             'parent.first_name' => 'required|string|min:3',
             'parent.last_name' => 'required|string|min:3',
             'parent.other_name' => 'string|nullable',
-            'parent.phone_number' => 'required|numeric',
             'parent.address' => 'required',
-            'parent.email' => 'required'
+            'parent.phone_number' => 'required|numeric',
+            'parent.username' => 'required',
+            'parent.email' => 'required_without_all:username,phone_number',
 
         ];
     }

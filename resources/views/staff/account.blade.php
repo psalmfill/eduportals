@@ -12,7 +12,7 @@
         <li>
             <a href="#">
                 <i class="entypo-users"></i>
-                Classes
+                Account
             </a>
         </li>
     </ol>

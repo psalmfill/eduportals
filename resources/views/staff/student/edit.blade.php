@@ -326,7 +326,7 @@
                         <fieldset>
                             <legend>Parent/Guardian</legend>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="parent_first_name">First Name</label>
                                         <input type="text" name="parent[first_name]"
@@ -336,7 +336,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="parent_last_name">Last Name</label>
                                         <input type="text" name="parent[last_name]"
@@ -346,7 +346,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="parent_other_name">Other Name</label>
                                         <input type="text" name="parent[other_name]"
@@ -358,29 +358,47 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="parent_username">Username</label>
+                                        <input type="text" name="parent[username]"
+                                            value="{{ old('parent.username') ?? $student->parent->username }}"
+                                            class="form-control">
+                                        @error('parent.username')
+                                            <div>
+                                                <small class="text-danger">{{ $message }}</small>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="parent_email">Email</label>
                                         <input type="text" name="parent[email]" value="{{ $student->parent->email }}"
                                             class="form-control">
                                     </div>
+                                    @error('parent.email')
+                                        <div>
+                                            <small class="text-danger">{{ $message }}</small>
+                                        </div>
+                                    @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="parent_phone_number">Phone Number</label>
                                         <input type="text" name="parent[phone_number]"
                                             value="{{ $student->parent->phone_number }}" class="form-control">
-                                        @error('parent_phone_number')
+                                        @error('parent.phone_number')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="other_name">Address</label>
                                         <input type="text" name="parent[address]"
                                             value="{{ $student->parent->address }}" class="form-control">
-                                        @error('parent_address')
+                                        @error('parent.address')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

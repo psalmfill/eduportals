@@ -76,7 +76,9 @@ class StudentsController extends Controller
 
 
             //create Parent
-            $parent = User::where('email', $request->parent['email'])->first();
+            $parent = User::where('email', $request->parent['email'])
+                ->orWhere('username', $request->parent['username'])
+                ->orWhere('phone_number', $request->parent['phone_number'])->first();
             if (!$parent) {
 
                 $parent = new User($request->parent);

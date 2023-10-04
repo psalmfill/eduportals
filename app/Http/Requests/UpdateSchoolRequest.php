@@ -30,11 +30,11 @@ class UpdateSchoolRequest extends FormRequest
             'name' => 'required|string',
             'code' => [
                 'required', 'string',
-                Rule::unique('vendors')->ignore($id)
+                Rule::unique('schools')->ignore($id)
             ],
             'email' => [
                 'required', 'email',
-                Rule::unique('vendors')->ignore($id)
+                Rule::unique('schools')->ignore($id)
             ],
             'category' => 'required|exists:school_categories,id',
             'vendor' => 'required|exists:vendors,id',
