@@ -20,7 +20,7 @@ class CreateLearningResourcesTable extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->string('title');
             $table->string('type')->default('text');
-            $table->text('content')->default('');
+            $table->text('content')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();
             $table->foreign('school_class_id')->references('id')->on('school_classes')->onDelete('RESTRICT');
