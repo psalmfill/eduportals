@@ -182,7 +182,7 @@
              </li>
          @endif
 
-         {{-- <li class="nav-item">
+         <li class="nav-item">
              <a class="nav-link" data-toggle="collapse" href="#academics-basic" aria-expanded="false"
                  aria-controls="academics-basic">
                  <i class="mdi mdi-library-books menu-icon"></i>
@@ -198,13 +198,13 @@
                          </a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link" href="{{ route('subjects.index') }}">
+                         <a class="nav-link" href="{{ route('assignments.index') }}">
                              <span class="title">Assignments</span>
                          </a>
                      </li>
                  </ul>
              </div>
-         </li> --}}
+         </li>
          <li class="nav-item">
              <a class="nav-link" data-toggle="collapse" href="#examination-basic" aria-expanded="false"
                  aria-controls="examination-basic">

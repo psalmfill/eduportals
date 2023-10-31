@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.student')
 
 @section('page_styles')
     <!-- Imported styles on this page -->
@@ -74,6 +74,25 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
+                    @error('students')
+                        <div class=" text-center alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <br />
+                    {{-- <script type="text/javascript">
+                        jQuery(document).ready(function($) {
+                            var $table4 = jQuery("#table-4");
+
+                            $table4.DataTable({
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    'copyHtml5',
+                                    'excelHtml5',
+                                    'csvHtml5',
+                                    'pdfHtml5'
+                                ]
+                            });
+                        });
+                    </script> --}}
 
                     <div class="container table">
                         <div class="row table-head border d-none d-md-flex font-weight-bold">
@@ -90,7 +109,7 @@
                                 Action
                             </div>
                         </div>
-                        @if ($learningResources->count() > 0)
+                        @isset($learningResources)
                             @foreach ($learningResources as $item)
                                 <div class="row striped border py-3 align-middle">
 
@@ -106,100 +125,70 @@
                                     <div class="col-md-2 my-md-auto my-1">
                                         <div class="d-flex">
                                             @if ($item->type == 'text')
-                                                <a href="{{ route('learning-resources.show', $item->id) }}"
+                                                <a href="{{ route('student.learning-resources.show', $item->id) }}"
                                                     class="btn btn-info btn-sm "> View</a>
                                             @else
-                                                <a href="{{ route('learning-resources.download', $item->id) }}"
+                                                <a href="{{ route('student.learning-resources.download', $item->id) }}"
                                                     class="btn btn-info btn-sm ">
                                                     Download</a>
-                                            @endif
-                                            @if (!(user() instanceof \App\Models\Student))
-                                                <a href="{{ route('learning-resources.edit', $item->id) }}"
-                                                    class="btn btn-secondary btn-sm mx-2">
-                                                    Edit</a>
-                                                <button class="btn btn-danger btn-sm mr-4"
-                                                    onclick="deleteResource({{ $item->id }})">
-                                                    Delete</button>
-                                                <form action="{{ route('learning-resources.destroy', $item->id) }}"
-                                                    method="POST" id="delete-form-{{ $item->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
-                        @else
-                            <div class="col-md-12 my-md-auto py-2">
-                                <h3 class="text-center alert alert-info">
-                                    Nothing to show here
-                                </h3>
-
-                                @if (!(user() instanceof \App\Models\Student))
-                                    <div class="d-flex justify-content-center">
-                                        <a href="{{ route('learning-resources.create') }}" class="btn btn-success">Add New
-                                            Resource</a>
-                                    </div>
-                                @endif
-                            </div>
                         @endisset
+
+                    </div>
                 </div>
             </div>
+            <br>
         </div>
     </div>
-    <br>
-</div>
-</div>
 @endsection
 @section('page_scripts')
-<script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
 
-<script>
-    $('#class').change(function(e) {
-        const class_id = e.target.value;
-        console.log(class_id);
-        // show_loading_bar(65);
-        //fetch class sections
-        $.ajax({
+    <script>
+        $('#class').change(function(e) {
+            const class_id = e.target.value;
+            console.log(class_id);
+            // show_loading_bar(65);
+            //fetch class sections
+            $.ajax({
 
-            url: BASE_URL + "/api/classes/" + class_id + '/sections',
-        }).done(function(data) {
-            let html = '<option>Select Section</option>'
-            data.sections.forEach(function(el) {
-                html += '<option value="' + el.name + '">' + el.name + '</option>'
-            })
+                url: BASE_URL + "/api/classes/" + class_id + '/sections',
+            }).done(function(data) {
+                let html = '<option>Select Section</option>'
+                data.sections.forEach(function(el) {
+                    html += '<option value="' + el.name + '">' + el.name + '</option>'
+                })
 
 
-            $('#section').html(html);
-            // show_loading_bar(100);
+                $('#section').html(html);
+                // show_loading_bar(100);
+            });
+        })
+        $('#next-class').change(function(e) {
+            const class_id = e.target.value;
+            console.log(class_id);
+            // show_loading_bar(65);
+            //fetch class sections
+            $.ajax({
+
+                url: BASE_URL + "/api/classes/" + class_id + '/sections',
+            }).done(function(data) {
+                let html = '<option>Select Next Section</option>'
+                data.sections.forEach(function(el) {
+                    html += '<option value="' + el.id + '">' + el.name + '</option>'
+                })
+
+
+                $('#next-section').html(html);
+                // show_loading_bar(100);
+            });
+        })
+        $(".check-all").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
         });
-    })
-    $('#next-class').change(function(e) {
-        const class_id = e.target.value;
-        console.log(class_id);
-        // show_loading_bar(65);
-        //fetch class sections
-        $.ajax({
-
-            url: BASE_URL + "/api/classes/" + class_id + '/sections',
-        }).done(function(data) {
-            let html = '<option>Select Next Section</option>'
-            data.sections.forEach(function(el) {
-                html += '<option value="' + el.id + '">' + el.name + '</option>'
-            })
-
-
-            $('#next-section').html(html);
-            // show_loading_bar(100);
-        });
-    })
-
-    function deleteResource(id) {
-        var v = confirm('Are you sure you want to delete');
-        if (v) {
-            $(document).find('#delete-form-' + id).submit();
-        }
-    }
-</script>
+    </script>
 @endsection

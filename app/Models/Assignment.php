@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
 {
+    protected $guarded = [];
+
+    protected $casts = [
+        'submission_date' => 'date',
+        'available_date' => 'date',
+    ];
+
     public function school()
     {
         return $this->belongsTo(School::class);
@@ -13,6 +20,15 @@ class Assignment extends Model
     public function school_class()
     {
         return $this->belongsTo(SchoolClass::class);
+    }
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 
     public function term()

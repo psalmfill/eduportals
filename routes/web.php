@@ -60,7 +60,9 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 'StaffController@resetPassword'
             )->name('staff.resetPassword');
             Route::resource('sections', 'SectionsController');
+            Route::resource('assignments', 'AssignmentController');
             Route::resource('learning-resources', 'LearningResourceController');
+            Route::get('learning-resources/{id}/download', 'LearningResourceController@getDownload')->name('learning-resources.download');
             Route::resource('subjects', 'SubjectsController');
             Route::get('classes/subjects', 'SchoolClassesController@subjects')->name('classes.subjects');
             Route::post('classes/subjects', 'SchoolClassesController@subjectsAssign')->name('classes.subjects.assign');
@@ -195,6 +197,12 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::get('attendance', 'HomeController@viewAttendance')->name('student.attendance');
             Route::get('results', 'ExaminationsController@index')->name('student.result');
             Route::post('results', 'ExaminationsController@getResult')->name('student.result.fetch');
+            Route::get('learning-resources', 'LearningResourcesController@index')->name('student.learning-resources.index');
+            Route::get('learning-resources/{id}', 'LearningResourcesController@show')->name('student.learning-resources.show');
+            Route::get('learning-resources/{id}/download', 'LearningResourcesController@getDownload')->name('student.learning-resources.download');
+
+            Route::get('assignments', 'AssignmentController@index')->name('student.assignments.index');
+            Route::get('assignments/{id}', 'AssignmentController@show')->name('student.assignments.show');
         });
     });
 });

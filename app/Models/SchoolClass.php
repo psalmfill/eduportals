@@ -10,12 +10,17 @@ class SchoolClass extends Model
 
     public function sections()
     {
-        return $this->belongsToMany(Section::class,'school_class_section','school_class_id','section_id');
+        return $this->belongsToMany(Section::class, 'school_class_section', 'school_class_id', 'section_id');
     }
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class,'school_class_section_subject','school_class_id','subject_id')
-        ->withPivot('section_id','school_id');
+        return $this->belongsToMany(Subject::class, 'school_class_section_subject', 'school_class_id', 'subject_id')
+            ->withPivot('section_id', 'school_id');
+    }
+
+    public function learning_resources()
+    {
+        return $this->hasMany(LearningResources::class);
     }
 }
