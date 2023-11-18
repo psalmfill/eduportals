@@ -161,6 +161,7 @@
                                                             <input type="number"
                                                                 name="students[{{ $item->id }}][mark][{{ $type->id }}]"
                                                                 min="0" max="{{ $type->mark }}" class="form-control"
+                                                                style="padding: 20% 4px; text-align:center"
                                                                 value="{{ $mark ? $mark->score : '' }}">
                                                         </td>
                                                     @endforeach
