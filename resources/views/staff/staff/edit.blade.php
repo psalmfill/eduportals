@@ -27,8 +27,6 @@
         <div class="card-body">
             <div class="well well-sm">
                 <h4>Please fill the details to update staff.</h4>
-
-
                 <form id="rootwizard-2" method="post" action="{{ route('staff.update', $staff->id) }}"
                     class="form-wizard validate" enctype="multipart/form-data">
                     @csrf
@@ -491,9 +489,9 @@
                                         <label class="control-label" for="passport">Passport</label>
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"
-                                                style="max-width: 200px; max-height: 150px">
+                                                style="max-width: 200px">
                                                 <img src="{{ $staff->image ? asset($staff->avatar) : 'http://placehold.it/200x150' }}"
-                                                    class="h-100 w-100" alt="...">
+                                                    class="img-fluid" alt="...">
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <span class="btn btn-white btn-file">

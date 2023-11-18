@@ -38,13 +38,17 @@
                     <div class="col-md-1 my-md-auto py-2">
                         Passport
                     </div>
+
+                    <div class="col-md-2 my-md-auto py-2">
+                        Username
+                    </div>
                     <div class="col-md-3 my-md-auto py-2">
                         Name
                     </div>
-                    <div class="col-md-2 my-md-auto py-2">
+                    <div class="col-md-1 my-md-auto py-2">
                         Phone Number
                     </div>
-                    <div class="col-md-2 my-md-auto py-2">
+                    <div class="col-md-1 my-md-auto py-2">
                         Email Address
                     </div>
                     <div class="col-md-2 my-md-auto py-2">
@@ -55,21 +59,24 @@
                     </div>
                 </div>
                 @foreach ($staff as $item)
-                    <div class="row striped border py-3 text-center align-middle">
+                    <div class="row striped border py-3 text-center align-middl">
                         <div class="col-md-1 my-md-auto my-1">
                             <img width="100" height="100" src="{{ $item->avatar }}" alt="image" class="rounded">
+                        </div>
+                        <div class="col-md-2 my-md-auto my-1 ">
+                            <div class="">{{ $item->username }}</div>
                         </div>
                         <div class="col-md-3 my-md-auto my-1 ">
                             <div class="text-uppercase">{{ $item->name }}</div>
                         </div>
-                        <div class="col-md-2 my-md-auto my-1 ">
+                        <div class="col-md-1 my-md-auto my-1 ">
                             {{ $item->phone_number }}
                         </div>
-                        <div class="col-md-2 my-md-auto my-1">
+                        <div class="col-md-1 my-md-auto my-1">
                             {{ $item->email }}
                         </div>
                         <div class="col-md-2 my-md-auto my-2">
-                            {{ $item->address }}
+                            {{ $item->address_1 }}
                         </div>
                         <div class="col-md-2 my-md-auto my-1">
                             <div class="d-flex justify-content-center">

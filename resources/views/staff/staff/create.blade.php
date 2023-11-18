@@ -58,9 +58,10 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="control-label" for="first_name">First Name</label>
+                                    <label class="control-label" for="first_name">First Name <span
+                                            class="required">*</span></label>
                                     <input class="form-control" name="first_name" id="first_name" data-validate="required"
-                                        placeholder="Your first name" />
+                                        placeholder="Your first name" value="{{ old('first_name') }}" />
                                     @error('first_name')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -73,7 +74,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="last_name">Last Name</label>
                                     <input class="form-control" name="last_name" id="last_name" data-validate="required"
-                                        placeholder="Your last name" />
+                                        placeholder="Your last name" value="{{ old('last_name') }}" />
                                     @error('last_name')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -86,7 +87,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="other_name">Other Name</label>
                                     <input class="form-control" name="other_name" id="other_name"
-                                        placeholder="Your other name" />
+                                        placeholder="Your other name" value="{{ old('other_name') }}" />
                                     @error('other_name')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -111,7 +112,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="date_of_birth">Date of Birth</label>
                                     <input type="date" class="form-control" name="date_of_birth" id="date_of_birth"
-                                        data-validate="required" placeholder="Your full name" data-mask="date" />
+                                        data-validate="required" placeholder="Your full name" data-mask="date"
+                                        value="{{ old('date_of_birth') }}" />
                                     @error('date_of_birth')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -123,7 +125,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="email">Email Address</label>
                                     <input class="form-control" name="email" id="email"
-                                        placeholder="Your email address" data-mask="email" />
+                                        placeholder="Your email address" data-mask="email" value="{{ old('email') }}" />
                                     @error('email')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -135,7 +137,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="phone_number">Phone number</label>
                                     <input class="form-control" name="phone_number" id="phone_number"
-                                        placeholder="Your phone number" />
+                                        placeholder="Your phone number" value="{{ old('phone_number') }}" />
                                     @error('phone_number')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -155,7 +157,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="address_1">Address 1</label>
                                     <input class="form-control" name="address_1" id="address_1" data-validate="required"
-                                        placeholder="Enter your street address" />
+                                        placeholder="Enter your street address" value="{{ old('address_1') }}" />
                                     @error('address_1')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -172,7 +174,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="address_2">Address 2</label>
                                     <input class="form-control" name="address_2" id="address_line_2"
-                                        placeholder="(Optional) Secondary Address" />
+                                        placeholder="(Optional) Secondary Address" value="{{ old('address_2') }}" />
                                     @error('address_2')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -189,7 +191,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="country">Country</label>
                                     <input class="form-control" name="country" id="country" data-validate="required"
-                                        placeholder="Country" />
+                                        placeholder="Country" value="{{ old('country') }}" />
                                     @error('country')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -203,7 +205,7 @@
                                     <label class="control-label" for="state">State</label>
 
                                     <input class="form-control" name="state" id="state" data-validate="required"
-                                        placeholder="State" />
+                                        placeholder="State" value="{{ old('state') }}" />
                                     @error('state')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -217,7 +219,7 @@
                                 <div class="form-group">
                                     <label class="control-label" for="city">City</label>
                                     <input class="form-control" name="city" id="city" data-validate="required"
-                                        placeholder="City" />
+                                        placeholder="City" value="{{ old('city') }}" />
                                     @error('city')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -242,7 +244,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="prim_subject">Certificate Obtained</label>
                                     <input class="form-control" name="primary[subject]" id="prim_subject"
-                                        data-validate="require" placeholder="Graduation Degree" />
+                                        data-validate="require" placeholder="Graduation Degree"
+                                        value="{{ old('primary.subject') }}" />
                                     @error('primary.subject')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -254,7 +257,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="prim_school">School Name</label>
-                                    <input class="form-control" name="primary[school]" id="prim_school" />
+                                    <input class="form-control" name="primary[school]" id="prim_school"
+                                        value="{{ old('primary.school') }}" />
                                     @error('primary.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -267,7 +271,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="prim_start_date">Start Date</label>
                                     <input type="date" class="form-control datepicker" name="primary[start_date]"
-                                        id="prim_start_date" data-start-view="2" placeholder="(Optional)" />
+                                        id="prim_start_date" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('primary.start_date') }}" />
                                     @error('primary.start_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -280,7 +285,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="prim_end_date">End Date</label>
                                     <input type="date" class="form-control datepicker" name="primary[end_date]"
-                                        id="prim_end_date" data-start-view="2" placeholder="(Optional)" />
+                                        id="prim_end_date" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('primary.end_date') }}" />
                                     @error('primary.end_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -303,7 +309,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_subject">Certificate Obtained</label>
                                     <input class="form-control" name="secondary[subject]" id="second_subject"
-                                        data-validate="require" placeholder="High School" />
+                                        data-validate="require" placeholder="High School"
+                                        value="{{ old('secondary.subject') }}" />
                                     @error('secondary.subject')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -315,7 +322,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="second_school">School Name</label>
-                                    <input class="form-control" name="secondary[school]" id="second_school" />
+                                    <input class="form-control" name="secondary[school]" id="second_school"
+                                        value="{{ old('secondary.school') }}" />
                                     @error('secondary.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -328,7 +336,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_date_start">Start Date</label>
                                     <input type="date" class="form-control datepicker" name="secondary[start_date]"
-                                        id="second_date_start" data-start-view="2" placeholder="(Optional)" />
+                                        id="second_date_start" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('secondary.start_date') }}" />
                                     @error('secondary.start_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -341,7 +350,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_date_end">End Date</label>
                                     <input type="date" class="form-control datepicker" name="secondary[end_date]"
-                                        id="second_date_end" data-start-view="2" placeholder="(Optional)" />
+                                        id="second_date_end" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('secondary.end_date') }}" />
                                     @error('secondary.end_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -362,7 +372,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_subject">Certificate Obtained</label>
                                     <input class="form-control" name="university[subject]" id="second_subject"
-                                        data-validate="require" placeholder="Gradration degree" />
+                                        data-validate="require" placeholder="Gradration degree"
+                                        value="{{ old('university.subject') }}" />
                                     @error('university.subject')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -374,7 +385,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="second_school">School Name</label>
-                                    <input class="form-control" name="university[school]" id="second_school" />
+                                    <input class="form-control" name="university[school]" id="second_school"
+                                        value="{{ old('university.school') }}" />
                                     @error('university.school')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -387,7 +399,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_date_start">Start Date</label>
                                     <input type="date" class="form-control datepicker" name="university[start_date]"
-                                        id="second_date_start" data-start-view="2" placeholder="(Optional)" />
+                                        id="second_date_start" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('university.start_date') }}" />
                                     @error('university.start_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -400,7 +413,8 @@
                                 <div class="form-group">
                                     <label class="control-label" for="second_date_end">End Date</label>
                                     <input type="date"class="form-control datepicker" name="secondary[end_date]"
-                                        id="second_date_end" data-start-view="2" placeholder="(Optional)" />
+                                        id="second_date_end" data-start-view="2" placeholder="(Optional)"
+                                        value="{{ old('university.end_date') }}" />
                                     @error('university.end_date')
                                         <div>
                                             <small class="text-danger">{{ $message }}</small>
@@ -426,7 +440,7 @@
                                 <input type="text" class="form-control" name="username" id="username"
                                     data-validate="required,minlength[5]"
                                     data-message-minlength="Username must have minimum of 5 chars."
-                                    placeholder="Could also be your email" />
+                                    placeholder="Could also be your email" value="{{ old('username') }}" />
                                 @error('username')
                                     <div>
                                         <small class="text-danger">{{ $message }}</small>
@@ -486,8 +500,9 @@
                                 <div class="form-group">
                                     <label for="gender">Gender</label>
                                     <select name="gender" id="gender" class="form-control">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female
+                                        </option>
                                     </select>
                                     @error('gender')
                                         <div>
@@ -506,8 +521,9 @@
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
 
                                         <div class="fileinput-preview fileinput-exists thumbnail"
-                                            style="max-width: 200px; max-height: 150px">
-                                            <img src="http://placehold.it/150x150" class="h-100 w-100" alt="...">
+                                            style="max-width: 200px">
+                                            <img src="http://placehold.it/150x150" class="h-100 w-100 img-fluid"
+                                                alt="...">
                                         </div>
                                         <div>
                                             <span class="btn btn-white btn-file">

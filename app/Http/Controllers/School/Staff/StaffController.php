@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
 use App\Models\Role;
 use App\Models\School;
 use App\Models\SchoolClass;
@@ -49,7 +51,7 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStaffRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -69,7 +71,7 @@ class StaffController extends Controller
                 $staff->state = $request->state;
                 $staff->city = $request->city;
                 $staff->email = $request->email;
-                $staff->date_of_birth =  Carbon::createFromDate(date('d/m/Y', strtotime($request->date_of_birth)))->toDateString();
+                $staff->date_of_birth = Carbon::createFromDate(date('d-m-Y', strtotime($request->date_of_birth)))->toDateString();
                 $staff->password = bcrypt($request->password);
 
                 $destination = null;
@@ -108,6 +110,7 @@ class StaffController extends Controller
                     Storage::delete($destination);
                 }
             }
+            dd($e);
             return redirect()->back()->with('error', 'Could not create new Staff ');
         }
 
@@ -145,7 +148,7 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateStaffRequest $request, $id)
     {
         try {
             DB::beginTransaction();

@@ -150,7 +150,6 @@
     </div>
     <br>
 </div>
-</div>
 @endsection
 @section('page_scripts')
 <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
