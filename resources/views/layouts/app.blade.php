@@ -31,7 +31,7 @@
         <header>
             <nav class="navbar navbar-expand-lg topnav-menu navbar-light zindex-10">
                 <div class="container">
-                    <a class="navbar-brand logo" href="index.html">
+                    <a class="navbar-brand logo" href="/">
                         <img src="/images/logo.svg" height="30" class="align-top" alt="" />
                         {{-- <img src="/images/logo-light.png" height="30" class="align-top logo-light"
                             alt="" /> --}}
@@ -49,15 +49,16 @@
 
 
                         <ul class="navbar-nav align-items-lg-center ">
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" href="/">Home</a>
-                            </li> --}}
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-sm" target="_blank" href="/get-started">Get Started</a>
+                            </li>
 
-                            <li class="nav-item ms-2">
+                            {{-- <li class="nav-item ms-2">
                                 <a class="btn btn-primary btn-sm" target="_blank"
                                     href="https://api.whatsapp.com/send?phone=2348188631121&text=I%20want%20to%20setup%20eduportals%20E-SIMS%20for%20my%20school">GET
                                     STARTED</a>
-                            </li>
+                            </li> --}}
+
 
                         </ul>
 
@@ -69,6 +70,7 @@
 
         </header>
 
+        @yield('content')
         <section class="position-relative overflow-hidden hero-13 pt-7 pt-lg-5 pb-6">
             <div class="container">
                 <div class="row align-items-center text-center text-sm-start">
@@ -146,7 +148,6 @@
             </div>
         </section>
     </div>
-    @yield('content')
 
     <!-- footer start -->
     <section class="pt-5 pb-4 bg-gradient3 position-relative">

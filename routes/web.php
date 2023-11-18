@@ -236,3 +236,4 @@ Route::group(['prefix' => 'super-admin', 'namespace' => 'Admin'], function () {
 
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/get-started', 'HomeController@getStarted')->name('get_started');
