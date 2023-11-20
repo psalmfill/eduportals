@@ -201,10 +201,19 @@ class ExaminationController extends Controller
         $exams = Exam::where('school_id', getSchool()->id)->get();
 
         $sessions = AcademicSession::all();
+        $user = user();
+        if ($user instanceof Staff)
+            $classes = $user->school_classes->unique();
+        else
+            $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+
+
         if (request()->query->count()) {
             $exam =  Exam::findOrFail($request->exam);
             $currentSession =  AcademicSession::findOrFail($request->session);
-            $currentClass =  SchoolClass::findOrFail($request->class);
+            $currentClass =
+                $classes->where('id', $request->class)->first();
+            if (!$currentClass) abort(401);
             $currentSection =  Section::findOrFail($request->section);
             $sections = $currentClass->sections;
             $mark_stores = MarkStore::where('exam_id', $exam->id)
@@ -218,11 +227,9 @@ class ExaminationController extends Controller
                 $student_ids = $mark_stores->pluck('student_id')->unique();
                 $students = Student::whereIn('id', $student_ids)->paginate(15);
             }
-            $classes = SchoolClass::where('school_id', getSchool()->id)->get();
-
             return view('staff.examinations.students', compact('sessions', 'exams', 'classes', 'sections', 'students', 'currentClass', 'currentSection', 'exam', 'currentSession', 'mark_stores'));
         }
-        $classes = SchoolClass::where('school_id', getSchool()->id)->get();
+
         return view('staff.examinations.students', compact('classes', 'exams', 'sessions'));
     }
 
