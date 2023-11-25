@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="text-white">Purchase Pins</h3>
-                    <form action="{{ route('pins.generate') }}" class="form" method="POST">
+                    <form action="{{ route('staff.pins.buy') }}" class="form" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-3">

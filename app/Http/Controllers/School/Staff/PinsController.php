@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\PDF;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -36,6 +37,10 @@ class PinsController extends Controller
         return view('staff.pins.pin_collection', compact('pinCollection'));
     }
 
+    public function buy(Request $request)
+    {
+        abort(401);
+    }
 
     public function generate(Request $request)
     {

@@ -43,6 +43,11 @@ class PinsController extends Controller
         return view('vendors.pin_collection', compact('pinCollection'));
     }
 
+    public function buy(Request $request)
+    {
+        abort(401);
+    }
+
 
     public function generate(Request $request)
     {
