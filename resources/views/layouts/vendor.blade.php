@@ -33,10 +33,10 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="{{ route('admin.dashboard') }}"><img src=""
-                        alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}">
-                    <img src="" alt="logo" /></a>
+                <a class="navbar-brand brand-logo" href="{{ route('vendor.dashboard') }}"><img
+                        src="{{ asset('images/logo.svg') }}" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="{{ route('vendor.dashboard') }}">
+                    <img src="{{ asset('images/logo.svg') }}" alt="logo" /></a>
                 <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
                     data-toggle="minimize">
                     <span class="typcn typcn-th-menu"></span>
@@ -96,7 +96,7 @@
                         <p class="sidebar-menu-title">Dashboard menu</p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-link" href="{{ route('vendor.dashboard') }}">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
@@ -112,13 +112,13 @@
                         <div class="collapse" id="schools-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('schools.index') }}">
+                                    <a class="nav-link" href="{{ route('vendor.schools.index') }}">
                                         <span class="title">My Schools</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('schools.create') }}">
+                                    <a class="nav-link" href="{{ route('vendor.schools.create') }}">
                                         <span class="title">Onboard School</span>
                                     </a>
                                 </li>
@@ -135,17 +135,30 @@
                         <div class="collapse" id="pins-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pins.index') }}">
+                                    <a class="nav-link" href="{{ route('vendor.pins.index') }}">
                                         <span class="title">Buy Pins</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pins.collections') }}">
+                                    <a class="nav-link" href="{{ route('vendor.pins.collections') }}">
                                         <span class="title">Collections</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('vendor.student_transfer') }}">
+                            <i class="mdi mdi-account menu-icon"></i>
+                            <span class="menu-title">Students Transfer</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('vendor.logout') }}">
+                            <i class="mdi mdi-logout menu-icon"></i>
+                            <span class="menu-title">Logout</span>
+                        </a>
                     </li>
                 </ul>
 

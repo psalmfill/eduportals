@@ -49,8 +49,12 @@
 
 
                         <ul class="navbar-nav align-items-lg-center ">
-                            <li class="nav-item">
+                            <li class="nav-item nav-link">
                                 <a class="btn btn-primary btn-sm" target="_blank" href="/get-started">Get Started</a>
+                            </li>
+                            <li class="nav-item nav-link">
+                                <a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('vendor.login.form') }}">Login</a>
                             </li>
 
                             {{-- <li class="nav-item ms-2">

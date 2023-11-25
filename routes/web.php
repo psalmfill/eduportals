@@ -185,6 +185,11 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 )->name('staff.finances.record_fee');
                 Route::post('record-fees', 'FinanceManagementController@saveFee')->name('staff.finances.saveFee');
             });
+
+            Route::get('pins', 'PinsController@index')->name('staff.pins.index');
+            Route::post('pins', 'PinsController@buy')->name('staff.pins.buy');
+            Route::get('pins/collections', 'PinsController@collections')->name('staff.pins.collections');
+            Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('staff.pins.collections.show');
         });
 
         //STUDENTS ROUTES
@@ -233,6 +238,30 @@ Route::group(['prefix' => 'super-admin', 'namespace' => 'Admin'], function () {
         Route::resource('vendor-categories', 'VendorCategoriesController');
     });
 });
+
+Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
+
+    Route::get('login', 'LoginController@showLoginForm')->name('vendor.login.form');
+    Route::post('login', 'LoginController@authenticate')->name('vendor.login');
+
+    Route::group(['middleware' => ['auth:web', 'isVendor']], function () {
+
+        Route::get('/', 'HomeController@index')->name('vendor.dashboard');
+        Route::get('logout', 'LoginController@logout')->name('vendor.logout');
+        Route::get('pins', 'PinsController@index')->name('vendor.pins.index');
+        Route::post('pins', 'PinsController@buy')->name('vendor.pins.buy');
+        Route::get('pins/collections', 'PinsController@collections')->name('vendor.pins.collections');
+        Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('vendor.pins.collections.show');
+        Route::resource('schools', 'SchoolsController', ['names' => 'vendor.schools']);
+        Route::put('school/{school}/change-admin-password', 'SchoolsController@resetPassword')->name('school.changeAdminPassword');
+        Route::get(
+            'students-transfer',
+            'SchoolsController@transfer'
+        )->name('vendor.student_transfer');
+        Route::post('students-transfer', 'SchoolsController@processTransfer')->name('vendor.student_transfer.post');
+    });
+});
+
 
 
 Route::get('/', 'HomeController@index')->name('home');

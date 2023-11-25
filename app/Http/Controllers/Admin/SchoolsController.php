@@ -77,9 +77,9 @@ class SchoolsController extends Controller
             $school->save();
             (new SchoolClassesController)->createAlumniAndTrashClasses($school);
             DB::commit();
-            return redirect()->back()->with('message', 'vendor created successfully');
+            return redirect()->back()->with('message', 'School created successfully');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'vendor creation fail');
+            return redirect()->back()->with('error', 'School creation fail');
         }
     }
 

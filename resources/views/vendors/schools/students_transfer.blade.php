@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.vendor')
 
 @section('page_styles')
     <!-- Imported styles on this page -->
@@ -29,20 +29,35 @@
                     <h3 class="text-white">Filter Student</h3>
                     <form action="" class="form">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <select name="class" id="class" class="form-control input-lg" required>
-                                        <option value="">Select Class</option>
-                                        @foreach ($classes as $item)
+                                    <select name="school" id="school" class="form-control input-lg" required>
+                                        <option value="">Select School</option>
+                                        @foreach ($schools as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ isset($class_id) && $class_id == $item->id ? 'selected' : '' }}>
+                                                {{ isset($school_id) && $school_id == $item->id ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select name="class" id="class" class="form-control input-lg" required>
+                                        <option value="">Select Class</option>
+                                        @isset($classes)
+                                            @foreach ($classes as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ isset($class_id) && $class_id == $item->id ? 'selected' : '' }}>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <select name="section" id="section" class="form-control input-lg" required>
                                         <option value="">Select Section</option>
@@ -56,7 +71,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i>
                                     Search</button>
                             </div>
@@ -70,7 +85,8 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{ route('students.promote') }}" method="POST">
+                {{-- <form action="{{ route('students.promote') }}" method="POST"> --}}
+                <form action="" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -148,8 +164,18 @@
                     </div>
                     <br>
                     <div class="row bg-dark pt-3">
-                        <div class="col-md-3 text-white">
-                            <h4>Promotion to:</h4>
+                        <div class="col-md-1 text-white">
+                            <h4>Transfer to:</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <select name="next_school" id="next-school" class="form-control input-lg" required>
+                                    <option value="">Select School</option>
+                                    @foreach ($schools as $item)
+                                        <option value="{{ $item->id }}"> {{ $item->name }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -164,7 +190,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <select name="next_section" id="next-section" class="form-control" required>
                                     <option value="">Select Next Section</option>
@@ -174,9 +200,9 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block btn-sm">Promote to Next</button>
+                                <button class="btn btn-primary btn-block btn-sm">Transfer</button>
                             </div>
                         </div>
                     </div>
@@ -189,8 +215,31 @@
     <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
 
     <script>
+        $('#school').change(function(e) {
+            const school_id = e.target.value;
+            console.log(school_id);
+            // show_loading_bar(65);
+            //fetch class sections
+            if (school_id) {
+                $.ajax({
+
+                    url: BASE_URL + "/api/schools/" + school_id + '/classes',
+                }).done(function(data) {
+                    console.log(data);
+                    let html = '<option>Select Section</option>'
+                    data.classes.forEach(function(el) {
+                        html += '<option value="' + el.id + '">' + el.name + '</option>'
+                    })
+
+
+                    $('#class').html(html);
+                    // show_loading_bar(100);
+                });
+            }
+        })
         $('#class').change(function(e) {
             const class_id = e.target.value;
+            console.log(class_id);
             // show_loading_bar(65);
             //fetch class sections
             $.ajax({
@@ -199,7 +248,7 @@
             }).done(function(data) {
                 let html = '<option>Select Section</option>'
                 data.sections.forEach(function(el) {
-                    html += '<option value="' + el.name + '">' + el.name + '</option>'
+                    html += '<option value="' + el.id + '">' + el.name + '</option>'
                 })
 
 
@@ -207,8 +256,31 @@
                 // show_loading_bar(100);
             });
         })
+        $('#next-school').change(function(e) {
+            const school_id = e.target.value;
+            console.log(school_id);
+            // show_loading_bar(65);
+            //fetch class sections
+            if (school_id) {
+                $.ajax({
+
+                    url: BASE_URL + "/api/schools/" + school_id + '/classes',
+                }).done(function(data) {
+                    console.log(data);
+                    let html = '<option>Select Next Class</option>'
+                    data.classes.forEach(function(el) {
+                        html += '<option value="' + el.id + '">' + el.name + '</option>'
+                    })
+
+
+                    $('#next-class').html(html);
+                    // show_loading_bar(100);
+                });
+            }
+        })
         $('#next-class').change(function(e) {
             const class_id = e.target.value;
+            console.log(class_id);
             // show_loading_bar(65);
             //fetch class sections
             $.ajax({

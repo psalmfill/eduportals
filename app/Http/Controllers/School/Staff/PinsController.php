@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\School\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pin;
@@ -18,39 +18,38 @@ class PinsController extends Controller
 {
     public function index()
     {
-        $schools = School::all();
-        return view('admin.pins', compact('schools'));
+
+        $pins = Pin::where('school_id', getSchool()->id)->paginate();
+        return view('staff.pins.index', compact('pins'));
     }
 
     public function collections()
     {
-        $schools = School::all();
-        $pinCollections = PinCollection::paginate();
-        return view('admin.pin_collections', compact('pinCollections', 'schools'));
+        $pinCollections = PinCollection::where('school_id', getSchool()->id)->paginate();
+        return view('staff.pins.pin_collections', compact('pinCollections'));
     }
 
 
     public function viewCollection($id)
     {
         $pinCollection = PinCollection::find($id);
-        return view('admin.pin_collection', compact('pinCollection'));
+        return view('staff.pins.pin_collection', compact('pinCollection'));
     }
 
 
     public function generate(Request $request)
     {
         $request->validate([
-            'school' => 'required|exists:schools,id',
             'quantity' => 'required|integer|min:1',
             'days' => 'required|integer|min:1',
 
         ]);
         try {
             DB::beginTransaction();
-            $school = School::findOrFail($request->school);
+
 
             $pinCollection = PinCollection::create([
-                'school_id' => $school->id,
+                'school_id' => getSchool()->id,
                 'reference' => Str::random(),
             ]);
 
@@ -60,10 +59,10 @@ class PinsController extends Controller
                 $latestPin = Pin::latest('serial_number')->first();
                 $pin = new Pin();
                 $pin->code = $this->generateCode();
-                $pin->ref_code = $this->generateRefCode($school);
+                $pin->ref_code = $this->generateRefCode(getSchool());
                 $pin->serial_number = $this->generateSerialCode($latestPin ? (int)$latestPin->serial_number : Pin::count());
                 $pin->duration = $days;
-                $pin->school_id = $school->id;
+                $pin->school_id = getSchool()->id;
                 $pin->pin_collection_id = $pinCollection->id;
                 $pin->save();
                 $count--;

@@ -16,7 +16,7 @@ class AjaxController extends Controller
         if ($user instanceof Staff)
             $classes = $user->school_classes->unique();
         else
-            $classes = SchoolClass::where('school_id', getSchool()->id)->orderBy('name', 'desc')->get();
+            $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->orderBy('name', 'desc')->get();
 
         return response()->json([
             'classes' => $classes
@@ -92,5 +92,15 @@ class AjaxController extends Controller
         return response()->json(
             $subjects
         );
+    }
+
+    public function getSchoolClasses($id)
+    {
+
+        $classes = SchoolClass::where('school_id', $id)->orderBy('name', 'desc')->whereNotIn('name', ['Alumni', 'Trash'])->get();
+
+        return response()->json([
+            'classes' => $classes
+        ]);
     }
 }

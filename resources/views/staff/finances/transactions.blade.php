@@ -24,6 +24,49 @@
 @endsection
 
 @section('content')
+    <div class="card bg-dark">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-white">Filter Result</h3>
+                    <form action="" method="GET" class="form">
+                        {{-- @csrf --}}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="session" id="" class="form-control input-lg">
+                                        <option value="">Select Session</option>
+                                        @foreach ($sessions as $session)
+                                            <option value="{{ $session->id }}"
+                                                {{ isset($currentSession) && $currentSession->id == $session->id ? 'selected' : '' }}>
+                                                {{ $session->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="term" id="" class="form-control input-lg">
+                                        <option value="">Select Term</option>
+                                        @foreach ($terms as $term)
+                                            <option value="{{ $term->id }}"
+                                                {{ isset($currentTerm) && $currentTerm->id == $term->id ? 'selected' : '' }}>
+                                                {{ $term->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-block btn-sm"><i class="entypo-search"></i>
+                                    Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
             <h1>Finance Management</h1>

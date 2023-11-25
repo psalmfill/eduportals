@@ -439,6 +439,28 @@
                      </ul>
                  </div>
              </li>
+             <li class="nav-item">
+                 <a class="nav-link" data-toggle="collapse" href="#pins-basic" aria-expanded="false"
+                     aria-controls="pins-basic">
+                     <i class="mdi mdi-folder-account menu-icon"></i>
+                     <span class="menu-title">Pins</span>
+                     <i class="typcn typcn-chevron-right menu-arrow"></i>
+                 </a>
+                 <div class="collapse" id="pins-basic">
+                     <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.pins.index') }}">
+                                 <span class="title">Buy Pins</span>
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.pins.collections') }}">
+                                 <span class="title">Collections</span>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </li>
          @endif
 
 

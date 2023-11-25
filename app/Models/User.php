@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return  asset(Storage::url($this->image));
     }
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
+    }
 }

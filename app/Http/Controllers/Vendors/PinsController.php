@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pin;
@@ -18,22 +18,29 @@ class PinsController extends Controller
 {
     public function index()
     {
-        $schools = School::all();
-        return view('admin.pins', compact('schools'));
+        $schools = School::where('vendor_id', user()->vendor->id)->get();
+        $pins = Pin::whereHas('school', function ($q) {
+            return $q->whereHas('vendor', function ($qr) {
+                return $qr->where('vendor_id', user()->vendor->id);
+            });
+        })->paginate();
+        return view('vendors.pins', compact('schools', 'pins'));
     }
 
     public function collections()
     {
-        $schools = School::all();
-        $pinCollections = PinCollection::paginate();
-        return view('admin.pin_collections', compact('pinCollections', 'schools'));
+        $schools = School::where('vendor_id', user()->vendor->id)->get();
+        $pinCollections = PinCollection::whereHas('school', function ($q) {
+            return $q->where('vendor_id', user()->vendor->id);
+        })->paginate();
+        return view('vendors.pin_collections', compact('pinCollections', 'schools'));
     }
 
 
     public function viewCollection($id)
     {
         $pinCollection = PinCollection::find($id);
-        return view('admin.pin_collection', compact('pinCollection'));
+        return view('vendors.pin_collection', compact('pinCollection'));
     }
 
 

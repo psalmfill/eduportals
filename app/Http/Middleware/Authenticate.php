@@ -30,6 +30,9 @@ class Authenticate extends Middleware
                 return route('admin.login.form');
             }
 
+            if ($request->is('vendor') || $request->is('vendor/*')) {
+                return route('vendor.login.form');
+            }
 
 
             return route('student.login.form', getSchool()->code);

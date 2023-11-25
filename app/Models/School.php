@@ -11,9 +11,15 @@ class School extends Model
     {
         return $this->belongsToMany(Staff::class, 'school_staff', 'school_id', 'staff_id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
     }
 
     public function pins()

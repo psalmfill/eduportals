@@ -25,7 +25,7 @@
     <style>
         .content-wrapper {
             background-size: cover;
-            background-image: url({{ asset(\Storage::url(getSettings()->backdrop_image)) }}) !important;
+            background-image: url({{ getSettings() ? asset(\Storage::url(getSettings()->backdrop_image)) : '' }}) !important;
         }
     </style>
 </head>
@@ -38,7 +38,8 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-center  text-left py-5 px-4 px-sm-5">
                             <div class="brand-logo">
-                                <img src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo">
+                                <img src="{{ getSchool()->logo ? asset(\Storage::url(getSchool()->logo)) : asset('images/logo.svg') }}"
+                                    alt="logo">
 
                             </div>
                             <h4>Hello! let's get started</h4>

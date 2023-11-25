@@ -28,3 +28,5 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
         Route::get('/staff/{id}/classes/{class_id}/sections/{section_id}', 'AjaxController@getStaffClassSectionSubjects');
     });
 });
+Route::get('schools/{id}/classes', 'AjaxController@getSchoolClasses');
+Route::get('/classes/{id}/sections', 'AjaxController@getSectionsByClassId');

@@ -18,10 +18,20 @@ use Illuminate\Support\Str;
 
 class FinanceManagementController extends Controller
 {
-    public function transactions()
+    public function transactions(Request $request)
     {
-        $transactions = Transaction::where('school_id', getSchool()->id)->paginate();
-        return view('staff.finances.transactions', compact('transactions'));
+        $currentSession = AcademicSession::find($request->session);
+        $currentTerm = Term::find($request->term);
+
+        $transactions = Transaction::where('school_id', getSchool()->id)
+            ->when($currentSession, function ($q, $session) {
+                return $q->where('academic_session_id', $session->id);
+            })->when($currentTerm, function ($q, $term) {
+                return $q->where('term_id', $term->id);
+            })->paginate();
+        $sessions = AcademicSession::all();
+        $terms = Term::where('school_id', getSchool()->id)->get();
+        return view('staff.finances.transactions', compact('transactions',  'terms', 'sessions', 'currentSession', 'currentTerm'));
     }
 
     public function showTransactions(Transaction $transaction)

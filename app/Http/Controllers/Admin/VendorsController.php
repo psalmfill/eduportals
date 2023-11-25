@@ -54,7 +54,7 @@ class VendorsController extends Controller
             $admin->email = $request->admin_email;
             $admin->phone_number = $request->admin_phone_number;
             $admin->address = $request->admin_address;
-            $admin->password = bcrypt('12345678');
+            $admin->password = $request->password ? bcrypt($request->password) : bcrypt('12345678');
             $admin->role_id = 2;
             $admin->save();
 
