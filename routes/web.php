@@ -34,12 +34,9 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
 
         Route::post('staff/login', 'School\Staff\LoginController@authenticate')->name('staff.login');
 
-        Route::get('/staff/login', function () {
-            return view('staff.login');
-        })->name('staff.login.form');
-        Route::get('/login', function () {
-            return view('student.login');
-        })->name('student.login.form');
+        Route::get('/staff/login', 'School\Staff\LoginController@login')->name('staff.login.form');
+
+        Route::get('/login', 'School\Student\LoginController@login')->name('student.login.form');
         Route::post('/login', 'School\Student\LoginController@authenticate')->name('student.login');
 
         //
@@ -118,7 +115,11 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                     ->name('staff.examination.affectiveTrait.update');
 
                 Route::get('result-remarks', 'ResultRemarksController@index')->name('staff.result_remarks');
-                Route::post('result-remarks', 'ResultRemarksController@store')->name('staff.result_remarks.store');
+                Route::post(
+                    'result-remarks',
+                    'ResultRemarksController@store'
+                )->name('staff.result_remarks.store');
+                Route::post('result-remarks-exisiting', 'ResultRemarksController@storeExisting')->name('staff.result_remarks.existing');
                 Route::get('result-remarks/{id}', 'ResultRemarksController@edit')->name('staff.result_remarks.edit');
                 Route::put('result-remarks/{id}', 'ResultRemarksController@update')->name('staff.result_remarks.update');
                 Route::delete('result-remarks/{id}', 'ResultRemarksController@destroy')->name('staff.result_remarks.destroy');

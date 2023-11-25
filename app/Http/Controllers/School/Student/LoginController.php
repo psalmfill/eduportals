@@ -54,6 +54,11 @@ class LoginController extends Controller
     //     }
     // }
 
+    public function login()
+    {
+        return view('student.login');
+    }
+
     public function authenticate(Request $request)
     {
         $data = $request->only('reg_no', 'password');

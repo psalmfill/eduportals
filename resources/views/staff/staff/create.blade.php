@@ -500,7 +500,8 @@
                                 <div class="form-group">
                                     <label for="gender">Gender</label>
                                     <select name="gender" id="gender" class="form-control">
-                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male
+                                        </option>
                                         <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female
                                         </option>
                                     </select>

@@ -94,4 +94,42 @@ class ResultRemarksController extends Controller
             return redirect()->route('staff.result_remarks')->with('message', 'Successfully deleted remark');
         return redirect()->back()->with('error', 'failed deleting remark');
     }
+
+    public function storeExisting(Request $request)
+    {
+        $data = $request->validate([
+            'academic_session_id' => 'required|exists:academic_sessions,id',
+            'current_academic_session_id' => 'required|exists:academic_sessions,id',
+            'current_exam_id' => 'required|exists:exams,id',
+            'exam_id' => 'required|exists:exams,id',
+            'next_term_begins' => 'required|date',
+            'next_term_fee' => 'required|numeric',
+        ]);
+        $resultRemarks = ResultRemark::select([
+            'headmaster', 'teacher', 'max_average', 'min_average', 'decision', 'school_id', 'school_class_id'
+        ])->where([
+            ['academic_session_id', $request->academic_session_id],
+            ['exam_id', $request->exam_id],
+        ])->get();
+        if ($resultRemarks->count() == 0) {
+            return redirect()->back()->with('error', 'No existing data for selected session and term');
+        }
+        try {
+            foreach ($resultRemarks as $resultRemark) {
+                $data = $resultRemark->toArray();
+                $data['academic_session_id'] = $request->current_academic_session_id;
+                $data['exam_id'] = $request->current_exam_id;
+                $data['next_term_begins'] = $request->next_term_begins;
+                $data['next_term_fee'] = $request->next_term_fee;
+
+                $resultRemark = new ResultRemark($data);
+                $resultRemark->save();
+            }
+
+            return redirect()->back()->with('message', 'Successfully created new remarks');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'failed creating new remark');
+        }
+        return redirect()->back()->with('error', 'failed creating new remark');
+    }
 }
