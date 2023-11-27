@@ -111,6 +111,40 @@
                         </a>
                         <div class="collapse" id="schools-basic">
                             <ul class="nav flex-column sub-menu">
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="collapse" href="#staff-basic" aria-expanded="false"
+                                        aria-controls="staff-basic">
+                                        <i class="mdi mdi-folder-account menu-icon"></i>
+                                        <span class="menu-title">Staff</span>
+                                        <i class="typcn typcn-chevron-right menu-arrow"></i>
+                                    </a>
+                                    <div class="collapse" id="staff-basic">
+
+                                        <ul class="nav flex-column sub-menu">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('vendor.staff.index') }}">
+                                                    <span class="title">All Staff</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('vendor.staff.create') }}">
+                                                    <span class="title">New Staff</span>
+                                                </a>
+                                                {{-- </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('vendor.staff.assign_classes') }}">
+                                                    <span class="title">Assign Class</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('vendor.staff.assign_subjects') }}">
+                                                    <span class="title">Assign Subject</span>
+                                                </a>
+                                            </li> --}}
+                                        </ul>
+                                    </div>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('vendor.schools.index') }}">
                                         <span class="title">My Schools</span>

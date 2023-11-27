@@ -146,6 +146,7 @@ class SchoolsController extends Controller
             DB::commit();
             return redirect()->back()->with('message', 'School updated successfully');
         } catch (Exception $e) {
+            DB::rollback();
             return redirect()->back()->with('error', 'School update fail');
         }
     }

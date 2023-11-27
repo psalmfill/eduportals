@@ -260,6 +260,19 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
             'SchoolsController@transfer'
         )->name('vendor.student_transfer');
         Route::post('students-transfer', 'SchoolsController@processTransfer')->name('vendor.student_transfer.post');
+        Route::resource('staff', 'StaffController', ['names' => 'vendor.staff']);
+        Route::post(
+            'staff/{staff}/change-password',
+            'StaffController@resetPassword'
+        )->name('vendor.staff.resetPassword');
+        Route::get(
+            'staff/{staff}/manage-schools',
+            'StaffController@manageSchools'
+        )->name('vendor.staff.manageSchools');
+        Route::put(
+            'staff/{staff}/manage-schools',
+            'StaffController@UpdateSchools'
+        )->name('vendor.staff.updateSchools');
     });
 });
 

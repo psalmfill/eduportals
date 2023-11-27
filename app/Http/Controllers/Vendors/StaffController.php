@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\School\Staff;
+namespace App\Http\Controllers\Vendors;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateStaffRequest;
@@ -28,9 +28,11 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staff = School::where('id', getSchool()->id)->first()->staff()->paginate(25);
+        $staff = Staff::whereHas('schools', function ($q) {
+            return $q->where('vendor_id', user()->vendor->id);
+        })->paginate(25);
 
-        return view('staff.staff.index', compact('staff'));
+        return view('vendors.staff.index', compact('staff'));
     }
 
     /**
@@ -42,7 +44,7 @@ class StaffController extends Controller
     {
         // $roles = Role::all();
         // $designation = null;
-        return view('staff.staff.create');
+        return view('vendors.staff.create');
     }
 
     /**
@@ -113,7 +115,7 @@ class StaffController extends Controller
             return redirect()->back()->with('error', 'Could not create new Staff ');
         }
 
-        return redirect()->route('staff.index')->with('message', 'New Staff Created');
+        return redirect()->route('vendors.staff.index')->with('message', 'New Staff Created');
     }
 
     /**
@@ -125,7 +127,34 @@ class StaffController extends Controller
     public function show($id)
     {
         $staff = Staff::findOrFail($id);
-        return view('staff.staff.view', compact('staff'));
+        return view('vendors.staff.view', compact('staff'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function manageSchools($id)
+    {
+        $staff = Staff::findOrFail($id);
+        $schools =
+            School::where('vendor_id', user()->vendor->id)->get();
+        return view('vendors.staff.manage_schools', compact('staff', 'schools'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function UpdateSchools(Request $request, $id)
+    {
+        $staff = Staff::findOrFail($id);
+        $staff->schools()->sync($request->schools);
+        return redirect()->back()->with('message', ' Staff Updated');
     }
 
     /**
@@ -137,7 +166,7 @@ class StaffController extends Controller
     public function edit($id)
     {
         $staff = Staff::find($id);
-        return view('staff.staff.edit', compact('staff'));
+        return view('vendors.staff.edit', compact('staff'));
     }
 
     /**
@@ -223,9 +252,9 @@ class StaffController extends Controller
     {
         $staff = Staff::findOrFail($id);
         if ($staff->schools()->detach(getSchool()->id)) {
-            return redirect()->route('staff.index')->with('message', 'Staff Deleted');
+            return redirect()->route('vendor.staff.index')->with('message', 'Staff Deleted');
         }
-        return redirect()->route('staff.index')->with('error', 'Deletion failed');
+        return redirect()->route('vendor.staff.index')->with('error', 'Deletion failed');
     }
 
     public function assignClasses()
@@ -236,7 +265,7 @@ class StaffController extends Controller
             return $s->school_classes()->wherePivot('school_id', getSchool()->id)->get()->count();
         }); //Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id',request()->route()->school_id)->get();
         $sections = Section::where('school_id', getSchool()->id)->get();
-        return view('staff.staff.classes', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+        return view('vendors.staff.classes', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
     }
 
     public function assignClassesStore(Request $request)
@@ -263,7 +292,7 @@ class StaffController extends Controller
         });
         $sections = Section::where('school_id', getSchool()->id)->get();
         $currentStaff = Staff::find($id);
-        return view('staff.staff.classes', compact('currentStaff', 'schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+        return view('vendors.staff.classes', compact('currentStaff', 'schoolClasses', 'staff', 'staffWithClasses', 'sections'));
     }
 
     public function assignSubjects()
@@ -274,7 +303,7 @@ class StaffController extends Controller
             return $s->school_classes()->wherePivot('school_id', getSchool()->id)->get()->count();
         }); //Staff::join('school_staff', 'staff.id', '=', 'school_staff.staff_id')->where('school_staff.school_id',request()->route()->school_id)->get();
         $sections = Section::where('school_id', getSchool()->id)->get();
-        return view('staff.staff.subjects', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
+        return view('vendors.staff.subjects', compact('schoolClasses', 'staff', 'staffWithClasses', 'sections'));
     }
 
     public function assignSubjectsStore(Request $request)
