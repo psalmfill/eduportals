@@ -56,7 +56,7 @@ class HomeController extends Controller
                 if ($response->paymentable instanceof PinCollection) {
                     // check if user has already pin given the pin 
                     if ($response->paymentable->delivered) {
-                        if (user()->vendor) {
+                        if (!user()->vendor) {
                             return redirect("/staff/pins/collections/{$response->paymentable->id}");
                         }
                         return redirect("/vendor/pins/collections/{$response->paymentable->id}");
@@ -85,13 +85,18 @@ class HomeController extends Controller
                 $pin->save();
                 $count--;
             }
-            $collection = $pinCollection->pins()->with('school')->get();
+            if (!user()->vendor) {
+                return redirect("/staff/pins/collections/{$pinCollection->id}");
+            }
+            return redirect("/vendor/pins/collections/{$pinCollection->id}");
 
-            $pdf = App::make('dompdf.wrapper');
-            $pdf->loadHTML(view('templates.pins', compact('collection')));
-            $pinCollection->update(['delivered' => true]);
-            DB::commit();
-            return $pdf->download('pins.pdf');
+            // $collection = $pinCollection->pins()->with('school')->get();
+
+            // $pdf = App::make('dompdf.wrapper');
+            // $pdf->loadHTML(view('templates.pins', compact('collection')));
+            // $pinCollection->update(['delivered' => true]);
+            // DB::commit();
+            // return $pdf->download('pins.pdf');
         } catch (Exception $e) {
 
             DB::rollBack();
