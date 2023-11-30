@@ -290,4 +290,5 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/create-free-account', 'HomeController@getStarted')->name('get_started');
+Route::post('/create-free-account', 'HomeController@store')->name('get_started.store');
 Route::get('/payments/callback', 'HomeController@handlePaymentCallback')->name('payment.callback');

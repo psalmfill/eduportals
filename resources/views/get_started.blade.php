@@ -3,8 +3,24 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
+                @if (\Session::has('message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ \Session::get('message') }}
+                        <button type="button" class="close btn text-danger" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (\Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ \Session::get('error') }}
+                        <button type="button" class="close btn text-danger" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <h3>Fill in the following information to get started</h3>
-                <form action="{{ route('vendors.store') }}" method="POST">
+                <form action="{{ route('get_started.store') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -63,7 +79,9 @@
                             <select name="category" id="" class="form-control">
                                 <option value="">Select Category</option>
                                 @foreach ($vendorCategories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    <option value="{{ $cat->id }}"
+                                        {{ old('category') == $cat->id ? ' selected="selected"' : '' }}>
+                                        {{ $cat->name }}</option>
                                 @endforeach
                             </select>
                             @error('category')
@@ -120,6 +138,22 @@
                             <input type="text" name="admin_phone_number" value="{{ old('admin_phone_number') }}"
                                 class="form-control">
                             @error('admin_phone_number')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="admin_password" value="{{ old('admin_password') }}"
+                                class="form-control">
+                            @error('admin_password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Password Confirmation <span class="text-danger">*</span></label>
+                            <input type="password" name="admin_password_confirmation"
+                                value="{{ old('admin_password_confirmation') }}" class="form-control">
+                            @error('admin_password_confirmation')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>

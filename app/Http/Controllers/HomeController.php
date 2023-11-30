@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\School\Staff\PinsController;
 use App\Http\Repositories\PaymentRepository;
+use App\Http\Requests\NewVendorRequest;
 use App\Models\Payment;
 use App\Models\Pin;
 use App\Models\PinCollection;
 use App\Models\School;
 use App\Models\SchoolCategory;
 use App\Models\Staff;
+use App\Models\User;
+use App\Models\Vendor;
 use App\Models\VendorCategory;
 use Exception;
 use Illuminate\Http\Request;
@@ -130,5 +133,48 @@ class HomeController extends Controller
             $count--;
         }
         return $sn . $int;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(NewVendorRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            //created vendor admin
+            $admin = new User();
+            $admin->first_name = $request->admin_first_name;
+            $admin->last_name = $request->admin_last_name;
+            $admin->other_name = $request->admin_other_name;
+            $admin->email = $request->admin_email;
+            $admin->phone_number = $request->admin_phone_number;
+            $admin->address = $request->admin_address;
+            $admin->password = bcrypt($request->password);
+            $admin->role_id = 2;
+            $admin->save();
+
+            //create vendor
+            $vendor = new Vendor();
+            $vendor->name = $request->name;
+            $vendor->code = $request->code;
+            $vendor->email = $request->email;
+            $vendor->address = $request->address;
+            $vendor->country = $request->country;
+            $vendor->state = $request->state;
+            $vendor->phone_number = $request->admin_phone_number;
+            $vendor->city = $request->city;
+            $vendor->user_id = $admin->id;
+            $vendor->vendor_category_id = $request->category;
+            $vendor->save();
+
+            DB::commit();
+            return redirect()->route('vendor.login.form')->with('message', 'vendor created successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'vendor creation fail');
+        }
     }
 }
