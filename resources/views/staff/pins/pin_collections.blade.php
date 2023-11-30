@@ -71,7 +71,7 @@
                                                 </div>
                                                 <div class="btn-group">
                                                     <a href="{{ route('staff.pins.collections.download', $item->id) }}"
-                                                        class="btn btn-info btn-sm"><i class="entypo-eye"></i> View</a>
+                                                        class="btn btn-info btn-sm"><i class="entypo-eye"></i> Download</a>
                                                 </div>
                                                 {{-- <form action="{{route('staff.deleteStudent')}}" id="delete-student" method="POST">
                                         @method('DELETE')
