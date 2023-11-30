@@ -73,7 +73,7 @@ class PinsController extends Controller
             $data['reference'] = Str::random(10);
             $data['user_id'] = user()->id;
             $data['school_id'] = $request->school;
-            $data['amount'] = $request->quantity * 50;
+            $data['amount'] = $request->quantity * 350;
 
 
             $payment = Payment::create($data);
