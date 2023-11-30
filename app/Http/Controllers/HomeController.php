@@ -85,17 +85,18 @@ class HomeController extends Controller
                 $pin->save();
                 $count--;
             }
-            if (!user()->vendor) {
-                return redirect("/staff/pins/collections/{$pinCollection->id}");
-            }
-            return redirect("/vendor/pins/collections/{$pinCollection->id}");
+
 
             // $collection = $pinCollection->pins()->with('school')->get();
 
             // $pdf = App::make('dompdf.wrapper');
             // $pdf->loadHTML(view('templates.pins', compact('collection')));
-            // $pinCollection->update(['delivered' => true]);
-            // DB::commit();
+            $pinCollection->update(['delivered' => true]);
+            DB::commit();
+            if (!user()->vendor) {
+                return redirect("/staff/pins/collections/{$pinCollection->id}");
+            }
+            return redirect("/vendor/pins/collections/{$pinCollection->id}");
             // return $pdf->download('pins.pdf');
         } catch (Exception $e) {
 
