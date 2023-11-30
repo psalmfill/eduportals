@@ -69,6 +69,10 @@
                                                     <a href="{{ route('staff.pins.collections.show', $item->id) }}"
                                                         class="btn btn-info btn-sm"><i class="entypo-eye"></i> View</a>
                                                 </div>
+                                                <div class="btn-group">
+                                                    <a href="{{ route('staff.pins.collections.download', $item->id) }}"
+                                                        class="btn btn-info btn-sm"><i class="entypo-eye"></i> View</a>
+                                                </div>
                                                 {{-- <form action="{{route('staff.deleteStudent')}}" id="delete-student" method="POST">
                                         @method('DELETE')
                                         @csrf
