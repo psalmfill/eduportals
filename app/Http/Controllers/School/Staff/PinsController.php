@@ -35,7 +35,8 @@ class PinsController extends Controller
 
     public function collections()
     {
-        $pinCollections = PinCollection::where('school_id', getSchool()->id)->paginate();
+        $pinCollections = PinCollection::where('school_id', getSchool()->id)
+            ->orderBy('created_at', 'desc')->paginate();
         return view('staff.pins.pin_collections', compact('pinCollections'));
     }
 

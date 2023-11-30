@@ -196,6 +196,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::post('pins', 'PinsController@buy')->name('staff.pins.buy');
             Route::get('pins/collections', 'PinsController@collections')->name('staff.pins.collections');
             Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('staff.pins.collections.show');
+            Route::get('pins/collections/{id}/download', 'PinsController@download')->name('staff.pins.collections.download');
             Route::get('pins/payments', 'PinsController@payments')->name('staff.pins.collections.payments');
         });
 

@@ -32,6 +32,10 @@
                     <h3 class="text-white">Collection {{ $pinCollection->reference }} - Pins</h3>
                 </div>
             </div>
+            <div class="btn-group">
+                <a href="{{ route('vendor.pins.collections.download', $item->id) }}"
+                    class="btn btn-info btn-sm">Download</a>
+            </div>
         </div>
     </div>
     @isset($pinCollection)
