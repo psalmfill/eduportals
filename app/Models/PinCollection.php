@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PinCollection extends Model
 {
     protected $fillable = [
-        'reference', 'school_id'
+        'reference', 'school_id', 'quantity', 'delivered'
     ];
 
     public function pins()

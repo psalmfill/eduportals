@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Vendors;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\PaymentRepository;
+use App\Models\Payment;
 use App\Models\Pin;
 use App\Models\PinCollection;
 use App\Models\School;
@@ -16,6 +18,13 @@ use Illuminate\Support\Str;
 
 class PinsController extends Controller
 {
+    protected $paymentRepository;
+
+    public function __construct()
+    {
+        $this->paymentRepository = app(PaymentRepository::class);
+    }
+
     public function index()
     {
         $schools = School::where('vendor_id', user()->vendor->id)->get();
@@ -32,7 +41,7 @@ class PinsController extends Controller
         $schools = School::where('vendor_id', user()->vendor->id)->get();
         $pinCollections = PinCollection::whereHas('school', function ($q) {
             return $q->where('vendor_id', user()->vendor->id);
-        })->paginate();
+        })->orderBy('created_at', 'desc')->paginate();
         return view('vendors.pin_collections', compact('pinCollections', 'schools'));
     }
 
@@ -45,77 +54,69 @@ class PinsController extends Controller
 
     public function buy(Request $request)
     {
-        abort(401);
-    }
-
-
-    public function generate(Request $request)
-    {
         $request->validate([
-            'school' => 'required|exists:schools,id',
-            'quantity' => 'required|integer|min:1',
-            'days' => 'required|integer|min:1',
-
+            'quantity' => 'required|integer|min:5',
+            'school' => 'required|exists:schools,id'
         ]);
+
         try {
             DB::beginTransaction();
-            $school = School::findOrFail($request->school);
-
             $pinCollection = PinCollection::create([
-                'school_id' => $school->id,
+                'school_id' => $request->school,
                 'reference' => Str::random(),
+                'quantity' => $request->quantity,
+                'delivered' => false,
             ]);
 
-            $count = $request->quantity;
-            $days = $request->days;
-            while ($count > 0) {
-                $latestPin = Pin::latest('serial_number')->first();
-                $pin = new Pin();
-                $pin->code = $this->generateCode();
-                $pin->ref_code = $this->generateRefCode($school);
-                $pin->serial_number = $this->generateSerialCode($latestPin ? (int)$latestPin->serial_number : Pin::count());
-                $pin->duration = $days;
-                $pin->school_id = $school->id;
-                $pin->pin_collection_id = $pinCollection->id;
-                $pin->save();
-                $count--;
+            $data['paymentable_type'] = get_class($pinCollection);
+            $data['paymentable_id'] = $pinCollection->id;
+            $data['reference'] = Str::random(10);
+            $data['user_id'] = user()->id;
+            $data['school_id'] = $request->school;
+            $data['amount'] = $request->quantity * 50;
+
+
+            $payment = Payment::create($data);
+            DB::commit();
+            $response = $this->paymentRepository->createWithModel($payment);
+            if ($response->status == 'success') {
+                return redirect($response->data->link);
+            } else {
+                // fail the payment
+                $this->paymentRepository->update([
+                    'status' => 'failed',
+                    $payment->id
+                ]);
+                return redirect()->back()->with('error', 'Could not process payment');
             }
-            $collection = $pinCollection->pins()->with('school')->get();
+            // go to paystack payment
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Could not process payment');
+        }
+        // create a collection
+    }
+
+    public function payments()
+    {
+        $payments = Payment::whereHas('school', function ($q) {
+            return $q->where('vendor_id', user()->vendor->id);
+        })
+            ->where('paymentable_type', PinCollection::class)->orderBy('created_at', 'desc')
+            ->paginate();
+        return view('vendors.pin_payments', compact('payments'));
+    }
+    public function download($id)
+    {
+        try {
+
+            $collection = PinCollection::findOrFail($id)->pins()->with('school')->get();
 
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadHTML(view('templates.pins', compact('collection')));
-            DB::commit();
             return $pdf->download('pins.pdf');
         } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Pins Generation failed');
+            return redirect()->back()->with('error', 'An error occurred');
         }
-    }
-
-    private function generateCode()
-    {
-        while (true) {
-            $code = random_int(1000, 9999) . '-' . random_int(1000, 9999) . '-' . random_int(1000, 9999) . '-' . random_int(1000, 9999);
-            if (!Pin::where('code', $code)->exists()) {
-                return $code;
-            }
-        }
-    }
-
-    private function generateRefCode(School $school)
-    {
-        return strtoupper($school->code) . '-' . random_int(1000, 9999) . '-' . Str::random(5);
-    }
-
-    private function generateSerialCode($int)
-    {
-        $int += 1;
-        $count = 20;
-        $sn = '';
-        while ($count > strlen($int)) {
-            $sn .= '0';
-            $count--;
-        }
-        return $sn . $int;
     }
 }

@@ -24,48 +24,6 @@
 @endsection
 
 @section('content')
-    <div class="card bg-secondary mb-2">
-        <div class="card-body">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="text-white">Purchase Pins</h3>
-                    <form action="{{ route('vendors.pins.buy') }}" class="form" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <select name="school" id="school" class="form-control form-control-sm">
-                                        <option value="">Select School</option>
-                                        @foreach ($schools as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="number" name="quantity" min="1" placeholder="Quantity"
-                                        class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            {{-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="number" name="days" min="1" placeholder="Number of days"
-                                        class="form-control form-control-sm">
-                                </div>
-                            </div> --}}
-                            <div class="col-md-2">
-                                <button class="btn btn-primary btn-block btn-sm"><i class="entypo-arrows-ccw"></i>
-                                    Purchase</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
 
         <div class="col-md-4">
@@ -109,6 +67,45 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5">
+            <div class="card bg-secondary mb-2 mt-5">
+                <div class="card-body">
+                    <h3 class="text-white">Purchase Pins</h3>
+                    <form action="{{ route('vendor.pins.buy') }}" class="form" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <select name="school" id="school" class="form-control form-control-sm">
+                                <option value="">Select School</option>
+                                @foreach ($schools as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('school')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="quantity" min="1" placeholder="Quantity"
+                                onkeyup="$('#total').val(this.value * 350)" class="form-control form-control-sm">
+                            @error('quantity')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" id="total" placeholder="Amount" class="form-control form-control-sm"
+                                readonly>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-sm"><i class="entypo-arrows-ccw"></i>
+                            Purchase</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
 @endsection
 

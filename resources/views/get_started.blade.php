@@ -123,8 +123,9 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6 mt-2">
-                            <button class="btn btn-primary btn-block" type="submit">Get Started</button>
+                        <div class="form-group col-md-6 mt-2 ">
+                            <button class="btn btn-primary btn-block" type="submit">Create a Free
+                                Account</button>
                         </div>
                     </div>
                 </form>

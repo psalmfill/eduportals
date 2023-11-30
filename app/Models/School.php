@@ -34,6 +34,11 @@ class School extends Model
         return $this->hasMany(PinCollection::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function roles()
     {
         return $this->hasMany(Role::class);

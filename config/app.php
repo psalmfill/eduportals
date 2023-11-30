@@ -233,4 +233,10 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
+    'url' => env('APP_URL', 'http://localhost'),
+    'flutterwave_secret_key' => env('FLUTTERWAVE_SECRET_KEY'),
+    'flutterwave_public_key' => env('FLUTTERWAVE_PUBLIC_KEY'),
+    'flutterwave_base_url' => env('FLUTTERWAVE_BASE_URL'),
+    'asset_url' => env('ASSET_URL', null),
+
 ];

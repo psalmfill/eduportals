@@ -458,6 +458,11 @@
                                  <span class="title">Collections</span>
                              </a>
                          </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('staff.pins.collections.payments') }}">
+                                 <span class="title">Payments</span>
+                             </a>
+                         </li>
                      </ul>
                  </div>
              </li>

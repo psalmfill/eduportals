@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Gateways\Payment;
+use App\Http\Repositories\PaymentRepository;
+use App\Models\PinCollection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::domain('{school}.' . env('BASE_URL'))->group(function () {
 
     Route::group(['middleware' => ['school']], function () {
+
 
         Route::group(['namespace' => 'School',], function () {
             // Route::get('/', 'FrontendController@index');
@@ -191,6 +196,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::post('pins', 'PinsController@buy')->name('staff.pins.buy');
             Route::get('pins/collections', 'PinsController@collections')->name('staff.pins.collections');
             Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('staff.pins.collections.show');
+            Route::get('pins/payments', 'PinsController@payments')->name('staff.pins.collections.payments');
         });
 
         //STUDENTS ROUTES
@@ -253,6 +259,9 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
         Route::post('pins', 'PinsController@buy')->name('vendor.pins.buy');
         Route::get('pins/collections', 'PinsController@collections')->name('vendor.pins.collections');
         Route::get('pins/collections/{id}', 'PinsController@viewCollection')->name('vendor.pins.collections.show');
+        Route::get('pins/collections/{id}/download', 'PinsController@download')->name('vendor.pins.collections.download');
+        Route::get('pins/payments', 'PinsController@payments')->name('vendor.pins.collections.payments');
+
         Route::resource('schools', 'SchoolsController', ['names' => 'vendor.schools']);
         Route::put('school/{school}/change-admin-password', 'SchoolsController@resetPassword')->name('school.changeAdminPassword');
         Route::get(
@@ -279,4 +288,5 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
 
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/get-started', 'HomeController@getStarted')->name('get_started');
+Route::get('/create-free-account', 'HomeController@getStarted')->name('get_started');
+Route::get('/payments/callback', 'HomeController@handlePaymentCallback')->name('payment.callback');
