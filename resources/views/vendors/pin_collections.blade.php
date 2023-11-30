@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="btn-group">
                                                     <a href="{{ route('vendor.pins.collections.download', $item->id) }}"
-                                                        class="btn btn-info btn-sm">Download</a>
+                                                        class="btn btn-secondary btn-sm">Download</a>
                                                 </div>
                                                 {{-- <form action="{{route('staff.deleteStudent')}}" id="delete-student" method="POST">
                                         @method('DELETE')
