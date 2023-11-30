@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a href="{{ route('vendor.pins.collections.download', $pinCollection->id) }}"
+                <a href="{{ route('staff.pins.collections.download', $pinCollection->id) }}"
                     class="btn btn-info btn-sm">Download</a>
             </div>
         </div>
