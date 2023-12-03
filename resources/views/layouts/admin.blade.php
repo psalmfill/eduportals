@@ -58,7 +58,7 @@
                                 <i class="typcn typcn-cog text-primary"></i>
                                 Settings
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}">
                                 <i class="typcn typcn-power text-primary"></i>
                                 Logout
                             </a>
@@ -76,7 +76,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas bg-dark" id="sidebar">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
                         <div class="d-flex sidebar-profile">
@@ -96,27 +96,31 @@
                         <p class="sidebar-menu-title">Dashboard menu</p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-link " href="{{ route('admin.dashboard') }}">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li
+                        class="nav-item {{ in_array(Route::currentRouteName(), ['vendors.index', 'vendor-categories.index']) ? 'active' : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#vendors-basic" aria-expanded="false"
                             aria-controls="vendors-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
                             <span class="menu-title">Vendors</span>
                             <i class="typcn typcn-chevron-right menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="vendors-basic">
+                        <div class="collapse {{ in_array(Route::currentRouteName(), ['vendors.index', 'vendor-categories.index']) ? 'show' : '' }}"
+                            id="vendors-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('vendors.index') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendors.index']) ? 'active' : '' }}"
+                                        href="{{ route('vendors.index') }}">
                                         <span class="title">All Vendors</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('vendor-categories.index') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor-categories.index']) ? 'active' : '' }}"
+                                        href="{{ route('vendor-categories.index') }}">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
@@ -124,35 +128,40 @@
                         </div>
                     </li>
 
-                    <li class="nav-item">
+                    <li
+                        class="nav-item {{ in_array(Route::currentRouteName(), ['schools.index', 'schools.create', 'school-categories.index']) ? 'active' : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#schools-basic" aria-expanded="false"
                             aria-controls="schools-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
                             <span class="menu-title">Schools</span>
                             <i class="typcn typcn-chevron-right menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="schools-basic">
+                        <div class="collapse {{ in_array(Route::currentRouteName(), ['schools.index', 'schools.create', 'school-categories.index']) ? 'show' : '' }}"
+                            id="schools-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('schools.index') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['schools.index']) ? 'active' : '' }}"
+                                        href="{{ route('schools.index') }}">
                                         <span class="title">All Schools</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('schools.create') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['schools.create']) ? 'active' : '' }}"
+                                        href="{{ route('schools.create') }}">
                                         <span class="title">Onboard School</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('school-categories.index') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['school-categories.index']) ? 'active' : '' }}"
+                                        href="{{ route('school-categories.index') }}">
                                         <span class="title">Categories</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#admins-basic" aria-expanded="false"
                             aria-controls="admins-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
@@ -162,7 +171,7 @@
                         <div class="collapse" id="admins-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('schools.index') }}">
+                                    <a class="nav-link " href="{{ route('schools.index') }}">
                                         <span class="title">All Schools</span>
                                     </a>
                                 </li>
@@ -173,8 +182,9 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li class="nav-item">
+                    </li> --}}
+                    <li
+                        class="nav-item {{ in_array(Route::currentRouteName(), ['pins.index', 'pins.collections']) ? 'active' : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#pins-basic" aria-expanded="false"
                             aria-controls="pins-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
@@ -184,45 +194,57 @@
                         <div class="collapse" id="pins-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pins.index') }}">
+                                    <a class="nav-link  {{ in_array(Route::currentRouteName(), ['pins.index']) ? 'active' : '' }}"
+                                        href="{{ route('pins.index') }}">
                                         <span class="title">Generate Pins</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('pins.collections') }}">
+                                    <a class="nav-link  {{ in_array(Route::currentRouteName(), ['pins.collections']) ? 'active' : '' }}"
+                                        href="{{ route('pins.collections') }}">
                                         <span class="title">Collections</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li
+                        class="nav-item  {{ in_array(Route::currentRouteName(), ['admin.roles.index', 'academic-sessions.index']) ? 'active' : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#settings-basic" aria-expanded="false"
                             aria-controls="settings-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
                             <span class="menu-title">Settings</span>
                             <i class="typcn typcn-chevron-right menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="settings-basic">
+                        <div class="collapse {{ in_array(Route::currentRouteName(), ['admin.roles.index', 'academic-sessions.index']) ? 'show' : '' }}"
+                            id="settings-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.roles.index') }}">
+                                    <a class="nav-link  {{ in_array(Route::currentRouteName(), ['admin.roles.index']) ? 'active' : '' }}"
+                                        href="{{ route('admin.roles.index') }}">
                                         <span class="title">Roles</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('school-categories.create') }}">
                                         <span class="title">Permissions</span>
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
+                                <li
+                                    class="nav-item  {{ in_array(Route::currentRouteName(), ['academic-sessions.index']) ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ route('academic-sessions.index') }}">
                                         <span class="title">Sessions</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.logout') }}">
+                            <i class="mdi mdi-logout menu-icon"></i>
+                            <span class="menu-title">Logout</span>
+                        </a>
                     </li>
                 </ul>
 
@@ -253,15 +275,13 @@
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     Distributed By: <a href="{{ env('BASE_URL') }}" target="_blank">Eduportals</a>
-                    </span>
 
+                </footer>
+                <!-- partial -->
             </div>
-            </footer>
-            <!-- partial -->
+            <!-- main-panel ends -->
         </div>
-        <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
     <script src="{{ asset('assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js') }}"></script>
@@ -273,7 +293,7 @@
     <!-- inject:js -->
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
-    {{-- <script src="{{ asset('js/template.js') }}"></script> --}}
+    <script src="{{ asset('js/template.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/todolist.js') }}"></script>
     <!-- endinject -->

@@ -39,56 +39,56 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Name </label>
-                                            <input type="text" value="{{ $school->name }}" name="name"
+                                            <label for="name">Name </label>
+                                            <input id="name" type="text" value="{{ $school->name }}" name="name"
                                                 class="form-control">
                                             @error('name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Code</label>
-                                            <input type="text" value="{{ $school->code }}" name="code"
+                                            <label for="code">Code</label>
+                                            <input id="code" type="text" value="{{ $school->code }}" name="code"
                                                 class="form-control">
                                             @error('code')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Email</label>
-                                            <input type="text" value="{{ $school->email }}" name="email"
+                                            <label for="email">Email</label>
+                                            <input id="email" type="text" value="{{ $school->email }}" name="email"
                                                 class="form-control">
                                             @error('email')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Address</label>
-                                            <input type="text" value="{{ $school->address }}" name="address"
+                                            <label for="address">Address</label>
+                                            <input id="address" type="text" value="{{ $school->address }}" name="address"
                                                 class="form-control">
                                             @error('address')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Country</label>
-                                            <input type="text" value="{{ $school->country }}" name="country"
+                                            <label for="country">Country</label>
+                                            <input id="country" type="text" value="{{ $school->country }}" name="country"
                                                 class="form-control">
                                             @error('country')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">State</label>
-                                            <input type="text" value="{{ $school->state }}" name="state"
+                                            <label for="state">State</label>
+                                            <input id="state" type="text" value="{{ $school->state }}" name="state"
                                                 class="form-control">
                                             @error('state')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="">City</label>
-                                            <input type="text" value="{{ $school->city }}" name="city"
+                                            <label for="city">City</label>
+                                            <input id="city" type="text" value="{{ $school->city }}" name="city"
                                                 class="form-control">
                                             @error('city')
                                                 <small class="text-danger">{{ $message }}</small>

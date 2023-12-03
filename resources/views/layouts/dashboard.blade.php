@@ -16,9 +16,6 @@
     <link rel="stylesheet" href="{{ asset('vendors/typicons.font/font/typicons.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font-icons/entypo/css/entypo.css') }}">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
@@ -50,8 +47,7 @@
                         src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo" class="w-auto" /></a>
                 <a class="navbar-brand brand-logo-mini" href="{{ route('staff.dashboard') }}">
                     <img src="{{ asset(\Storage::url(getSchool()->logo)) }}" alt="logo" class="w-auto" /></a>
-                <button class="navbar-toggler navbar-toggler align-self-center d-none " type="button"
-                    data-toggle="minimize">
+                <button class="navbar-toggler navbar-toggler align-self-center " type="button" data-toggle="minimize">
                     <span class="typcn typcn-th-menu"></span>
                 </button>
             </div>
@@ -147,7 +143,7 @@
     <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    <script src="{{ asset('assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js') }}"></script> --}}
     <!-- base:js -->
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
     <!-- endinject -->
@@ -158,6 +154,8 @@
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/todolist.js') }}"></script>
+
+    <script src="{{ asset('/js/template.js') }}"></script>
     <!-- endinject -->
     <!-- plugin js for this page -->
     <script src="{{ asset('vendors/progressbar.js/progressbar.min.js') }}"></script>

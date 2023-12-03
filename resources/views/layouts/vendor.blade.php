@@ -54,11 +54,11 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('vendor.account.setting') }}">
                                 <i class="typcn typcn-cog text-primary"></i>
                                 Settings
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('vendor.logout') }}">
                                 <i class="typcn typcn-power text-primary"></i>
                                 Logout
                             </a>
@@ -102,7 +102,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    <li
+                        class="nav-item {{ in_array(Route::currentRouteName(), ['vendor.schools.index', 'vendor.school.create']) ? 'active' : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#schools-basic" aria-expanded="false"
                             aria-controls="schools-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
@@ -113,7 +114,15 @@
                             <ul class="nav flex-column sub-menu">
 
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="collapse" href="#staff-basic" aria-expanded="false"
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), [
+                                        'vendor.schools.index',
+                                        'vendor.school.create',
+                                        'vendor.staff.index',
+                                        'vendor.staff.create',
+                                    ])
+                                        ? 'active'
+                                        : '' }}"
+                                        data-toggle="collapse" href="#staff-basic" aria-expanded="false"
                                         aria-controls="staff-basic">
                                         <i class="mdi mdi-folder-account menu-icon"></i>
                                         <span class="menu-title">Staff</span>
@@ -123,12 +132,14 @@
 
                                         <ul class="nav flex-column sub-menu">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('vendor.staff.index') }}">
+                                                <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.staff.index']) ? 'active' : '' }}"
+                                                    href="{{ route('vendor.staff.index') }}">
                                                     <span class="title">All Staff</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('vendor.staff.create') }}">
+                                                <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.staff.create']) ? 'active' : '' }}"
+                                                    href="{{ route('vendor.staff.create') }}">
                                                     <span class="title">New Staff</span>
                                                 </a>
                                                 {{-- </li>
@@ -159,39 +170,64 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li
+                        class="nav-item {{ in_array(Route::currentRouteName(), [
+                            'vendor.pins.collections',
+                            'vendor.pins.index',
+                            'vendor.pins.collections.payments',
+                        ])
+                            ? 'active'
+                            : '' }}">
                         <a class="nav-link" data-toggle="collapse" href="#pins-basic" aria-expanded="false"
                             aria-controls="pins-basic">
                             <i class="mdi mdi-folder-account menu-icon"></i>
                             <span class="menu-title">Pins</span>
                             <i class="typcn typcn-chevron-right menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="pins-basic">
+                        <div class="collapse {{ in_array(Route::currentRouteName(), [
+                            'vendor.pins.collections',
+                            'vendor.pins.index',
+                            'vendor.pins.collections.payments',
+                        ])
+                            ? 'show'
+                            : '' }}"
+                            id="pins-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('vendor.pins.index') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.pins.index']) ? 'active' : '' }}"
+                                        href="{{ route('vendor.pins.index') }}">
                                         <span class="title">Buy Pins</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('vendor.pins.collections') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.pins.collections']) ? 'active' : '' }}"
+                                        href="{{ route('vendor.pins.collections') }}">
                                         <span class="title">Collections</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('vendor.pins.collections.payments') }}">
+                                    <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.pins.collections.payments']) ? 'active' : '' }}"
+                                        href="{{ route('vendor.pins.collections.payments') }}">
                                         <span class="title">Payments</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('vendor.student_transfer') }}">
+                    <li class="nav-item ">
+                        <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.student_transfer']) ? 'active' : '' }}"
+                            href="{{ route('vendor.student_transfer') }}">
                             <i class="mdi mdi-account menu-icon"></i>
                             <span class="menu-title">Students Transfer</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ in_array(Route::currentRouteName(), ['vendor.account.setting']) ? 'active' : '' }}"
+                            href="{{ route('vendor.account.setting') }}">
+                            <i class="mdi mdi-account menu-icon"></i>
+                            <span class="menu-title">Account</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -229,15 +265,13 @@
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     Distributed By: <a href="{{ env('BASE_URL') }}" target="_blank">Eduportals</a>
-                    </span>
 
+                </footer>
+                <!-- partial -->
             </div>
-            </footer>
-            <!-- partial -->
+            <!-- main-panel ends -->
         </div>
-        <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
     <script src="{{ asset('assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js') }}"></script>
@@ -249,7 +283,7 @@
     <!-- inject:js -->
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
-    {{-- <script src="{{ asset('js/template.js') }}"></script> --}}
+    <script src="{{ asset('js/template.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
     <script src="{{ asset('js/todolist.js') }}"></script>
     <!-- endinject -->

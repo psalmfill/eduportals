@@ -105,7 +105,7 @@
                                                     @csrf
                                                     @method('delete')
 
-                                                    <div class="btn-group">
+                                                    <div class="">
                                                         <a href="{{ route('sections.edit', $item->id) }}"
                                                             class="btn btn-info btn-sm icon-left  pull-left">
                                                             <i class="entypo-pencil"></i>

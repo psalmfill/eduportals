@@ -283,6 +283,10 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
             'staff/{staff}/manage-schools',
             'StaffController@UpdateSchools'
         )->name('vendor.staff.updateSchools');
+
+        Route::get('account-settings', 'HomeController@account')->name('vendor.account.setting');
+        Route::put('account-settings', 'HomeController@updateProfile')->name('vendor.account.setting.update');
+        Route::put('account-password-change', 'HomeController@changePassword')->name('vendor.change-password');
     });
 });
 

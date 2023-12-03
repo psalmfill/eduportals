@@ -38,8 +38,9 @@
                                     @csrf
                                     @method('put')
                                     <div class="form-group">
-                                        <label for="">Category Name</label>
-                                        <input type="text" value="{{ $category->name }}" name="name" class="form-control">
+                                        <label for="name">Category Name</label>
+                                        <input id="name" type="text" value="{{ $category->name }}" name="name"
+                                            class="form-control">
                                         @error('name')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -52,8 +53,8 @@
                                 <form action="{{ route('school-categories.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="">Category Name</label>
-                                        <input type="text" name="name" class="form-control">
+                                        <label for="name">Category Name</label>
+                                        <input id="name" type="text" name="name" class="form-control">
                                         @error('name')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror

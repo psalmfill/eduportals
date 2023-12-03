@@ -126,7 +126,7 @@
                                                     class="form-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <div class="btn-group">
+                                                    <div class="">
                                                         <a href="{{ route('subjects.edit', $item->id) }}"
                                                             class="btn btn-info btn-sm icon-left  pull-left">
                                                             <i class="entypo-pencil"></i>

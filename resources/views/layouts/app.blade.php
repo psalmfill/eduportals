@@ -29,7 +29,7 @@
 
     <div class="header-2 primary">
         <header>
-            <nav class="navbar navbar-expand-lg topnav-menu navbar-light zindex-10">
+            <nav class="navbar navbar-expand-lg navbar-light zindex-10">
                 <div class="container">
                     <a class="navbar-brand logo" href="/">
                         <img src="/images/logo.svg" height="30" class="align-top" alt="" />

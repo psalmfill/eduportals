@@ -54,7 +54,9 @@
                                         <td>{{ $item->name }}</td>
                                         <td class="text-lowercase">{{ $item->code }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->phone_number }}</td>
+                                        <td><a
+                                                href="https://api.whatsapp.com/send?phone={{ $item->phone_number }}">{{ $item->phone_number }}</a>
+                                        </td>
                                         <td>{{ $item->address }}</td>
                                         <td>{{ $item->country }}</td>
                                         <td>{{ $item->state }}</td>
