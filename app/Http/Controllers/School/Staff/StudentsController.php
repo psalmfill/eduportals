@@ -325,14 +325,14 @@ class StudentsController extends Controller
     {
         if ($request->getMethod() == 'POST') {
             $studentsPresent = collect($request->students);
-            $session_id = $request->session;
+            $session_id
+                = getSettings()->current_session_id;;
             $class_id = $request->class;
             $section_id = $request->section;
             $date = $request->date;
-            $term_id = $request->term;
+            $term_id = getSettings()->current_term_id;
             $students = Student::where('school_class_id', $class_id)
                 ->where('section_id', $section_id)->active()->get();
-
 
             foreach ($students as $student) {
                 Attendance::updateOrCreate([
@@ -342,7 +342,10 @@ class StudentsController extends Controller
                     'school_id' => getSchool()->id,
                     'school_class_id' => $class_id,
                     'section_id' => $section_id,
-                    'date' => Carbon::createFromDate($date),
+                    'date' => date(
+                        'Y-m-d',
+                        strtotime($date)
+                    ),
                 ])->update([
                     'present' => $studentsPresent->contains($student->id),
                     'holiday' => $request->holiday ? 1 : 0
@@ -370,7 +373,18 @@ class StudentsController extends Controller
             $sections = $currentClass->sections;
             $students = Student::where('school_class_id', $currentClass->id)
                 ->where('section_id', $currentSection->id)->active()->get();
-
+            $attendances = Attendance::where([
+                ['academic_session_id', $currentSession->id],
+                'term_id' =>
+                $currentTerm->id,
+                'school_id' => getSchool()->id,
+                'school_class_id' => $currentClass->id,
+                'section_id' => $currentSection->id,
+            ])->where(
+                'date',
+                date('Y-m-d', strtotime($date))
+            )
+                ->get();
             return view('staff.student.attendance', compact(
                 'currentClass',
                 'currentSession',
@@ -381,7 +395,8 @@ class StudentsController extends Controller
                 'students',
                 'date',
                 'terms',
-                'currentTerm'
+                'currentTerm',
+                "attendances"
             ));
         }
 

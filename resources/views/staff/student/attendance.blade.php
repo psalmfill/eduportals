@@ -155,8 +155,8 @@
                                                     <td><input type="checkbox" name="students[]" value="{{ $item->id }}"
                                                             id=""
                                                             @php
-$at = App\Models\Attendance::getAttendance($item->id,$date);
-                                    if($at && $at->present) echo 'checked'; @endphp>
+$at = $attendances->firstWhere('student_id', $item->id);
+                                    if($at && $at->present) echo 'checked'; @endphp />
                                                     </td>
                                                 </tr>
                                             @endforeach

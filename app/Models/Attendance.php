@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     protected $guarded = [];
-    protected $dates = ['dates'];
+    protected $dates = ['date'];
+    protected $casts = [
+        'date' => 'date'
+    ];
     public static function getAttendance(
         $student_id,
         $date
@@ -16,7 +19,7 @@ class Attendance extends Model
         return self::where(
             'student_id',
             $student_id
-        )->where('date', Carbon::createFromDate($date))->first();
+        )->whereDate('date', Carbon::createFromDate($date))->first();
     }
 
     public function student()
