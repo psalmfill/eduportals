@@ -61,12 +61,8 @@ class Staff extends Authenticatable
         $sections = DB::table('school_class_staff')->select(['section_id'])
             ->where('school_class_id', $class)
             ->where('staff_id', $staff)
-            ->where('school_id', $school_id)->get();
-        $arr = [];
-        foreach ($sections as $b) {
-            array_push($arr, $b->section_id);
-        }
-        $sections = Section::find($arr);
+            ->where('school_id', $school_id)->pluck('section_id');
+        $sections = Section::find($sections);
         return $sections;
     }
     public function getAvatarAttribute()

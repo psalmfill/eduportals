@@ -208,6 +208,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::post('/change-password', 'HomeController@changePassword')->name('student.changePassword');
             Route::get('logout', 'LoginController@logout')->name('student.logout');
             Route::get('attendance', 'HomeController@viewAttendance')->name('student.attendance');
+            Route::get('subjects', 'HomeController@subjects')->name('student.subjects');
             Route::get('results', 'ExaminationsController@index')->name('student.result');
             Route::post('results', 'ExaminationsController@getResult')->name('student.result.fetch');
             Route::get('learning-resources', 'LearningResourcesController@index')->name('student.learning-resources.index');

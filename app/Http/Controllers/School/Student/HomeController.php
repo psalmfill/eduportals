@@ -19,6 +19,14 @@ class HomeController extends Controller
         return view('student.index');
     }
 
+    public function subjects()
+    {
+        $section = user()->section;
+        $subjects = $section->subjects()->wherePivot('school_class_id', user()->school_class_id)
+            ->wherePivot('school_id', getSchool()->id)->get();
+        return view('student.subjects', compact('subjects'));
+    }
+
     public function profile()
     {
         return view('student.view', ['student' => user()]);

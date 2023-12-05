@@ -76,7 +76,7 @@
 
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas bg-dark" id="sidebar">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
                         <div class="d-flex sidebar-profile">
@@ -123,6 +123,13 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('student.subjects') }}">
+                            <i class="mdi mdi-book menu-icon"></i>
+                            <span class="menu-title">My Subjects</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('student.result') }}">
@@ -198,6 +205,7 @@
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script>
     <script src="{{ asset('js/todolist.js') }}"></script>
     <!-- endinject -->
     <!-- plugin js for this page -->
