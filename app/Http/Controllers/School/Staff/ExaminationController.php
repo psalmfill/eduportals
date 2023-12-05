@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
 use App\Models\AffectiveTrait;
 use App\Models\AffectiveTraitResult;
+use App\Models\Attendance;
 use App\Models\CommentResult;
 use App\Models\CommentResultGrade;
 use App\Models\CommentResultGroup;
@@ -410,7 +411,14 @@ class ExaminationController extends Controller
                 ->first();
 
             $grades = Grade::where('school_id', getSchool()->id)->get();
+            $session_id = $request->session;
 
+            $attendances = Attendance::getReport(
+                $session_id,
+                $exam->term_id,
+                $class_id,
+                $student_id
+            );
             $section = $student->section;
             $html = view('staff.examinations.templates.standard_result', compact(
                 'classes',
@@ -434,7 +442,8 @@ class ExaminationController extends Controller
                 'psychomotorResult',
                 'type',
                 'affectiveTraitResult',
-                'pin'
+                'pin',
+                'attendances'
             ));
             // return $html;
         }
@@ -1292,6 +1301,12 @@ class ExaminationController extends Controller
                 // ->where('max_average', '<=', floor($studentAverage))
                 $remark = $remarks->where('min_average', '<=', $studentAverage)
                     ->first();
+                $attendances = Attendance::getReport(
+                    $session_id,
+                    $exam->term_id,
+                    $class_id,
+                    $student->id
+                );
 
                 $html .= view('staff.examinations.templates.standard_result_m', compact(
                     'classes',
@@ -1310,7 +1325,8 @@ class ExaminationController extends Controller
                     'session',
                     'section',
                     'generalSettings',
-                    'verifyUrlQrCode'
+                    'verifyUrlQrCode',
+                    'attendances'
                 ))->render();
             }
             // return $html;
@@ -1518,6 +1534,12 @@ class ExaminationController extends Controller
                 // ->where('max_average', '<=', floor($studentAverage))
                 ->where('min_average', '<=', $studentAverage)
                 ->first();
+            $attendances = Attendance::getReport(
+                $session_id,
+                $exam->term_id,
+                $class_id,
+                $student_id
+            );
             $grades = Grade::where('school_id', getSchool()->id)->get();
             $html = view('templates.standard_result', compact(
                 'classes',
@@ -1539,7 +1561,8 @@ class ExaminationController extends Controller
                 'verifyUrlQrCode',
                 'affectiveTrait',
                 'psychomotorResult',
-                'affectiveTraitResult'
+                'affectiveTraitResult',
+                'attendances'
             ));
         }
         // increase pin usage

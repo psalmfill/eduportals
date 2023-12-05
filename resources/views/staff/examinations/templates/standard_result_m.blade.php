@@ -221,7 +221,7 @@
                                         $isAbsent = $mark->absent;
                                     }
                                     $grade = App\Models\Grade::getGrade($total);
-                                    
+
                                 @endphp
                                 <td class="text-center">{{ $mark && !$mark->absent ? $mark->score : '-' }}</td>
                             @endforeach
@@ -237,22 +237,47 @@
                     </tbody>
                 </table>
                 <br><br>
-
-                <table class="table" style="width:50%">
-                    <tr>
-                        <td style="border-bottom:1px solid #333">Grading</td>
-                        <td style="border-bottom:1px solid #333">Interpretation</td>
-                    </tr>
-                    @foreach ($grades->chunk(2) as $chunk)
-                        @foreach ($chunk as $g)
+                <div style="display:flex; justify-content:space-between">
+                    <div style="width:50%">
+                        <table class="table">
                             <tr>
-                                <td>{{ $g->name }} = {{ $g->minimum_score }} - {{ $g->maximum_score }}</td>
-
-                                <td>{{ $g->remark }}</td>
+                                <td style="border-bottom:1px solid #000">Grading</td>
+                                <td style="border-bottom:1px solid #000">Interpretation</td>
                             </tr>
-                        @endforeach
-                    @endforeach
-                </table>
+                            @foreach ($grades->chunk(2) as $chunk)
+                                @foreach ($chunk as $g)
+                                    <tr>
+                                        <td>{{ $g->name }} = {{ $g->minimum_score }} - {{ $g->maximum_score }}
+                                        </td>
+
+                                        <td>{{ $g->remark }}</td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+
+                        </table>
+                    </div>
+                    @if (isset($attendances) and $attendances['total_days'])
+                        <div style="width:45%">
+                            <table class="table">
+                                <tr>
+                                    <td colspan="2" style="border-bottom:1px solid #000">Student's Attendance</td>
+                                </tr>
+                                <tr>
+                                    <td>Days School Opened</td>
+                                    <td>{{ $attendances['total_days'] }}</td>
+                                <tr>
+                                    <td>Days present</td>
+                                    <td>{{ $attendances['days_present'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Days Absent</td>
+                                    <td>{{ $attendances['days_absent'] }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    @endif
+                </div>
             </div>
             <div class="col-4">
                 @if ($affectiveTrait)
@@ -271,7 +296,7 @@
                                             ->where('student_id', $student->id)
                                             ->where('subject', $sub->title)
                                             ->first();
-                                        
+
                                     @endphp
                                     {{ $ps ? $ps->grade : '-' }}
                                 </td>
@@ -314,7 +339,7 @@
                                             ->where('student_id', $student->id)
                                             ->where('subject', $sub->title)
                                             ->first();
-                                        
+
                                     @endphp
                                     {{ $ps ? $ps->grade : '-' }}
                                 </td>

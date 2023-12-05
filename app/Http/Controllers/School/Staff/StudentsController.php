@@ -375,11 +375,13 @@ class StudentsController extends Controller
                 ->where('section_id', $currentSection->id)->active()->get();
             $attendances = Attendance::where([
                 ['academic_session_id', $currentSession->id],
-                'term_id' =>
-                $currentTerm->id,
-                'school_id' => getSchool()->id,
-                'school_class_id' => $currentClass->id,
-                'section_id' => $currentSection->id,
+                [
+                    'term_id',
+                    $currentTerm->id
+                ],
+                ['school_id', getSchool()->id],
+                ['school_class_id', $currentClass->id],
+                ['section_id', $currentSection->id],
             ])->where(
                 'date',
                 date('Y-m-d', strtotime($date))

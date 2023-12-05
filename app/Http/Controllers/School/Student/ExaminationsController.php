@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
 use App\Models\AffectiveTrait;
 use App\Models\AffectiveTraitResult;
+use App\Models\Attendance;
 use App\Models\CommentResult;
 use App\Models\CommentResultGrade;
 use App\Models\CommentResultRemark;
@@ -215,6 +216,12 @@ class ExaminationsController extends Controller
                 ->where('min_average', '<=', $studentAverage)
                 ->first();
             $grades = Grade::where('school_id', getSchool()->id)->get();
+            $attendances = Attendance::getReport(
+                $session_id,
+                $exam->term_id,
+                $class_id,
+                $student_id
+            );
             $html = view('staff.examinations.templates.standard_result', compact(
                 'classes',
                 'currentClass',
@@ -237,7 +244,8 @@ class ExaminationsController extends Controller
                 'psychomotorResult',
                 'affectiveTraitResult',
                 'pin',
-                'type'
+                'type',
+                'attendances'
             ));
         }
         return $html;
@@ -420,6 +428,12 @@ class ExaminationsController extends Controller
                 ->where('min_average', '<=', $studentAverage)
                 ->first();
             $grades = Grade::where('school_id', getSchool()->id)->get();
+            $attendances = Attendance::getReport(
+                $session_id,
+                $exam->term_id,
+                $class_id,
+                $student_id
+            );
             $html = view('templates.standard_result', compact(
                 'classes',
                 'currentClass',
@@ -440,7 +454,8 @@ class ExaminationsController extends Controller
                 'verifyUrlQrCode',
                 'affectiveTrait',
                 'psychomotorResult',
-                'affectiveTraitResult'
+                'affectiveTraitResult',
+                'attendances'
             ));
         }
         // increase pin usage
