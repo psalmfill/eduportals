@@ -187,7 +187,7 @@
 
             <tr>
                 <td>Total Marks Obtained</td>
-                <td>{{ $total_mark }}/{{ $exam->total_mark * $subjects->count() }}</td>
+                <td>{{ $total_mark }}/{{ $exam->total_mark * $student_subjects->count() }}</td>
                 <td colspan="2">Student Average</td>
                 <td colspan="2">{{ $studentAverage }}</td>
                 <td>Class Average</td>
@@ -238,15 +238,16 @@
                                     $grade = App\Models\Grade::getGrade($total);
 
                                 @endphp
-                                <td class="text-center">{{ $mark && !$mark->absent ? $mark->score : '-' }}</td>
+                                <td class="text-center">
+                                    {{ $mark && !$mark->absent && !$mark->not_offered ? $mark->score : '-' }}</td>
                             @endforeach
                             @php
                                 $subPosition = App\Models\MarkStore::getSubjectPosition($exam->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
                             @endphp
-                            <td class="text-center">{{ $isAbsent || $notOffered ? '' : $total }}</td>
-                            <td class="text-center">{{ $grade && !$isAbsent && !$notOffered ? $grade->name : '' }}
+                            <td class="text-center">{{ $isAbsent || $notOffered ? '-' : $total }}</td>
+                            <td class="text-center">{{ $grade && !$isAbsent && !$notOffered ? $grade->name : '-' }}
                             </td>
-                            <td class="text-center">{!! !$isAbsent && !$notOffered ? $subPosition : '' !!}</td>
+                            <td class="text-center">{!! !$isAbsent && !$notOffered ? $subPosition : '-' !!}</td>
                             {{-- <td class="text-center">{{ $grade && !$isAbsent && !$notOffered ? $grade->remark : '-' }}</td> --}}
                         </tr>
                     @endforeach

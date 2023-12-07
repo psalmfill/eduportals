@@ -341,8 +341,9 @@ class ExaminationController extends Controller
             }
 
             //get class section subjects
-            // $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student->id)->pluck('subject_id'))->sortBy('name');
+            $student_subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student->id)->pluck('subject_id'))->sortBy('name');
             $subjects = Subject::find($allMarkStoreFromStudents->pluck('subject_id')->unique())->sortBy('name');
+
 
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
@@ -363,8 +364,8 @@ class ExaminationController extends Controller
             $allStudentsId = $allMarkStoreFromStudents->pluck('student_id')->unique();
 
             //Get all the students total scores
-            $scores = $allStudentsId->map(function ($e) use ($allMarkStoreFromStudents, $subjects) {
-                $subject_count =  $subjects->count();
+            $scores = $allStudentsId->map(function ($e) use ($allMarkStoreFromStudents) {
+                $subject_count =  $allMarkStoreFromStudents->where('student_id', $e)->unique()->count();
                 $score = $allMarkStoreFromStudents->where('student_id', $e)->sum('score');
                 return [
                     'student_id' => $e, 'score' => $score,
@@ -389,7 +390,7 @@ class ExaminationController extends Controller
             $total_students = $allStudentsId->count();
 
             //calculate student average
-            $studentAverage = number_format($total_mark / $subjects->count(), 2);
+            $studentAverage = number_format($total_mark / $student_subjects->count(), 2);
 
             //calculate class average
             // $classAverage = number_format($scores->sum(function ($s) {
@@ -427,6 +428,7 @@ class ExaminationController extends Controller
                 'exam',
                 'student',
                 'subjects',
+                'student_subjects',
                 'psychomotor',
                 'total_mark',
                 'total_students',
@@ -1284,6 +1286,8 @@ class ExaminationController extends Controller
 
                 $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
                 $subject_ids = $allMarkStoreFromStudents->pluck('subject_id')->unique();
+                $student_subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student->id)->pluck('subject_id'))->sortBy('name');
+
                 $subjects = Subject::find($subject_ids);
 
                 foreach ($newGroup as $key => $value) {
@@ -1294,7 +1298,7 @@ class ExaminationController extends Controller
 
 
                 //calculate student average
-                $studentAverage = number_format($total_mark / $subjects->count(), 2);
+                $studentAverage = number_format($total_mark / $student_subjects->count(), 2);
 
 
 
@@ -1315,6 +1319,7 @@ class ExaminationController extends Controller
                     'exam',
                     'student',
                     'subjects',
+                    'student_subjects',
                     'psychomotor',
                     'total_mark',
                     'total_students',
@@ -1486,7 +1491,9 @@ class ExaminationController extends Controller
             }
 
             // get class section subjects
-            $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
+            $student_subjects
+                = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
+            $subjects = Subject::find($allMarkStoreFromStudents->pluck('subject_id'))->sortBy('name');
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
             //pluck out unique id for all the students in class
@@ -1519,7 +1526,7 @@ class ExaminationController extends Controller
             $total_students = $allStudentsId->count();
 
             //calculate student average
-            $studentAverage = number_format($total_mark / $subjects->count(), 2);
+            $studentAverage = number_format($total_mark / $student_subjects->count(), 2);
 
             //calculate class average
             $classAverage = $this->calculateClassAverage($exam_id, $class_id, $student->section_id, $session_id);
@@ -1548,6 +1555,7 @@ class ExaminationController extends Controller
                 'exam',
                 'student',
                 'subjects',
+                'student_subjects',
                 'psychomotor',
                 'total_mark',
                 'total_students',

@@ -174,7 +174,7 @@
 
             <tr>
                 <td>Total Marks Obtained</td>
-                <td>{{ $total_mark }}/{{ $exam->total_mark * $subjects->count() }}</td>
+                <td>{{ $total_mark }}/{{ $exam->total_mark * $student_subjects->count() }}</td>
                 <td colspan="2">Student Average</td>
                 <td colspan="2">{{ $studentAverage }}</td>
                 <td>Class Average</td>
@@ -208,30 +208,34 @@
                         <?php
                         $total = 0;
                         $isAbsent = true;
+                        $notOffered = true;
                         ?>
 
                         <tr>
                             <td>{{ $subject->name }}</td>
                             {{-- <td>{{$item->full_name}}</td> --}}
-                            @foreach ($exam->exam_types as $type)
+                            @foreach ($exam->exam_types as $exam_type)
                                 @php
-                                    $mark = App\Models\MarkStore::getMark($exam->id, $type->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
+                                    $mark = App\Models\MarkStore::getMark($exam->id, $exam_type->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
                                     $total += $mark ? $mark->score : 0;
                                     if ($mark) {
                                         $isAbsent = $mark->absent;
+                                        $notOffered = $mark->not_offered;
                                     }
                                     $grade = App\Models\Grade::getGrade($total);
 
                                 @endphp
-                                <td class="text-center">{{ $mark && !$mark->absent ? $mark->score : '-' }}</td>
+                                <td class="text-center">
+                                    {{ $mark && !$mark->absent && !$mark->not_offered ? $mark->score : '-' }}</td>
                             @endforeach
                             @php
                                 $subPosition = App\Models\MarkStore::getSubjectPosition($exam->id, $subject->id, $session->id, $currentClass->id, $student->id, $section->id);
                             @endphp
-                            <td class="text-center">{{ $isAbsent ? '-' : $total }}</td>
-                            <td class="text-center">{{ $grade && !$isAbsent ? $grade->name : '-' }}</td>
-                            <td class="text-center">{!! $isAbsent ? '-' : $subPosition !!}</td>
-                            {{-- <td class="text-center">{{ $grade && !$isAbsent ? $grade->remark : '-' }}</td> --}}
+                            <td class="text-center">{{ $isAbsent || $notOffered ? '-' : $total }}</td>
+                            <td class="text-center">{{ $grade && !$isAbsent && !$notOffered ? $grade->name : '-' }}
+                            </td>
+                            <td class="text-center">{!! !$isAbsent && !$notOffered ? $subPosition : '-' !!}</td>
+                            {{-- <td class="text-center">{{ $grade && !$isAbsent && !$notOffered ? $grade->remark : '-' }}</td> --}}
                         </tr>
                     @endforeach
                     </tbody>
