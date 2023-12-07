@@ -156,7 +156,7 @@ class ExaminationsController extends Controller
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
                 ['section_id', $section->id],
             ])->get();
@@ -369,7 +369,7 @@ class ExaminationsController extends Controller
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
                 ['section_id', $section->id],
             ])->get();
@@ -507,7 +507,7 @@ class ExaminationsController extends Controller
             ['section_id', $section_id],
             ['school_class_id', $class_id],
             ['not_offered', 0],
-            ['absent', 0],
+            // ['absent', 0],
             ['academic_session_id', $session_id],
         ])->get();
 

@@ -331,7 +331,7 @@ class ExaminationController extends Controller
                 ['exam_id', $exam_id],
                 ['school_class_id', $class_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
                 ['section_id', $request->section],
             ])->get();
@@ -587,7 +587,7 @@ class ExaminationController extends Controller
             ['exam_id', $exam_id],
             ['school_class_id', $class_id],
             ['not_offered', 0],
-            ['absent', 0],
+            // ['absent', 0],
             ['academic_session_id', $session_id],
         ])->when($section_id, function ($q, $section_id) {
             return $q->where('section_id', $section_id);
@@ -1465,7 +1465,7 @@ class ExaminationController extends Controller
                 ['school_class_id', $class_id],
                 ['student_id', $student_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
             ])->first();
             if (!$res) {
