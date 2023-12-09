@@ -93,7 +93,7 @@
                     <div class="media">
                         <i class="entypo-users icon-lg text-primary d-flex align-self-start mr-3"></i>
                         <div class="media-body">
-                            <h2 class="">{{ $pins->whereNotNull('expiry_date')->count() }}</h2>
+                            <h2 class="">{{ $pins->whereNotNull('student_id')->count() }}</h2>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <div class="media">
                         <i class="entypo-users icon-lg text-primary d-flex align-self-start mr-3"></i>
                         <div class="media-body">
-                            <h2 class="">{{ $pins->whereNull('expiry_date')->count() }}</h2>
+                            <h2 class="">{{ $pins->whereNull('student_id')->count() }}</h2>
                         </div>
                     </div>
                 </div>
