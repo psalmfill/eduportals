@@ -77,7 +77,7 @@ class ExaminationController extends Controller
             $students = Student::where('school_id', getSchool()->id)
                 ->where('school_class_id', $class_id)
                 ->where('section_id', $section_id)
-                ->orderBy('last_name','desc')
+                ->orderBy('last_name','asc')
                 ->get();
             $exam = Exam::find($exam_id);
             return view('staff.examinations.marks_register', compact(
