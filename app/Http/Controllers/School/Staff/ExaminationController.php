@@ -77,6 +77,7 @@ class ExaminationController extends Controller
             $students = Student::where('school_id', getSchool()->id)
                 ->where('school_class_id', $class_id)
                 ->where('section_id', $section_id)
+                ->orderBy('last_name','desc')
                 ->get();
             $exam = Exam::find($exam_id);
             return view('staff.examinations.marks_register', compact(
@@ -486,7 +487,15 @@ class ExaminationController extends Controller
             $exam = Exam::find($exam_id);
 
             $classAverage = $this->calculateClassAverage($exam_id, $class_id, $section_id, $currentSession->id);
-
+            $students = $students->map(function ($student) use ($markstore, $subjects) {
+            $results = $markstore->where('student_id', $student->id);
+            $totalScore = $results->sum('score');
+            $subjectsOffered = $subjects->whereIn('id', $results->pluck('subject_id')->unique())->sortBy('name');
+                $student['avg'] = $totalScore / $subjectsOffered->count();
+                return $student;
+            })->sort(function ($a, $b) {
+                return ($a['avg'] > $b['avg']) ? -1 : 1;
+            });
 
             return view('staff.examinations.broadsheet', compact(
                 'exams',
