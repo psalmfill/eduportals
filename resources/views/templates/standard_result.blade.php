@@ -235,51 +235,47 @@
                 </table>
                 <br><br>
 
-                <table class="table" style="border:0" border="0">
-                    <tr>
-                        <td style="border:0">
+                <div style="display:flex; justify-content:space-between">
+                    <div style="width:50%">
+                        <table class="table">
+                            <tr>
+                                <td style="border-bottom:1px solid #000">Grading</td>
+                                <td style="border-bottom:1px solid #000">Interpretation</td>
+                            </tr>
+                            @foreach ($grades->chunk(2) as $chunk)
+                                @foreach ($chunk as $g)
+                                    <tr>
+                                        <td>{{ $g->name }} = {{ $g->minimum_score }} - {{ $g->maximum_score }}
+                                        </td>
+
+                                        <td>{{ $g->remark }}</td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+
+                        </table>
+                    </div>
+                    @if (isset($attendances) and $attendances['total_days'])
+                        <div style="width:45%">
                             <table class="table">
                                 <tr>
-                                    <td style="border-bottom:1px solid #000">Grading</td>
-                                    <td style="border-bottom:1px solid #000">Interpretation</td>
+                                    <td colspan="2" style="border-bottom:1px solid #000">Student's Attendance</td>
                                 </tr>
-                                @foreach ($grades->chunk(2) as $chunk)
-                                    @foreach ($chunk as $g)
-                                        <tr>
-                                            <td>{{ $g->name }} = {{ $g->minimum_score }} -
-                                                {{ $g->maximum_score }}
-                                            </td>
-
-                                            <td>{{ $g->remark }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endforeach
-
+                                <tr>
+                                    <td>Days School Opened</td>
+                                    <td>{{ $attendances['total_days'] }}</td>
+                                <tr>
+                                    <td>Days present</td>
+                                    <td>{{ $attendances['days_present'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Days Absent</td>
+                                    <td>{{ $attendances['days_absent'] }}</td>
+                                </tr>
                             </table>
-                        </td>
-                        <td style="border:0;vertical-align:top">
-                            @if (isset($attendances) and $attendances['total_days'])
-                                <table class="table">
-                                    <tr>
-                                        <td colspan="2" style="border-bottom:1px solid #000">Student's Attendance
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Days School Opened</td>
-                                        <td>{{ $attendances['total_days'] }}</td>
-                                    <tr>
-                                        <td>Days present</td>
-                                        <td>{{ $attendances['days_present'] }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Days Absent</td>
-                                        <td>{{ $attendances['days_absent'] }}</td>
-                                    </tr>
-                                </table>
-                            @endif
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    @endif
+                </div>
             </div>
             <div class="col-4">
                 @if ($affectiveTrait)

@@ -66,7 +66,7 @@
                         </fieldset>
                         <br>
                         <fieldset>
-                            <legend>affectiveTrait Grades</legend>
+                            <legend>Affective Trait Grades</legend>
                             <div class="row">
                                 <div class="col-md-12">
                                     @foreach ($affectiveTrait->grades as $grade)
