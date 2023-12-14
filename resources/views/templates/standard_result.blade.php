@@ -375,6 +375,14 @@
                 <td>Principal/Head Teacher's Comments</td>
                 <td>{{ $remark ? $remark->headmaster : '' }}</td>
             </tr>
+            
+            @if($personalizedRemark)
+            <tr>
+                <td>Special Remark</td>
+                <td> {!! $personalizedRemark->comment !!}<td>
+
+            </tr>
+            @endif
             <tr>
                 <td>Next Term Begins</td>
                 <td>{{ $remark ? date('jS F, Y', strtotime($remark->next_term_begins)) : '' }}</td>

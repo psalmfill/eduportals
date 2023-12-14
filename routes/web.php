@@ -102,6 +102,8 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 Route::delete('comment-result-setup/{id}/delete', 'ExaminationController@commentResultSetupDestroy')->name('staff.comment_result.setup_destroy');
                 Route::resource('grades', 'GradesController');
                 Route::match(['POST', 'GET'], 'marks-register', 'ExaminationController@index')->name('staff.marks_register');
+                Route::get('personalized-remarks', 'ExaminationController@personalizedRemarks')->name('staff.personalized_remarks');
+                Route::post('personalized-remarks', 'ExaminationController@storePersonalizedRemarks')->name('staff.personalized_remarks.store');
                 Route::post('marks-register/post-marks', 'ExaminationController@postMarks')->name('staff.marks_register.postmarks');
                 Route::post('marks-register/clear-marks', 'ExaminationController@clearMarks')->name('staff.marks_register.clearmarks');
                 Route::match(['POST', 'GET'], 'broadsheet-results', 'ExaminationController@viewBroadsheetResult')->name('staff.broadsheet-results.view');

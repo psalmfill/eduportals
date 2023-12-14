@@ -17,6 +17,7 @@ use App\Models\ExamType;
 use App\Models\GeneralSetting;
 use App\Models\Grade;
 use App\Models\MarkStore;
+use App\Models\PersonalizedResultRemark;
 use App\Models\Pin;
 use App\Models\Psychomotor;
 use App\Models\PsychomotorSubject;
@@ -97,6 +98,94 @@ class ExaminationController extends Controller
         $sessions = AcademicSession::all();
         $exams = Exam::where('school_id', getSchool()->id)->get();
         return view('staff.examinations.marks_register', compact('classes', 'exams', 'sessions'));
+    }
+
+    public function personalizedRemarks(Request $request)
+    {
+
+
+        $user = user();
+        if ($user instanceof Staff)
+            $classes = $user->school_classes->unique();
+        else
+            $classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->get();
+
+
+        if (count($request->query()) > 0) {
+            $exams = Exam::where('school_id', getSchool()->id)->with('exam_types')->get();
+            $exam_id = $request->exam;
+            $class_id = $request->class;
+            $section_id = $request->section;
+            $session_id = $request->session;
+            $currentClass = SchoolClass::find($class_id);
+            $currentSection = Section::find($section_id);
+            $currentSession = AcademicSession::find($session_id);
+            $sessions = AcademicSession::all();
+            $sections =  $currentClass->sections;
+
+            $students = Student::where('school_id', getSchool()->id)
+                ->where('school_class_id', $class_id)
+                ->where('section_id', $section_id)
+                ->orderBy('last_name','asc')
+                ->get();
+            $exam = Exam::find($exam_id);
+            $personalizedRemarks = PersonalizedResultRemark::where([
+                ['exam_id', $exam_id],
+                ['section_id', $section_id],
+                ['academic_session_id', $session_id],
+                ['school_class_id', $class_id],
+            ])->get();
+            return view('staff.examinations.personalized_result_remarks', compact(
+                'exams',
+                'exam',
+                'students',
+                'classes',
+                'sections',
+                'currentClass',
+                'currentSection',
+                'sessions',
+                'currentSession',
+                'personalizedRemarks'
+            ));
+        }
+        $sessions = AcademicSession::all();
+        $exams = Exam::where('school_id', getSchool()->id)->get();
+        return view('staff.examinations.personalized_result_remarks', compact('classes', 'exams', 'sessions'));
+    }
+
+    public function storePersonalizedRemarks(Request $request)
+    {
+        $exam_id = $request->exam;
+        $academic_session_id = $request->session;
+        $class_id = $request->class;
+        $student_id = $request->student;
+        $section_id = $request->section;
+        $comment = $request->comment;
+                $remark = PersonalizedResultRemark::where('exam_id', $exam_id)
+                    ->where('academic_session_id', $academic_session_id)
+                    ->where('student_id', $student_id)
+                    ->where('school_class_id', $class_id)
+                    ->where('section_id', $section_id)
+                    ->first();
+                if ($remark) {
+                    $remark->update([
+                        'comment' => $comment,
+                    ]);
+                }else{
+                $remark = new PersonalizedResultRemark(
+                    [
+                        'exam_id' => $exam_id,
+                        'academic_session_id' => $academic_session_id,
+                        'student_id' => $student_id,
+                        'school_class_id' => $class_id,
+                        'section_id' => $section_id,
+                        'school_id'=> getSchool()->id,
+                        'comment' => $comment,
+                    ]
+                );
+                $remark->save();
+            }
+        return  redirect()->back()->with('message', 'Remark Saved');
     }
 
     public function postMarks(Request $request)
@@ -421,6 +510,11 @@ class ExaminationController extends Controller
                 $class_id,
                 $student_id
             );
+            $personalizedRemark = PersonalizedResultRemark::where('exam_id', $exam->id)
+            ->where('academic_session_id', $session_id)
+            ->where('student_id', $student_id)
+            ->where('school_class_id', $class_id)
+            ->first();
             $section = $student->section;
             $html = view('staff.examinations.templates.standard_result', compact(
                 'classes',
@@ -437,6 +531,7 @@ class ExaminationController extends Controller
                 'studentAverage',
                 'classAverage',
                 'remark',
+                'personalizedRemark',
                 'session',
                 'section',
                 'verifyUrlQrCode',
@@ -1321,6 +1416,11 @@ class ExaminationController extends Controller
                     $student->id
                 );
 
+                $personalizedRemark = PersonalizedResultRemark::where('exam_id', $exam->id)
+                ->where('academic_session_id', $session_id)
+                ->where('student_id', $student->id)
+                ->where('school_class_id', $class_id)
+                ->first();
                 $html .= view('staff.examinations.templates.standard_result_m', compact(
                     'classes',
                     'currentClass',
@@ -1340,7 +1440,8 @@ class ExaminationController extends Controller
                     'section',
                     'generalSettings',
                     'verifyUrlQrCode',
-                    'attendances'
+                    'attendances',
+                    'personalizedRemark'
                 ))->render();
             }
             // return $html;
@@ -1556,9 +1657,16 @@ class ExaminationController extends Controller
                 $class_id,
                 $student_id
             );
+            
+            $personalizedRemark = PersonalizedResultRemark::where('exam_id', $exam->id)
+            ->where('academic_session_id', $session_id)
+            ->where('student_id', $student_id)
+            ->where('school_class_id', $class_id)
+            ->first();
             $grades = Grade::where('school_id', getSchool()->id)->get();
             $html = view('templates.standard_result', compact(
                 'classes',
+                'personalizedRemark',
                 'currentClass',
                 'grades',
                 'exam',

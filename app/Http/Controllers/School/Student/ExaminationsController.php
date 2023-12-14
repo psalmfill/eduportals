@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers\School\Student;
 
-use App\Http\Controllers\Controller;
-use App\Models\AcademicSession;
-use App\Models\AffectiveTrait;
-use App\Models\AffectiveTraitResult;
-use App\Models\Attendance;
-use App\Models\CommentResult;
-use App\Models\CommentResultGrade;
-use App\Models\CommentResultRemark;
-use App\Models\Exam;
-use App\Models\GeneralSetting;
-use App\Models\Grade;
-use App\Models\MarkStore;
+use QrCode;
 use App\Models\Pin;
-use App\Models\Psychomotor;
-use App\Models\PsychomotorResult;
-use App\Models\ResultRemark;
-use App\Models\SchoolClass;
+use App\Models\Exam;
+use App\Models\Grade;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\MarkStore;
+use App\Models\Attendance;
+use App\Models\Psychomotor;
+use App\Models\SchoolClass;
+use App\Models\ResultRemark;
 use Illuminate\Http\Request;
+use App\Models\CommentResult;
+use App\Models\AffectiveTrait;
+use App\Models\GeneralSetting;
+use App\Models\AcademicSession;
+use App\Models\PsychomotorResult;
+use App\Models\CommentResultGrade;
+use App\Models\CommentResultRemark;
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
+use App\Models\AffectiveTraitResult;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use QrCode;
+use App\Models\PersonalizedResultRemark;
 
 class ExaminationsController extends Controller
 {
@@ -222,9 +223,15 @@ class ExaminationsController extends Controller
                 $class_id,
                 $student_id
             );
+            $personalizedRemark = PersonalizedResultRemark::where('exam_id', $exam->id)
+            ->where('academic_session_id', $session_id)
+            ->where('student_id', $student_id)
+            ->where('school_class_id', $class_id)
+            ->first();
             $html = view('staff.examinations.templates.standard_result', compact(
                 'classes',
                 'currentClass',
+                'personalizedRemark',
                 'grades',
                 'exam',
                 'student',

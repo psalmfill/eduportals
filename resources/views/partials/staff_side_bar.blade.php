@@ -258,7 +258,7 @@
                  <span class="menu-title">Examination</span>
                  <i class="typcn typcn-chevron-right menu-arrow"></i>
              </a>
-             <div class="collapse  {{ in_array(Route::currentRouteName(), ['staff.cbt', 'staff.results.view', 'staff.broadsheet-results.view', 'exams-setup.index', 'staff.examination.pychomotor', 'staff.examination.affectiveTrait', 'staff.comment_result.setup', 'staff.comment_result.grades', 'grades.index', 'staff.result_remarks', 'staff.marks_register', 'staff.examination.psychomotor.result', 'staff.examination.affectiveTrait.result', 'staff.comment_result']) ? 'show' : '' }}"
+             <div class="collapse  {{ in_array(Route::currentRouteName(), ['staff.cbt', 'staff.results.view', 'staff.broadsheet-results.view', 'exams-setup.index', 'staff.examination.pychomotor', 'staff.examination.affectiveTrait', 'staff.comment_result.setup', 'staff.comment_result.grades', 'grades.index', 'staff.result_remarks', 'staff.marks_register', 'staff.personalized_remarks','staff.examination.psychomotor.result', 'staff.examination.affectiveTrait.result', 'staff.comment_result']) ? 'show' : '' }}"
                  id="examination-basic">
 
                  <ul class="nav flex-column sub-menu">
@@ -395,6 +395,13 @@
                              <span class="title">Affective Trait Results</span>
                          </a>
                      </li>
+                     
+                     <li class="nav-item">
+                        <a class="nav-link {{ in_array(Route::currentRouteName(), ['staff.personalized_remarks']) ? 'active' : '' }}"
+                            href="{{ route('staff.personalized_remarks') }}">
+                            <span class="title">Personalize Result Remarks</span>
+                        </a>
+                    </li>
                      <li
                          class="nav-item {{ in_array(Route::currentRouteName(), ['staff.comment_result']) ? 'active' : '' }}">
                          <a class="nav-link" href="{{ route('staff.comment_result') }}">
