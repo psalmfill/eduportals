@@ -412,6 +412,8 @@
                         <h5>Verify Result</h5>
                         <img src="data:image/png;base64, {!! $verifyUrlQrCode !!} ">
                     </div>
+                <div style="font-size:8px; text-align:right">Powered by Eduportals.co</div>
+
                 </td>
             </tr>
         </table>

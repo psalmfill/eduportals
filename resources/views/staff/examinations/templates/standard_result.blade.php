@@ -428,9 +428,12 @@
                         <h5>Verify Result</h5>
                         {!! $verifyUrlQrCode !!}
                     </div>
+                <div style="font-size:8px; text-align:right">Powered by Eduportals.co</div>
+
                 </td>
             </tr>
         </table>
+
     </div>
     <div style="width:842px; margin:0 auto">
 
