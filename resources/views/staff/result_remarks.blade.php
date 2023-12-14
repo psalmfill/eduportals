@@ -143,7 +143,7 @@
                                             <div class="form-group">
                                                 <label for="next_term_fee">Next Term Fee</label>
 
-                                                <input type="number" value="{{ $resultRemark->next_term_fee }}"
+                                                <input type="text" value="{{ $resultRemark->next_term_fee }}"
                                                     name="next_term_fee" class="form-control">
                                                 @error('next_term_fee')
                                                     <small class="text-danger">{{ $message }}</small>
@@ -248,7 +248,7 @@
                                             <div class="form-group">
                                                 <label for="next_term_fee">Next Term Fee</label>
 
-                                                <input type="number" name="next_term_fee" class="form-control">
+                                                <input type="text" name="next_term_fee" class="form-control">
                                                 @error('next_term_fee')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -343,7 +343,7 @@
                                             <div class="form-group">
                                                 <label for="next_term_fee">Next Term Fee</label>
 
-                                                <input type="number" name="next_term_fee" class="form-control">
+                                                <input type="text" name="next_term_fee" class="form-control">
                                                 @error('next_term_fee')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror

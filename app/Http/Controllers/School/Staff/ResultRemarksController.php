@@ -32,7 +32,7 @@ class ResultRemarksController extends Controller
             'headmaster' => 'required|string',
             'teacher' => 'required|string',
             'next_term_begins' => 'required|date',
-            'next_term_fee' => 'required|numeric',
+            'next_term_fee' => 'required|string',
             'decision' => 'required'
         ]);
 
@@ -74,7 +74,7 @@ class ResultRemarksController extends Controller
             'headmaster' => 'required|string',
             'teacher' => 'required|string',
             'next_term_begins' => 'required|date',
-            'next_term_fee' => 'required|numeric',
+            'next_term_fee' => 'required|string',
             'decision' => 'required'
         ]);
 

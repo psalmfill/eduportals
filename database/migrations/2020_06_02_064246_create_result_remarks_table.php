@@ -19,7 +19,7 @@ class CreateResultRemarksTable extends Migration
             $table->string('teacher');
             $table->integer('max_average');
             $table->integer('min_average');
-            $table->integer('next_term_fee')->nullable();
+            $table->string('next_term_fee')->nullable();
             $table->date('next_term_begins')->nullable();
             $table->string('decision');
             $table->boolean('active')->default(1);
