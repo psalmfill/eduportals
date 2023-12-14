@@ -66,7 +66,7 @@ class ResultRemarksController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'session_id' => 'required',
+            'academic_session_id' => 'required',
             'school_class_id' => 'required|exists:school_classes,id',
             'exam_id' => 'required|exists:exams,id',
             'min_average' => 'required|numeric|lt:max_average',
@@ -81,10 +81,10 @@ class ResultRemarksController extends Controller
         try {
             $resultRemark = ResultRemark::findOrFail($id);
             $resultRemark->update($data);
-            return redirect()->back()->with('message', 'Successfully created new remark');
+            return redirect()->back()->with('message', 'Successfully updated remark');
         } catch (Exception $e) {
         }
-        return redirect()->back()->with('error', 'failed creating new remark');
+        return redirect()->back()->with('error', 'failed creating updating remark');
     }
 
     public function destroy($id)

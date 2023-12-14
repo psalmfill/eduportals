@@ -126,7 +126,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                     'result-remarks',
                     'ResultRemarksController@store'
                 )->name('staff.result_remarks.store');
-                Route::post('result-remarks-exisiting', 'ResultRemarksController@storeExisting')->name('staff.result_remarks.existing');
+                Route::post('result-remarks-existing', 'ResultRemarksController@storeExisting')->name('staff.result_remarks.existing');
                 Route::get('result-remarks/{id}', 'ResultRemarksController@edit')->name('staff.result_remarks.edit');
                 Route::put('result-remarks/{id}', 'ResultRemarksController@update')->name('staff.result_remarks.update');
                 Route::delete('result-remarks/{id}', 'ResultRemarksController@destroy')->name('staff.result_remarks.destroy');
