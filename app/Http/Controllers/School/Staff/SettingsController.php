@@ -40,7 +40,9 @@ class SettingsController extends Controller
             if ($request->logo) {
                 //delete old logo if any
                 if ($school->logo) {
+                   if (Storage::exists($school->logo)) {
                     Storage::delete($school->logo);
+                }
                 }
                 $logoDestination = $request->file('logo')->store('public/images');
                 $school->logo = $logoDestination;
@@ -48,7 +50,9 @@ class SettingsController extends Controller
             if ($request->coat_of_arm) {
                 //delete old coat_of_arm if any
                 if ($generalSettings->coat_of_arm) {
+                    if (Storage::exists($generalSettings->coat_of_arm)) {
                     Storage::delete($generalSettings->coat_of_arm);
+                }
                 }
                 $coatOfArmDestination = $request->file('coat_of_arm')->store('public/images');
                 $generalSettings->coat_of_arm = $coatOfArmDestination;
@@ -56,7 +60,9 @@ class SettingsController extends Controller
             if ($request->stamp) {
                 //delete old logo if any
                 if ($generalSettings->school_stamp) {
+                   if (Storage::exists($generalSettings->school_stamp)) {
                     Storage::delete($generalSettings->school_stamp);
+                }
                 }
                 $stampDestination = $request->file('stamp')->store('public/images');
                 $generalSettings->school_stamp = $stampDestination;
