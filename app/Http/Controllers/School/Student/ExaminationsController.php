@@ -170,7 +170,7 @@ class ExaminationsController extends Controller
             // get class section subjects
             $student_subjects
                 = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
-            $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
+            $subjects = Subject::find($allMarkStoreFromStudents->pluck('subject_id'))->sortBy('name');
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
             //pluck out unique id for all the students in class
@@ -391,7 +391,7 @@ class ExaminationsController extends Controller
             // get class section subjects
              $student_subjects
                 = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
-            $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
+            $subjects = Subject::find($allMarkStoreFromStudents->pluck('subject_id'))->sortBy('name');
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
             //pluck out unique id for all the students in class
