@@ -203,7 +203,7 @@ class ExaminationsController extends Controller
             $total_students = $allStudentsId->count();
 
             //calculate student average
-            $studentAverage = number_format($total_mark / $subjects->count(), 2);
+            $studentAverage = number_format($total_mark / $student_subjects->count(), 2);
 
             //calculate class average
             $classAverage = $this->calculateClassAverage($exam_id, $class_id, $student->section_id, $session_id);
@@ -424,7 +424,7 @@ class ExaminationsController extends Controller
             $total_students = $allStudentsId->count();
 
             //calculate student average
-            $studentAverage = number_format($total_mark / $subjects->count(), 2);
+            $studentAverage = number_format($total_mark / $student_subjects->count(), 2);
 
             //calculate class average
             $classAverage = $this->calculateClassAverage($exam_id, $class_id, $student->section_id, $session_id);
