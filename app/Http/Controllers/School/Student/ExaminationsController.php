@@ -168,6 +168,8 @@ class ExaminationsController extends Controller
             }
 
             // get class section subjects
+            $student_subjects
+                = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
             $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
@@ -387,6 +389,8 @@ class ExaminationsController extends Controller
             }
 
             // get class section subjects
+             $student_subjects
+                = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
             $subjects = Subject::find($allMarkStoreFromStudents->where('student_id', $student_id)->pluck('subject_id'))->sortBy('name');
             $total_mark = $allMarkStoreFromStudents->where('student_id', $student->id)->sum('score');
 
@@ -435,6 +439,11 @@ class ExaminationsController extends Controller
                 // ->where('max_average', '<=', floor($studentAverage))
                 ->where('min_average', '<=', $studentAverage)
                 ->first();
+            $personalizedRemark = PersonalizedResultRemark::where('exam_id', $exam->id)
+            ->where('academic_session_id', $session_id)
+            ->where('student_id', $student_id)
+            ->where('school_class_id', $class_id)
+            ->first();
             $grades = Grade::where('school_id', getSchool()->id)->get();
             $attendances = Attendance::getReport(
                 $session_id,
@@ -445,6 +454,7 @@ class ExaminationsController extends Controller
             $html = view('templates.standard_result', compact(
                 'classes',
                 'currentClass',
+                'personalizedRemark',
                 'grades',
                 'exam',
                 'student',
