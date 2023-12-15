@@ -142,7 +142,7 @@ class ExaminationsController extends Controller
                 ['school_class_id', $class_id],
                 ['student_id', $student_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
             ])->first();
             if (!$res) {
@@ -363,7 +363,7 @@ class ExaminationsController extends Controller
                 ['school_class_id', $class_id],
                 ['student_id', $student_id],
                 ['not_offered', 0],
-                ['absent', 0],
+                // ['absent', 0],
                 ['academic_session_id', $session_id],
             ])->first();
             if (!$res) {

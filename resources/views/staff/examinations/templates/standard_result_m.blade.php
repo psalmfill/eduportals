@@ -395,7 +395,7 @@
             </tr>
             <tr>
                 <td>Next Term Fees</td>
-                <td>N{{ $remark ? number_format($remark->next_term_fee) : '' }}</td>
+                <td>N{{ $remark ? $remark->next_term_fee: '' }}</td>
             </tr>
         </table>
         <br>
