@@ -52,6 +52,7 @@ class PinsController extends Controller
             $pinCollection = PinCollection::create([
                 'school_id' => $school->id,
                 'reference' => Str::random(),
+                'quantity' => $request->quantity
             ]);
 
             $count = $request->quantity;
