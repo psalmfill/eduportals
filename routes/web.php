@@ -5,6 +5,7 @@ use App\Http\Repositories\PaymentRepository;
 use App\Models\PinCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::domain('{school}.' . env('BASE_URL'))->group(function () {
-
     Route::group(['middleware' => ['school']], function () {
-
-
         Route::group(['namespace' => 'School',], function () {
             // Route::get('/', 'FrontendController@index');
             Route::get('/', function () {
@@ -78,12 +75,13 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::get('students/alumni', 'StudentsController@alumni')->name('staff.students.alumni');
             Route::get('students/trash', 'StudentsController@trash')->name('staff.students.trash');
             Route::delete('students/trash', 'StudentsController@emptyTrash')->name('staff.students.trash.empty');
+            Route::put('students/{id}/reset-password', 'StudentsController@resetPassword')->name('staff.students.resetPassword');
             Route::resource('students', 'StudentsController');
             Route::delete('students', 'StudentsController@deleteStudent')->name('staff.deleteStudent');
             Route::get('students-promotion', 'StudentsController@promotion')->name('students.promotion');
             Route::post('students-promotion', 'StudentsController@promote')->name('students.promote');
             Route::match(['Post', 'GET'], 'students-attendance', 'StudentsController@attendance')->name('students.attendance');
-            Route::get('students-attendance/view', 'StudentsController@Viewattendant')->name('students.attendance.view');
+            Route::get('students-attendance/view', 'StudentsController@ViewAttendance')->name('students.attendance.view');
 
             Route::group(['prefix' => 'examinations'], function () {
                 Route::get('comment-results', 'ExaminationController@commentResults')->name('staff.comment_result');
@@ -295,7 +293,7 @@ Route::group(['prefix' => 'vendor', 'namespace' => 'Vendors'], function () {
 
 
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', [HomeController::class,'index'])->name('home');
 Route::get('/create-free-account', 'HomeController@getStarted')->name('get_started');
 Route::post('/create-free-account', 'HomeController@store')->name('get_started.store');
 Route::get('/payments/callback', 'HomeController@handlePaymentCallback')->name('payment.callback');

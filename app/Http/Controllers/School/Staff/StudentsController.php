@@ -407,7 +407,7 @@ class StudentsController extends Controller
         return view('staff.student.attendance', compact('sessions', 'classes', 'terms'));
     }
 
-    public function viewAttendant(Request $request)
+    public function viewAttendance(Request $request)
     {
         $user = user();
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -574,5 +574,16 @@ class StudentsController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Student Trash Clear Failed: ' . $e->getMessage());
         }
+    }
+    
+    public function resetPassword(Request $request, $id)
+    {
+
+        $user  =  Student::findOrFail($id);;
+        $user->password = bcrypt('12345678');
+        if ($user->save()) {
+            return redirect()->back()->with('message', ' Password has been reset to 123456789 ');
+        }
+        return redirect()->back()->with('error', 'Fail to reset password');
     }
 }
