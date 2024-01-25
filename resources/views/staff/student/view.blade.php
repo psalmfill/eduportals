@@ -152,7 +152,14 @@
                     <br>
 
                     @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
-                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <div class="d-flex">
+                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <button onclick="$('#password-reset').submit()" class="btn btn-danger btn-sm ml-2">Reset Password</button>
+                        <form action="{{route('staff.students.resetPassword', $student->id)}}" method="POST" id="password-reset">
+                            @method('PUT')
+                            @csrf
+                        </form>
+                        </div>
                     @endif
                 </div>
 

@@ -21013,7 +21013,9 @@ code {
 
 /* Footer */
 .footer {
-  background: #e8eff9;
+  background: #ffffff; /* #e8eff9;*/
+  border-top: 1px solid #eee;
+  margin-top: 1%;
   padding: 1.875rem 1.875rem 1.875rem 1.875rem;
   transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
@@ -25379,7 +25381,7 @@ body.avgrund-active {
 }
 
 .content-wrapper {
-  background: #e8eff9;
+  background:  #ffffff; /* #e8eff9;*/
   padding: 1.875rem 1.875rem 0 1.875rem;
   width: 100%;
   -webkit-flex-grow: 1;
@@ -25899,6 +25901,7 @@ body.avgrund-active {
 
 .navbar .navbar-menu-wrapper {
   background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
   transition: width 0.25s ease;
   -webkit-transition: width 0.25s ease;
   -moz-transition: width 0.25s ease;

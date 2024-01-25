@@ -225,12 +225,12 @@
                                     </div> --}}
                                     <div class="form-group">
                                         <label for="field-3" class="col-sm-3 control-label">Passport</label>
-                                        <div class="fileinput-new thumbnail" data-provides="fileinput">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
 
-                                            <div class="fileinput-preview fileinput-exists thumbnail"
-                                                style="max-width:200px;max-height: 150px">
+                                            <div class="fileinput-preview fileinput-exists thumbnail mb-5"
+                                                style="max-width:200px; max-height: 150px">
                                                 <img src="{{ $student->image ? asset($student->avatar) : 'http://placehold.it/200x150' }}"
-                                                    class="img-fluid" alt="...">
+                                                    class="h-100 w-100" alt="...">
                                             </div>
                                             <div class="mt-1">
                                                 <span class="btn btn-white btn-file">

@@ -164,7 +164,7 @@
                     </div>
                     <br>
                     <div class="row bg-dark pt-3">
-                        <div class="col-md-1 text-white">
+                        <div class="col-md-2 text-white">
                             <h4>Transfer to:</h4>
                         </div>
                         <div class="col-md-3">

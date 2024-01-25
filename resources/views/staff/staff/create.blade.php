@@ -522,7 +522,7 @@
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
 
                                         <div class="fileinput-preview fileinput-exists thumbnail"
-                                            style="max-width: 200px">
+                                        style="max-width:200px; max-height: 150px">
                                             <img src="http://placehold.it/150x150" class="h-100 w-100 img-fluid"
                                                 alt="...">
                                         </div>
