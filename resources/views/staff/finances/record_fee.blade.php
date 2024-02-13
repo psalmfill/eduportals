@@ -101,10 +101,21 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    @foreach ($feeItems as $feeItem)
+                                        <div class="col-md-6">
+                                            <div class="checkbox checkbox-replace">
+                                                <input type="checkbox" name="feeItems[]" class="mt-1"
+                                                    id="section-{{ $feeItem->id }}" value="{{ $feeItem->id }}">
+                                                <label>{{ $feeItem->name }}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Total Fee Amount</label>
-                                            <input name="total_fee" type="number" class="form-control"
+                                            <input id="total-amount" name="total_fee" type="number" class="form-control"
                                                 placeholder="Total Fee Amount" value="{{ $fee->amount }}" </div>
                                         </div>
                                     </div>
@@ -190,11 +201,26 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <label class="d-block" for="">Fees</label>
+                                <div class="row">
+
+                                    @foreach ($feeItems as $feeItem)
+                                        <div class="col-md-6">
+                                            <div class="checkbox checkbox-replace">
+                                                <input type="checkbox" name="feeItems[]" class="mt-1 cat"
+                                                    data-amount="{{ $feeItem->amount }}"
+                                                    id="section-{{ $feeItem->id }}" value="{{ $feeItem->id }}">
+                                                <label>{{ $feeItem->name }}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Total Fee Amount</label>
-                                            <input name="total_fee" type="number" class="form-control"
+                                            <input id="total-amount" name="total_fee" type="number" class="form-control"
                                                 placeholder="Total Fee Amount">
                                         </div>
                                     </div>
@@ -202,7 +228,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Amount Paid</label>
-                                            <input name="amount_paid" type="number" class="form-control"
+                                            <input id="amount-paid" name="amount_paid" type="number" class="form-control"
                                                 placeholder="Amount Paid">
                                         </div>
                                     </div>
@@ -246,14 +272,11 @@
                 const class_id = $('#class').val()
                 // show_loading_bar(65);
                 //fetch class sections
-                console.log(section_id, BASE_URL + "/api/classes/" + class_id + '/sections/' + section_id +
-                    '/students');
 
                 $.ajax({
 
                     url: BASE_URL + "/api/classes/" + class_id + '/sections/' + section_id + '/students',
                 }).done(function(data) {
-                    console.log(data)
                     let html = '<option>Select Students</option>'
                     data.forEach(function(el) {
                         html += '<option value="' + el.id + '">' + el.full_name + ' (' + el.reg_no +
@@ -262,6 +285,21 @@
 
 
                     $('#students').html(html);
+                    // show_loading_bar(100);
+                });
+                $.ajax({
+
+                    url: BASE_URL + "/api/classes/" + class_id + '/sections/' + section_id + '/fee-categories',
+                }).done(function(data) {
+                   let total =0
+                    data.forEach(function(el) {
+                        $('#section-'+el.id).prop('checked',true);
+                        total +=el.amount *1
+                    })
+                    $('#total-amount').val(total);
+                    $('#amount-paid').val(total);
+
+
                     // show_loading_bar(100);
                 });
             })

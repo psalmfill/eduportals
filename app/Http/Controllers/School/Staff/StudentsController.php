@@ -582,7 +582,7 @@ class StudentsController extends Controller
         $user  =  Student::findOrFail($id);;
         $user->password = bcrypt('12345678');
         if ($user->save()) {
-            return redirect()->back()->with('message', ' Password has been reset to 123456789 ');
+            return redirect()->back()->with('message', ' Password has been reset to 12345678');
         }
         return redirect()->back()->with('error', 'Fail to reset password');
     }

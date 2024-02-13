@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class SchoolClass extends Model
 {
@@ -21,6 +22,15 @@ class SchoolClass extends Model
 
     public function learning_resources()
     {
-        return $this->hasMany(LearningResources::class);
+        return $this->hasMany(LearningResource::class);
+    }
+    /**
+     * The fee_items that belong to the Section
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function fee_items(): BelongsToMany
+    {
+        return $this->belongsToMany(FeeItem::class, 'fee_item_section', 'school_class_id', 'fee_item_id');
     }
 }

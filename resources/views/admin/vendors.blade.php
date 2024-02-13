@@ -324,17 +324,27 @@
                                             <td>{{ $item->state }}</td>
                                             <td>{{ $item->city }}</td>
                                             <td>
-                                                <form action="{{ route('vendors.destroy', $item->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <div class="btn-group">
-                                                        {{-- <a href="/a" class="btn btn-success"><i class="entypo-eye"></i> view</a> --}}
-                                                        <a href="{{ route('vendors.edit', $item->id) }}"
-                                                            class="btn btn-info btn-sm"><i class="entypo-pencil"></i>
-                                                            Edit</a>
-                                                        {{-- <button class="btn btn-danger"><i class="entypo-trash"></i>Delete</button> --}}
-                                                    </div>
-                                                </form>
+
+
+                                                <div class="btn-group">
+                                                    <form action="{{ route('vendors.destroy', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                    {{-- <a href="/a" class="btn btn-success"><i class="entypo-eye"></i> view</a> --}}
+                                                    <a href="{{ route('vendors.edit', $item->id) }}"
+                                                        class="btn btn-info btn-sm"><i class="entypo-pencil"></i>
+                                                        Edit</a>
+                                                    <button onclick="$('#password-reset').submit()"
+                                                        class="btn btn-danger btn-sm ml-2">Reset Password</button>
+
+                                                    <form action="{{ route('vendors.resetPassword', $item->user->id) }}"
+                                                        method="POST" id="password-reset">
+                                                        @method('PUT')
+                                                        @csrf
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

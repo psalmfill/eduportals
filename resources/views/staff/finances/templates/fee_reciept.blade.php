@@ -35,7 +35,7 @@
             font-size: 9pt;
             text-transform: capitalize;
             /* white-space: nowrap; */
-            background: #fffaf0;
+            /* background: #fffaf0; */
             min-height: 842px;
             text-transform: uppercase;
         }

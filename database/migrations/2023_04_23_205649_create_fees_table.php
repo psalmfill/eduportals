@@ -22,7 +22,7 @@ class CreateFeesTable extends Migration
             $table->morphs('staffable');
             $table->unsignedBigInteger('student_id')->nullable();
             $table->string('reference')->unique();
-            $table->decimal('amount');
+            $table->decimal('amount', 20);
             $table->boolean('full_payment');
             $table->timestamps();
         });

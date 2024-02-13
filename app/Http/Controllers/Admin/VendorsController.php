@@ -116,7 +116,7 @@ class VendorsController extends Controller
         try {
             DB::beginTransaction();
             //created vendor admin
-            $admin =  User::findOrFail($request->user_id);
+            $admin = User::findOrFail($request->user_id);
             $admin->first_name = $request->admin_first_name;
             $admin->last_name = $request->admin_last_name;
             $admin->other_name = $request->admin_other_name;
@@ -126,7 +126,7 @@ class VendorsController extends Controller
             $admin->save();
 
             //create vendor
-            $vendor =  Vendor::findOrFail($id);
+            $vendor = Vendor::findOrFail($id);
             $vendor->name = $request->name;
             $vendor->code = $request->code;
             $vendor->email = $request->email;
@@ -154,5 +154,17 @@ class VendorsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function resetPassword(Request $request, $id)
+    {
+
+        $user = User::findOrFail($id);
+        ;
+        $user->password = bcrypt('12345678');
+        if ($user->save()) {
+            return redirect()->back()->with('message', ' Password has been reset to 12345678 ');
+        }
+        return redirect()->back()->with('error', 'Fail to reset password');
     }
 }

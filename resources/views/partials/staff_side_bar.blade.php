@@ -413,7 +413,8 @@
          </li>
          @if (!(user() instanceof \App\Models\Staff || user() instanceof \App\Models\Student))
              <li class="nav-item">
-                 <a class="nav-link  {{ in_array(Route::currentRouteName(), ['staff.finances.transactions', 'staff.finances.fees', 'staff.finances.expenditures']) ? 'active' : '' }}"
+                 <a class="nav-link  {{ in_array(Route::currentRouteName(), ['staff.finances.transactions', 'staff.finances.fees', 'staff.finances.expenditures', 
+                 'staff.finances.feeItems.index','staff.finances.feeItems.edit','staff.finances.feeSetup']) ? 'active' : '' }}"
                      data-toggle="collapse" href="#finance-basic" aria-expanded="false"
                      aria-controls="finance-basic">
                      <i class="mdi mdi-cash menu-icon"></i>
@@ -424,6 +425,18 @@
                      id="finance-basic">
 
                      <ul class="nav flex-column sub-menu">
+                         <li class="nav-item">
+                            <a class="nav-link {{ in_array(Route::currentRouteName(), ['staff.finances.feeItems.index','staff.finances.feeItems.edit']) ? 'active' : '' }}"
+                                href="{{ route('staff.finances.feeItems.index') }}">
+                                <span class="title">Fee Items</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link {{ in_array(Route::currentRouteName(), ['staff.finances.feeSetup']) ? 'active' : '' }}"
+                               href="{{ route('staff.finances.feeSetup') }}">
+                               <span class="title">Setup Fees</span>
+                           </a>
+                       </li>
                          <li class="nav-item">
                              <a class="nav-link {{ in_array(Route::currentRouteName(), ['staff.finances.transactions']) ? 'active' : '' }}"
                                  href="{{ route('staff.finances.transactions') }}">

@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Gateways\Payment;
-use App\Http\Repositories\PaymentRepository;
-use App\Models\PinCollection;
-use Illuminate\Http\Request;
+use App\Http\Controllers\School\Staff\FeeItemsController;
+use App\Http\Controllers\School\Staff\FinanceManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -69,7 +67,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::resource('classes', 'SchoolClassesController');
             Route::resource('terms', 'TermController');
             Route::resource('roles', 'RolesController');
-            Route::match(['POST', 'GET'], 'psychomotors/setup', 'ExamSetupController@psychomotors')->name('staff.examination.psychomotor');
+            Route::match(['POST', 'GET'], 'psychomotor/setup', 'ExamSetupController@psychomotors')->name('staff.examination.psychomotor');
             Route::match(['POST', 'GET'], 'affective-trait/setup', 'ExamSetupController@affectiveTraits')->name('staff.examination.affectiveTrait');
             Route::resource('exams-setup', 'ExamSetupController');
             Route::get('students/alumni', 'StudentsController@alumni')->name('staff.students.alumni');
@@ -166,7 +164,7 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
             Route::get('hostels/{id}/rooms/{room_id}', 'HostelManagementController@editRoom')->name('staff.hostel_rooms.edit');
             Route::get('hostels/{id}/rooms/{room_id}/show', 'HostelManagementController@showRoom')->name('staff.hostel_rooms.show');
             Route::post('hostels/{id}/rooms/{room_id}/assign-student', 'HostelManagementController@roomAssignStudent')->name('staff.hostel_rooms.assignStudent');
-            Route::post('hostels/{id}/rooms/{room_id}/evit-student', 'HostelManagementController@roomEvictStudent')->name('staff.hostel_rooms.evictStudent');
+            Route::post('hostels/{id}/rooms/{room_id}/evict-student', 'HostelManagementController@roomEvictStudent')->name('staff.hostel_rooms.evictStudent');
             Route::put('hostels/{id}/rooms/{room_id}', 'HostelManagementController@updateRoom')->name('staff.hostel_rooms.update');
             Route::delete('hostels/{id}/rooms/{room_id}', 'HostelManagementController@destroyRoom')->name('staff.hostel_rooms.destroy');
 
@@ -182,6 +180,9 @@ Route::domain('{school}.' . env('BASE_URL'))->group(function () {
                 Route::get('expenditures', 'FinanceManagementController@expenditures')->name('staff.finances.expenditures');
                 Route::get('record-expenditure', 'FinanceManagementController@recordExpenditure')->name('staff.finances.record_expenditure');
                 Route::post('record-expenditure', 'FinanceManagementController@saveExpenditure')->name('staff.finances.save_expenditure');
+                Route::resource('fee-items', FeeItemsController::class, ['names'=> 'staff.finances.feeItems']);
+                Route::get('fees-setup', [FinanceManagementController::class,'feesSetup'])->name('staff.finances.feeSetup');
+                Route::post('fees-setup', [FinanceManagementController::class,'saveFeesSetup'])->name('staff.finances.feeSetup.save');
                 Route::get('fees', 'FinanceManagementController@fees')->name('staff.finances.fees');
                 Route::get('fees/{id}', 'FinanceManagementController@showFee')->name('staff.finances.fee');
                 Route::get('fees/{id}/complete-fees', 'FinanceManagementController@CompleteFee')->name('staff.finances.fee.complete');
@@ -243,6 +244,7 @@ Route::group(['prefix' => 'super-admin', 'namespace' => 'Admin'], function () {
         Route::resource('schools', 'SchoolsController');
         Route::put('school/{school}/change-admin-password', 'SchoolsController@resetPassword')->name('school.changeAdminPassword');
         Route::resource('school-categories', 'SchoolCategoriesController');
+        Route::put('vendors/{id}/reset-password', 'VendorsController@resetPassword')->name('vendors.resetPassword');
         Route::resource('vendors', 'VendorsController');
         Route::resource('vendor-categories', 'VendorCategoriesController');
     });

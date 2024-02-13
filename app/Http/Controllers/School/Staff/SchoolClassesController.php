@@ -140,7 +140,6 @@ class SchoolClassesController extends Controller
 
         $school_classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->with('sections', 'sections.subjects')->orderBy('name', 'asc')->get();
         $subjects = Subject::where('school_id', getSchool()->id)->get();
-        // dd($section->subjects->unique());
         return view('staff.class.subjects', compact('school_classes', 'subjects', 'schoolClass', 'section'));
     }
 

@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::domain('{school}.' . env('BASE_URL'))->group(function () {
     Route::group(['middleware' => ['school']], function () {
         Route::get('/classes/{id}/sections', 'AjaxController@getSectionsByClassId');
-        Route::get('/classes/{class_id}/sections/{section_id}/subjects', 'AjaxController@getSubjectByClassSection');
+        Route::get('/classes/{class_id}/sections/{section_id}/subjects', 'AjaxController@getSubjectsByClassSection');
+        Route::get('/classes/{class_id}/sections/{section_id}/fee-items', 'AjaxController@getFeeItemsByClassSection');
         Route::get('/classes/{class_id}/sections/{section_id}/students', 'AjaxController@getSectionStudents');
         Route::get('/classes/{name}/sections-by-class-name', 'AjaxController@getSectionsByClassName');
         Route::get('/staff/{id}/classes', 'AjaxController@getStaffClasses');

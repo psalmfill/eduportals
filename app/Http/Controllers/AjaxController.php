@@ -80,7 +80,7 @@ class AjaxController extends Controller
         );
     }
 
-    public function getSubjectByClassSection($class_id, $section_id)
+    public function getSubjectsByClassSection($class_id, $section_id)
     {
         $section = Section::find($section_id);
         $user = user();
@@ -91,6 +91,17 @@ class AjaxController extends Controller
                 ->wherePivot('school_id', getSchool()->id)->get();
         return response()->json(
             $subjects
+        );
+    }
+
+
+    public function getFeeItemsByClassSection($class_id, $section_id)
+    {
+        $section = Section::find($section_id);
+        $fee_items = $section->fee_items()->wherePivot('school_class_id', $class_id)
+            ->wherePivot('school_id', getSchool()->id)->get();
+        return response()->json(
+            $fee_items
         );
     }
 

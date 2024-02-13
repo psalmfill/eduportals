@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\AcademicSession;
 use App\Models\Expenditure;
 use App\Models\Fee;
+use App\Models\FeeItem;
+use App\Models\FeePaymentItem;
 use App\Models\GeneralSetting;
 use App\Models\SchoolClass;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Term;
 use App\Models\Transaction;
@@ -50,9 +53,8 @@ class FinanceManagementController extends Controller
         $sessions = AcademicSession::all();
         $terms  = Term::where('school_id', getSchool()->id)->get();
         $classes = SchoolClass::where('school_id', getSchool()->id)->get();
-
-        //
-        return view('staff.finances.record_fee', compact('sessions', 'terms', 'classes'));
+        $feeItems = FeeItem::orderBy('name')->get();
+        return view('staff.finances.record_fee', compact('sessions', 'terms', 'classes', 'feeItems'));
     }
     public function completeFee($id)
     {
@@ -80,10 +82,13 @@ class FinanceManagementController extends Controller
                 'student' => 'required|exists:students,id',
                 'class' => 'required|exists:school_classes,id',
                 'total_fee' => 'required|numeric',
-                'amount_paid' => 'required|numeric'
+                'amount_paid' => 'required|numeric',
+                'feeItems'=> 'required|array'
 
             ]
         );
+
+        $feeItems = FeeItem::find( $data['feeItems'] );
 
         try {
             DB::beginTransaction();
@@ -111,6 +116,14 @@ class FinanceManagementController extends Controller
                 $fee->full_payment = false;
                 $fee->reference = Str::uuid();
                 $fee->save();
+
+                foreach ($feeItems as $item) {
+                    FeePaymentItem::updateOrCreate([
+                        'fee_id'=> $fee->id,
+                        'fee_item_id'=>$item->id,
+                        'amount' => $item->amount
+                    ]);
+                }
             }
 
             //  create transaction
@@ -208,5 +221,41 @@ class FinanceManagementController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Record was not saved');
         }
+    }
+
+    public function feesSetup(){
+        $schoolClass = request()->school_class ? SchoolClass::where('id', request()->school_class)->with('sections')->first() : null;
+        $section = request()->school_class ? Section::where('id', request()->section)->first() : null;
+
+        $school_classes = SchoolClass::where('school_id', getSchool()->id)->whereNotIn('name', ['Alumni', 'Trash'])->with('sections', 'sections.subjects')->orderBy('name', 'asc')->get();
+        $feeItems = FeeItem::orderBy('name')->get();
+        return view('staff.finances.setup_fees', compact('school_classes', 'feeItems', 'section', 'schoolClass'));
+    }
+
+    public function saveFeesSetup(Request $request)
+    {
+        $class = SchoolClass::findOrFail($request->class);
+        if (!$request->sections)
+            return redirect()->back()->with('error', 'Please select at least one section');
+
+        foreach ($request->sections as $section) {
+
+            $class->fee_items()->wherePivot(
+                'school_id',
+                getSchool()->id
+            )->wherePivot('section_id', $section)->detach();
+
+
+            $feeItems = $request->feeItems ?? [];
+            foreach ($feeItems as $subject) {
+
+                $class->fee_items()->attach($subject, [
+                    'section_id' => $section,
+                    'school_id' => getSchool()->id
+                ]);
+            }
+        }
+
+        return redirect()->back();
     }
 }

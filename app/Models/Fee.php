@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Fee extends Model
 {
@@ -36,5 +38,24 @@ class Fee extends Model
     public function staff()
     {
         return $this->morphTo('staffable');
+    }
+    /**
+     * Get all of the items for the Fee
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(FeePaymentItem::class);
+    }
+
+    /**
+     * Get all of the fee_items for the Fee
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function fee_items(): HasManyThrough
+    {
+        return $this->hasManyThrough(FeePaymentItem::class, FeeItem::class);
     }
 }
