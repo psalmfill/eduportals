@@ -57,7 +57,7 @@
 
                                 <div class="form-group">
                                     <input type="text" name="username" class="form-control form-control-lg"
-                                        id="exampleInputEmail1" placeholder="Username">
+                                        id="exampleInputEmail1" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" class="form-control form-control-lg"

@@ -80,4 +80,9 @@ class LoginController extends Controller
     {
         return Auth::guard('student');
     }
+
+    public function username()
+    {
+        return 'reg_no';
+    }
 }
