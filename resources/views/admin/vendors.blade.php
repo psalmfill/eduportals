@@ -336,11 +336,11 @@
                                                     <a href="{{ route('vendors.edit', $item->id) }}"
                                                         class="btn btn-info btn-sm"><i class="entypo-pencil"></i>
                                                         Edit</a>
-                                                    <button onclick="$('#password-reset').submit()"
+                                                    <button onclick="$('#password-reset-{{$item->user->id}}').submit()"
                                                         class="btn btn-danger btn-sm ml-2">Reset Password</button>
 
                                                     <form action="{{ route('vendors.resetPassword', $item->user->id) }}"
-                                                        method="POST" id="password-reset">
+                                                        method="POST" id="password-reset-{{$item->user->id}}">
                                                         @method('PUT')
                                                         @csrf
                                                     </form>
