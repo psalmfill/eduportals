@@ -104,9 +104,10 @@
                                     @foreach ($feeItems as $feeItem)
                                         <div class="col-md-6">
                                             <div class="checkbox checkbox-replace">
-                                                <input type="checkbox" name="feeItems[]" class="mt-1"
+                                                <input type="checkbox" name="feeItems[]" class="mt-1" onchange="handleItemChecked(this)"
                                                     id="section-{{ $feeItem->id }}" value="{{ $feeItem->id }}">
-                                                <label>{{ $feeItem->name }}</label>
+                                                    <label>{{ $feeItem->name }} - {{$feeItem->amount}}</label>
+
                                             </div>
                                         </div>
                                     @endforeach
@@ -203,15 +204,15 @@
                                 </div>
 
                                 <label class="d-block" for="">Fees</label>
-                                <div class="row">
+                                <div class="row" id="fee-items">
 
                                     @foreach ($feeItems as $feeItem)
                                         <div class="col-md-6">
                                             <div class="checkbox checkbox-replace">
-                                                <input type="checkbox" name="feeItems[]" class="mt-1 cat"
+                                                <input type="checkbox" name="feeItems[]" class="mt-1 cat" onchange="handleItemChecked(this)"
                                                     data-amount="{{ $feeItem->amount }}"
                                                     id="section-{{ $feeItem->id }}" value="{{ $feeItem->id }}">
-                                                <label>{{ $feeItem->name }}</label>
+                                                <label>{{ $feeItem->name }} - {{$feeItem->amount}}</label>
                                             </div>
                                         </div>
                                     @endforeach
@@ -221,7 +222,7 @@
                                         <div class="form-group">
                                             <label for="">Total Fee Amount</label>
                                             <input id="total-amount" name="total_fee" type="number" class="form-control"
-                                                placeholder="Total Fee Amount">
+                                                placeholder="Total Fee Amount" value="{{$feeItem->sum('amount',0)}}">
                                         </div>
                                     </div>
 
@@ -249,6 +250,15 @@
     @section('page_scripts')
         <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
         <script>
+            function handleItemChecked(event){
+                let amount = $(event).attr('data-amount') * 1
+                if(event.checked){
+                    $('#amount-paid').val(($('#amount-paid').val().trim() *1) + amount)
+                }else {
+                    $('#amount-paid').val(($('#amount-paid').val().trim() *1) - amount)
+
+                }
+            }
             $('#class').change(function(e) {
                 const class_id = e.target.value;
                 // show_loading_bar(65);
@@ -289,13 +299,23 @@
                 });
                 $.ajax({
 
-                    url: BASE_URL + "/api/classes/" + class_id + '/sections/' + section_id + '/fee-categories',
+                    url: BASE_URL + "/api/classes/" + class_id + '/sections/' + section_id + '/fee-items',
                 }).done(function(data) {
                    let total =0
+                   let html = ''
                     data.forEach(function(el) {
-                        $('#section-'+el.id).prop('checked',true);
+                        // $('#section-'+el.id).prop('checked',true);
                         total +=el.amount *1
+                        html +=` <div class="col-md-6">
+                                            <div class="checkbox checkbox-replace">
+                                                <input type="checkbox" name="feeItems[]" class="mt-1 cat" onchange="handleItemChecked(this)"
+                                                    data-amount="${el.amount}"
+                                                    id="section-${el.id}" value="${el.id}" checked>
+                                                <label>${el.name} - ${el.amount}</label>
+                                            </div>
+                                        </div>`
                     })
+                    $('#fee-items').html(html)
                     $('#total-amount').val(total);
                     $('#amount-paid').val(total);
 

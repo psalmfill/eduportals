@@ -62,11 +62,13 @@
             padding: 5px;
         }
 
-        #result table tr:last-child td {
+        #result table tr:last-child td, #result table tr:last-child th{
             border-bottom: 1px solid #333;
+            border-bottom: 1px solid #333;
+
         }
 
-        #result table tr td:first-child {
+        #result table tr td:first-child,#result table tr th:first-child {
 
             border-left: 1px solid #333;
         }
@@ -74,7 +76,7 @@
         #head {
             width: 100%;
             height: 100px;
-            border: 1px solid #000;
+            /* border: 1px solid #000; */
         }
 
         #comments-table {
@@ -132,6 +134,8 @@
                         <address>{{ getSchool()->address }}, {{ getSchool()->city }}</address>
                         <p>{{ getSchool()->country }}</p>
                     </div>
+                    <h1 style="margin-top: 5%">School Fee Receipt</h1>
+
                 </th>
                 <th style="width:20%"><img width="130" height="130" class="img-100"
                         src="{{ asset(\Storage::url($fee->student->image)) }}" alt="student"></th>
@@ -165,20 +169,40 @@
             @foreach ($fee->transactions as $item)
                 <tr>
                     <td>{{ $item->reference }}</td>
-
-                    <td>{{ $item->amount != $fee->amount ? 'PART PAYMENT' : 'FULL PAYMENT' }}
+                    <td>Date</td>
+                    <td>{{$item->created_at->format('d, F Y')}}</td>
                     </td>
-                    <td style="text-align:right">N{{ $item->amount }}</td>
+                    <td ></td>
                     <td></td>
                 </tr>
+                <tr>
+                    <td >Items</td>
+                    <td colspan="4"></td>
+                </tr>
+                {{-- {{dd($item->items)}} --}}
+                @forEach ($item->items as $fee_payment_item)
+                {{-- {{dd($fee_payment_item)}} --}}
+                    <tr>
+                        <td></td>
+                        <td>{{$fee_payment_item->fee_item->name}}</td>
+                        <td  style="text-align:right" colspan="2">N{{$fee_payment_item->amount}}</td>
+                        <td></td>
+                    </tr>
+                @endforeach
             @endforeach
 
             <tr>
                 <td></td>
                 <td>TOTAL FEE</td>
-                <td style="text-align:right">N{{ $fee->amount }}</td>
-                <td>{{ $fee->full_payment ? 'FULL PAYMENT' : 'PART PAYMENT' }}</td>
-
+                <td style="text-align:right" colspan="2">N{{ $fee->amount }}</td>
+                {{-- <td>{{ $fee->full_payment ? 'FULL PAYMENT' : 'PART PAYMENT' }}</td> --}}
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>PAYMENT Status</td>
+                <td style="text-align:right" colspan="2">{{ $fee->full_payment ? 'FULL PAYMENT' : 'PART PAYMENT' }}</td>
+                <td></td>
             </tr>
         </table>
         <br>

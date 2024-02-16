@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaction extends Model
 {
@@ -37,5 +38,10 @@ class Transaction extends Model
     public function transactable()
     {
         return $this->morphTo('transactable');
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(FeePaymentItem::class);
     }
 }

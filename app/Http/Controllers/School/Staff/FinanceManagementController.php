@@ -68,7 +68,8 @@ class FinanceManagementController extends Controller
 
     public function  showFee($id)
     {
-        $fee = Fee::findOrFail($id);
+        $fee = Fee::where('id', $id)->with('transactions','transactions.items')->first();
+        if(!$fee) abort(404);
         $generalSettings = GeneralSetting::where('school_id', getSchool()->id)->first();
         return view('staff.finances.templates.fee_reciept', compact('generalSettings', 'fee'));
     }
@@ -116,14 +117,6 @@ class FinanceManagementController extends Controller
                 $fee->full_payment = false;
                 $fee->reference = Str::uuid();
                 $fee->save();
-
-                foreach ($feeItems as $item) {
-                    FeePaymentItem::updateOrCreate([
-                        'fee_id'=> $fee->id,
-                        'fee_item_id'=>$item->id,
-                        'amount' => $item->amount
-                    ]);
-                }
             }
 
             //  create transaction
@@ -138,6 +131,14 @@ class FinanceManagementController extends Controller
                 'status' => 'confirmed',
                 'reference' => Str::uuid()
             ]);
+            foreach ($feeItems as $item) {
+                FeePaymentItem::updateOrCreate([
+                    'fee_id'=> $fee->id,
+                    'fee_item_id'=>$item->id,
+                    'amount' => $item->amount,
+                    'transaction_id' =>  $transaction->id
+                ]);
+            }
             if ($fee->amount == $fee->transactions()->sum('amount')) {
                 $fee->update([
                     'full_payment' => true,
@@ -148,6 +149,7 @@ class FinanceManagementController extends Controller
             return redirect()->route('staff.finances.fees')->with('message', 'Fee has been recorded successfully');
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e);
             return redirect()->back()->with('error', 'Record was not saved');
         }
     }

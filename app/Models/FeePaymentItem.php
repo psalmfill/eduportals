@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class FeePaymentItem extends Model
 {
     use HasFactory;
+    protected $guarded=["id"];
 
     /**
      * Get the fee that owns the FeePaymentItem
